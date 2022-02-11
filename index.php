@@ -1,24 +1,26 @@
 <?php
 session_start();
 $error = "";
-if (isset($_POST['Login'])) {
+if (isset($_POST['login'])) {
     $_SESSION['name'] = $_POST['name'];
     $password = $_POST['pass'];
-    $cif = hash_hmac('sha512', '$password', 'secret');
-    $_SESSION["con"] = mysqli_connect('localhost', 'root', '', 'Clinica');
-    $sentencia = 'SELECT * FROM usuarios WHERE usuLogin="' . $_SESSION["name"] . '" AND usuPassword="' . $cif . '"';
+    //$cif = hash_hmac('sha512', '$password', 'secret');
+    $_SESSION["con"] = mysqli_connect('localhost', 'administrador', '', 'Clinica');
+    $sentencia = 'SELECT * FROM usuarios WHERE usuLogin="' . $_SESSION["name"] . '" AND usuPassword="' . $password . '"';
     $result = mysqli_query($_SESSION["con"], $sentencia);
     $fetch = mysqli_fetch_assoc($result);
-    $_SESSION['rol'] = $fetch['rol'];
-    $_SESSION["idusuario"] = $fetch["idusuario"];
+    $_SESSION['usutipo'] = $fetch['usutipo'];
+    $_SESSION["usuLogin"] = $fetch["usuLogin"];
     mysqli_close($_SESSION["con"]);
     if (mysqli_num_rows($result) == 0) {
         $error = "Usuario inexistente o contraseña incorrecta";
     } else {
-        if ($_SESSION['rol'] == 'consultor') {
-            header("location:cart.php");
-        } else if ($_SESSION['rol'] == 'administrador') {
-            header("location:insert.php");
+        if ($_SESSION['usutipo'] == 'Paciente') {
+            $error = "Has iniciado como paciente";
+        } else if ($_SESSION['usutipo'] == 'Medico') {
+            header("location:medico/index.php");
+        }  else if ($_SESSION['usutipo'] == 'Asistente') {
+            $error = "Has iniciado como asistente";
         }
     }
 } else {
@@ -30,12 +32,17 @@ if (isset($_POST['Login'])) {
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/boxicons@latest/css/boxicons.min.css">
         <link rel="stylesheet" href="assets/css/style.css">
+        <style>
+            p {
+                color: white;
+            }
+        </style>
         <title>Iniciar sesion</title>
     </head>
 
     <body>
         <div class="form">
-            <form action="login.php" method="post">
+            <form action="#" method="post">
                 <h1>¡Bienvenid@!</h1>
                 <div class="input">
                     <i class='bx bx-user input__lock'></i>
