@@ -22,13 +22,9 @@ body {
   height: 100vh;
   display: grid;
   place-items: center;
-  background-image: url("../img/radio.jpg");
-  background-repeat: no-repeat; 
-  background-size: cover; 
-  background-position: center;
 }
 
-h1 {
+h1,p {
   color: var(--container-color);
 }
 
@@ -52,7 +48,7 @@ h1 {
 }
 
 .input__icon {
-  color: var(--first-color);
+  color: var(--container-color);
   cursor: pointer;
 }
 
