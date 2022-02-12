@@ -20,6 +20,7 @@
     <?php
     session_start();
     $error = "";
+    $aviso = "";
     if (isset($_POST['login'])) {
         $_SESSION['name'] = $_POST['name'];
         $password = $_POST['pass'];
@@ -30,9 +31,17 @@
         $fetch = mysqli_fetch_assoc($result);
         $_SESSION['usutipo'] = $fetch['usutipo'];
         $_SESSION["usuLogin"] = $fetch["usuLogin"];
-        mysqli_close($_SESSION["con"]);
         if (mysqli_num_rows($result) == 0) {
-            $error = "Usuario inexistente/contraseña incorrecta. <br/> Intentelo de nuevo.";
+            $sentencia = 'SELECT * FROM usuarios WHERE usuLogin="' . $_SESSION["name"] . '"';
+            $result2 = mysqli_query($_SESSION["con"], $sentencia);
+            $fetch = mysqli_fetch_assoc($result2);
+            mysqli_close($_SESSION["con"]);
+            if (mysqli_num_rows($result2) == 0) {
+                $error = "Usuario inexistente.";
+            } else {
+                $error = "Contraseña incorrecta.";
+            }
+        $aviso = "Por favor, intentelo de nuevo.";
     ?>
             <script>
                 setTimeout(saltar, 2000);
@@ -43,7 +52,7 @@
             <?php
         } else {
             if ($_SESSION['usutipo'] == 'Paciente') {
-                $error = 'Bienvenid@ ' . $_SESSION["name"] . '! <br/> Espere mientras es redirigid@.';
+                $error = '<p class="ufl">' . $_SESSION["name"] . ', bienvenid@! <br/> Espere mientras es redirigid@.</p>';
             ?>
                 <script>
                     setTimeout(saltar, 2500);
@@ -53,7 +62,7 @@
                 </script>
             <?php
             } else if ($_SESSION['usutipo'] == 'Medico') {
-                $error = 'Bienvenid@ ' . $_SESSION["name"] . '! <br/> Espere mientras es redirigid@.';
+                $error = '<p class="ufl">' . $_SESSION["name"] . ', bienvenid@! <br/> Espere mientras es redirigid@.</p>';
             ?>
                 <script>
                     setTimeout(saltar, 2500);
@@ -63,7 +72,7 @@
                 </script>
             <?php
             } else if ($_SESSION['usutipo'] == 'Asistente') {
-                $error = 'Bienvenid@ ' . $_SESSION["name"] . '! <br/> Espere mientras es redirigid@.';
+                $error = '<p class="ufl">' . $_SESSION["name"] . ', bienvenid@! <br/> Espere mientras es redirigid@.</p>';
             ?>
                 <script>
                     setTimeout(saltar, 2500);
@@ -73,7 +82,7 @@
                 </script>
             <?php
             } else {
-                $error = 'Bienvenid@ ' . $_SESSION["name"] . '! <br/> Espere mientras es redirigid@.';
+                $error = '<p class="ufl">' . $_SESSION["name"] . ', bienvenid@! <br/> Espere mientras es redirigid@.</p>';
             ?>
                 <script>
                     setTimeout(saltar, 2500);
@@ -101,8 +110,8 @@
                 <input type="password" name="pass" placeholder="Contraseña" class="input__password" id="input-pass" required>
                 <i class='bx bx-hide input__icon' id="input-icon"></i>
             </div>
-            <p><?php echo "<strong> $error </strong>"; ?></p>
-            <br />
+            <p><?php echo "<strong>$error</strong>"; ?></p>
+            <p><?php echo "$aviso"; ?></p>
             <input type="submit" class="button" name="login" value="Iniciar sesion">
         </form>
     </div>

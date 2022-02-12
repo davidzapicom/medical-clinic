@@ -28,6 +28,10 @@ h1,p {
   color: var(--container-color);
 }
 
+p.ufl::first-letter {
+  text-transform: uppercase;
+}
+
 .input {
   position: relative;
   background-color: var(--container-color);
