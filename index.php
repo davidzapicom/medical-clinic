@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -8,6 +9,8 @@
     <link rel="stylesheet" href="assets/css/style.css">
     <style>
         body {
+            display: grid;
+            place-items: center;
             background-image: url("assets/img/frame.jpg");
             background-repeat: no-repeat;
             background-size: cover;
@@ -16,6 +19,7 @@
     </style>
     <title>Iniciar sesion</title>
 </head>
+
 <body>
     <?php
     session_start();
@@ -41,10 +45,11 @@
             } else {
                 $error = "Contraseña incorrecta.";
             }
-        $aviso = "Por favor, intentelo de nuevo.";
+            $aviso = "Por favor, intentelo de nuevo.";
     ?>
             <script>
                 setTimeout(saltar, 2000);
+
                 function saltar() {
                     location.replace("index.php");
                 }
@@ -52,40 +57,44 @@
             <?php
         } else {
             if ($_SESSION['usutipo'] == 'Paciente') {
-                $error = '<p class="ufl">' . $_SESSION["name"] . ', bienvenid@! <br/> Espere mientras es redirigid@.</p>';
+                $error = '<p class="ufl">' . $_SESSION["name"] . ', bienvenid@! <br/>Por favor, espere mientras es redirigid@.</p>';
             ?>
                 <script>
                     setTimeout(saltar, 2500);
+
                     function saltar() {
                         location.replace("paciente/index.php");
                     }
                 </script>
             <?php
             } else if ($_SESSION['usutipo'] == 'Medico') {
-                $error = '<p class="ufl">' . $_SESSION["name"] . ', bienvenid@! <br/> Espere mientras es redirigid@.</p>';
+                $error = '<p class="ufl">' . $_SESSION["name"] . ', bienvenid@! <br/>Por favor, espere mientras es redirigid@.</p>';
             ?>
                 <script>
                     setTimeout(saltar, 2500);
+
                     function saltar() {
                         location.replace("medico/index.php");
                     }
                 </script>
             <?php
             } else if ($_SESSION['usutipo'] == 'Asistente') {
-                $error = '<p class="ufl">' . $_SESSION["name"] . ', bienvenid@! <br/> Espere mientras es redirigid@.</p>';
+                $error = '<p class="ufl">' . $_SESSION["name"] . ', bienvenid@! <br/>Por favor, espere mientras es redirigid@.</p>';
             ?>
                 <script>
                     setTimeout(saltar, 2500);
+
                     function saltar() {
                         location.replace("asistente/index.php");
                     }
                 </script>
             <?php
             } else {
-                $error = '<p class="ufl">' . $_SESSION["name"] . ', bienvenid@! <br/> Espere mientras es redirigid@.</p>';
+                $error = '<p class="ufl">' . $_SESSION["name"] . ', bienvenid@! <br/>Por favor, espere mientras es redirigid@.</p>';
             ?>
                 <script>
                     setTimeout(saltar, 2500);
+
                     function saltar() {
                         location.replace("admin/index.php");
                     }
@@ -117,4 +126,5 @@
     </div>
     <script src="assets/js/main.js"></script>
 </body>
+
 </html>
