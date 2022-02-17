@@ -4,11 +4,52 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="../assets/css/plans.css">
-    <title>Citas paciente | Clinica</title>
+    <link rel="stylesheet" href="style.css">
+    <link href='https://unpkg.com/boxicons@2.1.1/css/boxicons.min.css' rel='stylesheet'>
+    <title>Paciente | Clinica ADSI</title>
 </head>
 <body>
-    <h1>Mis citas</h1>
+<?php
+session_start();
+?>
+    <nav class="sidebar close">
+        <header>
+            <div class="image-text">
+                <span class="image">
+                    <img src="../assets/img/scene.jpg" alt="">
+                </span>
+                <div class="text logo-text">
+                    <span class="name">Clinica ADSI</span>
+                    <span class="profession"><p class="ufl"><?php echo $_SESSION["name"]; ?></p></span>
+                </div>
+            </div>
+            <i class='bx bx-chevron-right toggle'></i>
+        </header>
+        <div class="menu-bar">
+            <div class="menu">
 
+                <ul class="menu-links">
+                    <li class="nav-link">
+                        <a href="#">
+                            <i class='bx bxs-calendar-plus icon'></i>
+                            <span class="text nav-text">Citas</span>
+                        </a>
+                    </li>
+                </ul>
+            </div>
+            <div class="bottom-content">
+                <li class="">
+                    <a href="../logout.php">
+                        <i class='bx bx-log-out icon'></i>
+                        <span class="text nav-text">Cerrar sesion</span>
+                    </a>
+                </li>
+            </div>
+        </div>
+    </nav>
+    <section class="home">
+        <div class="text">Mis Citas</div>
+    </section>
+    <script src="script.js"></script>
 </body>
 </html>

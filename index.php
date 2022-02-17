@@ -106,7 +106,7 @@
     ?>
     <div class="form">
         <form action="#" method="post">
-            <h1>¡Bienvenid@!</h1>
+            <h1>Clinica ADSI</h1>
             <div class="input">
                 <i class='bx bx-user input__lock'></i>
                 <input type="text" name="name" placeholder="Nombre de usuario/a" class="input__password" required>
