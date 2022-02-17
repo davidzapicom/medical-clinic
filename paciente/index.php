@@ -27,21 +27,20 @@ session_start();
         </header>
         <div class="menu-bar">
             <div class="menu">
-
                 <ul class="menu-links">
                     <li class="nav-link">
                         <a href="#">
-                            <i class='bx bxs-calendar-plus icon'></i>
+                            <i class='bx bxs-calendar icon'></i>
                             <span class="text nav-text">Citas</span>
                         </a>
                     </li>
                 </ul>
             </div>
             <div class="bottom-content">
-                <li class="">
+                <li>
                     <a href="../logout.php">
                         <i class='bx bx-log-out icon'></i>
-                        <span class="text nav-text">Cerrar sesion</span>
+                        <span class="text nav-text">Bye 👋</span>
                     </a>
                 </li>
             </div>
@@ -49,6 +48,18 @@ session_start();
     </nav>
     <section class="home">
         <div class="text">Mis Citas</div>
+
+
+
+
+
+
+
+
+
+
+
+
     </section>
     <script src="script.js"></script>
 </body>

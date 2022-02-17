@@ -1,6 +1,5 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -17,9 +16,8 @@
             background-position: center;
         }
     </style>
-    <title>Iniciar sesion</title>
+    <title>Login | Clinica ADSI</title>
 </head>
-
 <body>
     <?php
     session_start();
@@ -126,5 +124,4 @@
     </div>
     <script src="assets/js/main.js"></script>
 </body>
-
 </html>
