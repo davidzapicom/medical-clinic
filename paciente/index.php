@@ -61,6 +61,6 @@ session_start();
 
 
     </section>
-    <script src="script.js"></script>
+    <script src="../assets/js/bar-script.js"></script>
 </body>
 </html>
