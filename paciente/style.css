@@ -82,11 +82,12 @@ body{
     white-space: nowrap;
     opacity: 1;
 }
+
 .sidebar.close .text{
     opacity: 0;
 }
-/* =========================== */
 
+/* =========================== */
 .sidebar header{
     position: relative;
 }
@@ -206,6 +207,7 @@ body.dark .sidebar header .toggle{
     border-radius: 6px;
     cursor: pointer;
 }
+
 .toggle-switch .switch{
     position: relative;
     height: 22px;
@@ -242,6 +244,7 @@ body.dark .switch::before{
     background-color: var(--body-color);
     transition: var(--tran-05);
 }
+
 .home .text{
     font-size: 30px;
     font-weight: 500;
@@ -254,7 +257,6 @@ body.dark .switch::before{
     width: calc(100% - 78px);
 }
 
-
 p.ufl::first-letter {
     text-transform: uppercase;
-  }
+}
