@@ -15,6 +15,19 @@
     session_start();
     $error = "";
     $aviso = "";
+    if (isset($_POST['login'])) {
+        
+        $apellidos = $_POST['apellidos'];
+
+
+
+
+        $inuser = "INSERT INTO usuarios ('dniUsu','usuLogin','usuPassword','usuEstado','usutipo') VALUES ('$_POST[dni]', '$_POST[nombre]','$_POST[password]','$_POST[estado]','$_POST[tipo]')";
+        $inmed = "INSERT INTO medicos ('dniMed','medNombres','medApellidos','medEspecialidad','medTelefono','medCorreo') VALUES ('$_POST[dni]','$_POST[nombre]','$_POST[apellidos]','$_POST[especialidad]','$_POST[telefono]','$_POST[email]')";
+        $result = mysqli_query($_SESSION["con"], $inuser);
+        $result = mysqli_query($_SESSION["con"], $inmed);
+        mysqli_close($_SESSION["con"]);
+    } else {
     ?>
     <nav class="sidebar close">
         <header>
@@ -62,34 +75,36 @@
         <div class="text">
             <h1>Alta Médico</h1>
             <form action="#" method="post">
-                <input type="text" name="usu" placeholder="Nombre de usuario/a" class="input__password" required>
+                <input type="text" name="nombre" placeholder="Nombre" class="input__password" required>
                 <br />
                 <input type="text" name="apellidos" placeholder="Apellidos" class="input__password" required>
                 <br />
                 <input type="text" name="especialidad" placeholder="Especialidad" class="input__password" required>
                 <br />
-                <input type="tel" name="tel" placeholder="Telefono" class="input__password" required>
+                <input type="tel" name="telefono" placeholder="Telefono" class="input__password" required>
                 <br />
                 <input type="email" name="email" placeholder="Email" class="input__password" required>
                 <br />
                 <input type="id" name="dni" placeholder="DNI" class="input__password" required>
                 <br />
                 <div class="input">
-                    <input type="password" name="password1" placeholder="Contraseña" class="input__password" id="input-pass" required>
-                    <input type="password" name="pass" placeholder="Contraseña otra vez" class="input__password" id="input-pass" required>
+                    <input type="password" name="password" placeholder="Contraseña" class="input__password" id="input-pass" required>
+                    <input type="password" name="password2" placeholder="Contraseña otra vez" class="input__password" id="input-pass" required>
                 </div>
                 <select name="estado">
                     <option value="Activo">Activo</option>
                     <option value="Inactivo">Inactivo</option>
                 </select>
-                <input type="text" name="usu" placeholder="Rol" class="input__password" required>
+                <input type="text" name="tipo" placeholder="Rol" class="input__password" required>
                 <p><?php echo "<strong>$error</strong>"; ?></p>
                 <p><?php echo "$aviso"; ?></p>
-                <input type="submit" class="button" name="login" value="Iniciar sesion">
+                <input type="submit" class="button" name="alta" value="Alta">
             </form>
         </div>
     </section>
     <script src="../assets/js/bar-script.js"></script>
+    <?php
+    }
+    ?>
 </body>
-
 </html>

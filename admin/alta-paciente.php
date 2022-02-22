@@ -62,28 +62,28 @@
         <div class="text">
             <h1>Alta Paciente</h1>
             <form action="#" method="post">
-                <div class="input">
-                    <i class='bx bx-user input__lock'></i>
-                    <input type="text" name="usu" placeholder="Nombre de usuario/a o DNI" class="input__password" required>
-                </div>
+            <input type="text" name="usu" placeholder="Nombre de usuario/a" class="input__password" required>
+                <br />
+                <input type="text" name="id" placeholder="Identificación" class="input__password" required>
+                <br />
+                <input type="text" name="nombre" placeholder="Nombre" class="input__password" required>
+                <br />
+                <input type="text" name="apellidos" placeholder="Apellidos" class="input__password" required>
+                <br />
+                Fecha nacimiento:
+                <input type="date" name="fechanacimiento" class="input__password" required>
                 <br />
                 <div class="input">
-                    <div class="input__overlay" id="input-overlay"></div>
-
-                    <i class='bx bx-lock-alt input__lock'></i>
-                    <input type="password" name="pass" placeholder="Contraseña" class="input__password" id="input-pass" required>
-                    <i class='bx bx-hide input__icon' id="input-icon"></i>
+                    <input type="password" name="password" placeholder="Contraseña" class="input__password" id="input-pass" required>
+                    <input type="password" name="password2" placeholder="Contraseña otra vez" class="input__password" id="input-pass" required>
                 </div>
-                <div class="input">
-
-
-                    <i class='bx bx-lock-alt input__lock'></i>
-                    <input type="password" name="pass" placeholder="Introduce la contraseña otra vez" class="input__password" id="input-pass" required>
-                    <i class='bx bx-hide input__icon' id="input-icon"></i>
-                </div>
+                <select name="sexo">
+                    <option value="Masculino">Masculino</option>
+                    <option value="Femenino">Femenino</option>
+                </select>
                 <p><?php echo "<strong>$error</strong>"; ?></p>
                 <p><?php echo "$aviso"; ?></p>
-                <input type="submit" class="button" name="login" value="Iniciar sesion">
+                <input type="submit" class="button" name="alta" value="Alta">
             </form>
         </div>
     </section>
