@@ -24,17 +24,17 @@
     $error = "";
     $aviso = "";
     if (isset($_POST['login'])) {
-        $_SESSION['name'] = $_POST['name'];
+        $_SESSION['usu'] = $_POST['usu'];
         $password = $_POST['pass'];
         //$cif = hash_hmac('sha512', '$password', 'secret');
         $_SESSION["con"] = mysqli_connect('localhost', 'administrador', '', 'Clinica');
-        $sentencia = 'SELECT * FROM usuarios WHERE usuLogin="' . $_SESSION["name"] . '" AND usuPassword="' . $password . '"';
+        $sentencia = 'SELECT * FROM usuarios WHERE usuLogin="' . $_SESSION["usu"] . '" OR dniUsu="' . $_SESSION["usu"] . '" AND usuPassword="' . $password . '"';
         $result = mysqli_query($_SESSION["con"], $sentencia);
         $fetch = mysqli_fetch_assoc($result);
+        $_SESSION['name'] = $fetch['usuLogin'];
         $_SESSION['usutipo'] = $fetch['usutipo'];
-        $_SESSION["usuLogin"] = $fetch["usuLogin"];
         if (mysqli_num_rows($result) == 0) {
-            $sentencia = 'SELECT * FROM usuarios WHERE usuLogin="' . $_SESSION["name"] . '"';
+            $sentencia = 'SELECT * FROM usuarios WHERE usuLogin="' . $_SESSION["usu"] . '" OR dniUsu="' . $_SESSION["usu"] . '"';
             $result2 = mysqli_query($_SESSION["con"], $sentencia);
             $fetch = mysqli_fetch_assoc($result2);
             mysqli_close($_SESSION["con"]);
@@ -55,7 +55,7 @@
             <?php
         } else {
             if ($_SESSION['usutipo'] == 'Paciente') {
-                $error = '<p class="ufl">' . $_SESSION["name"] . ', bienvenid@! <br/>Por favor, espere mientras es redirigid@.</p>';
+                $error = '<p class="ufl"><strong>' . $_SESSION["name"] . '</strong>, bienvenid@! <br/>Por favor, espere mientras es redirigid@.</p>';
             ?>
                 <script>
                     setTimeout(saltar, 2500);
@@ -66,7 +66,7 @@
                 </script>
             <?php
             } else if ($_SESSION['usutipo'] == 'Medico') {
-                $error = '<p class="ufl">' . $_SESSION["name"] . ', bienvenid@! <br/>Por favor, espere mientras es redirigid@.</p>';
+                $error = '<p class="ufl"><strong>' . $_SESSION["name"] . '</strong>, bienvenid@! <br/>Por favor, espere mientras es redirigid@.</p>';
             ?>
                 <script>
                     setTimeout(saltar, 2500);
@@ -77,7 +77,7 @@
                 </script>
             <?php
             } else if ($_SESSION['usutipo'] == 'Asistente') {
-                $error = '<p class="ufl">' . $_SESSION["name"] . ', bienvenid@! <br/>Por favor, espere mientras es redirigid@.</p>';
+                $error = '<p class="ufl"><strong>' . $_SESSION["name"] . '</strong>, bienvenid@! <br/>Por favor, espere mientras es redirigid@.</p>';
             ?>
                 <script>
                     setTimeout(saltar, 2500);
@@ -88,7 +88,7 @@
                 </script>
             <?php
             } else {
-                $error = '<p class="ufl">' . $_SESSION["name"] . ', bienvenid@! <br/>Por favor, espere mientras es redirigid@.</p>';
+                $error = '<p class="ufl"><strong>' . $_SESSION["name"] . '</strong>, bienvenid@! <br/>Por favor, espere mientras es redirigid@.</p>';
             ?>
                 <script>
                     setTimeout(saltar, 2500);
@@ -107,7 +107,7 @@
             <h1>Clinica ADSI</h1>
             <div class="input">
                 <i class='bx bx-user input__lock'></i>
-                <input type="text" name="name" placeholder="Nombre de usuario/a" class="input__password" required>
+                <input type="text" name="usu" placeholder="Nombre de usuario/a o DNI" class="input__password" required>
             </div>
             <br />
             <div class="input">

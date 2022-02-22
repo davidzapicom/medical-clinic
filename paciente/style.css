@@ -28,7 +28,7 @@ body{
     transition: var(--tran-05);
 }
 
-h1, p {
+h1 {
     color: #0C102B;
 }
 
