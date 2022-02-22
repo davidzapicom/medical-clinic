@@ -20,7 +20,7 @@ session_start();
                 </span>
                 <div class="text logo-text">
                     <span class="name">Clinica ADSI</span>
-                    <span class="profession"><p class="ufl"><?php echo $_SESSION["name"]; ?></p></span>
+                    <span class="profession"><p class="ufl"><strong><?php echo $_SESSION["name"]. '</strong> | ' .$_SESSION['usutipo']; ?></p></span>
                 </div>
             </div>
             <i class='bx bx-chevron-right toggle'></i>
@@ -47,7 +47,9 @@ session_start();
         </div>
     </nav>
     <section class="home">
-        <div class="text">Mis Citas</div>
+        <div class="text">
+            <h1>Mis Citas</h1>
+        </div>
 
 
 

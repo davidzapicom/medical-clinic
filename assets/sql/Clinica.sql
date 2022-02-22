@@ -1,11 +1,11 @@
 -- phpMyAdmin SQL Dump
--- version 5.0.4
+-- version 5.1.1
 -- https://www.phpmyadmin.net/
 --
--- Servidor: 127.0.0.1
--- Tiempo de generación: 11-01-2021 a las 05:48:38
--- Versión del servidor: 10.4.14-MariaDB
--- Versión de PHP: 7.4.11
+-- Servidor: localhost
+-- Tiempo de generación: 22-02-2022 a las 01:04:47
+-- Versión del servidor: 10.4.22-MariaDB
+-- Versión de PHP: 8.1.2
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 START TRANSACTION;
@@ -18,7 +18,7 @@ SET time_zone = "+00:00";
 /*!40101 SET NAMES utf8mb4 */;
 
 --
--- Base de datos: `consulta`
+-- Base de datos: `Clinica`
 --
 
 -- --------------------------------------------------------
@@ -138,6 +138,10 @@ INSERT INTO `usuarios` (`dniUsu`, `usuLogin`, `usuPassword`, `usuEstado`, `usuti
 ('00000001A', 'Lider', '63f2dbe23707d96f3f1feae0c203013c4a2a831391cc8189fa0b2673bcdb6fa8a818ef754bac38a878ddb7baa3143423c5870c4a93b333fe9e1601c5a285b507', 'Activo', 'Administrador'),
 ('12345678A', 'Juan', 'c062e4fd3eed28511a1f2b52bf7b56b70a79bcbecef1f24fd86abfa7269d920e7bd7553c998d9e94fd8f5226b8e57881eca7c9b3403065894f26c5db2ab7fab6', 'Activo', 'Asistente'),
 ('21324354F', 'Perico', '778cb2714c34ccec1005d24ee6d9815ecb7f26966ea22b211f890c8589c5352966c4d45d5b63a4851b32f81c5f44d634b806ed908177bfb3f7dfbd8c0d7a78eb', 'Activo', 'Medico'),
+('3492389C', 'cel', 'cel', 'Activo', 'Paciente'),
+('349436T', 'Tere', 'tere', 'Activo', 'Medico'),
+('34973433J', 'Josefina', 'josefina', 'Activo', 'Asistente'),
+('349786M', 'Marx', 'marx', 'Activo', 'Administrador'),
 ('41236987F', 'andrew', '7e2b5e49b917b41e7f65e9e9946cc83486eb8da75bf64669020dbc6e653431335b2d2a9089ec4be8aa3f6d333e9f02d5746092c145a0d9cd71760484bcee7484', 'Activo', 'Paciente'),
 ('71902685Q', 'cristianim', 'fb85cfb4a08f7c51c16ae233484a2484ad67869adeb9d1e3937bfa27deaeb7f400360efcd64804a7e74e281abbc722d8d84315f07c60c2884a95a877c717644b', 'Activo', 'Medico'),
 ('71978454T', 'Rita', '93ba37351b6b0fd1e34e43740cf35c3bdf853d275e5753ed5b170a7bb275faedb676a4cee182a2b3366a1e112b24213c3a35951408b4c8782ea33552490bf42d', 'Activo', 'Paciente');

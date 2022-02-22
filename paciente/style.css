@@ -28,6 +28,10 @@ body{
     transition: var(--tran-05);
 }
 
+h1, p {
+    color: #0C102B;
+}
+
 /* ===== Sidebar ===== */
  .sidebar{
     position: fixed;
