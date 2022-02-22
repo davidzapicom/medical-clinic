@@ -119,6 +119,7 @@
             </div>
             <p><?php echo "<strong>$error</strong>"; ?></p>
             <p><?php echo "$aviso"; ?></p>
+            <br/>
             <input type="submit" class="button" name="login" value="Iniciar sesion">
         </form>
     </div>
