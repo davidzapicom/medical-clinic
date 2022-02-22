@@ -29,13 +29,13 @@ session_start();
             <div class="menu">
                 <ul class="menu-links">
                     <li class="nav-link">
-                        <a href="#">
+                        <a href="alta-paciente.php">
                         <i class='bx bx-user icon'></i>
                             <span class="text nav-text">Alta Paciente</span>
                         </a>
                     </li>
                     <li class="nav-link">
-                        <a href="#">
+                        <a href="alta-medico.php">
                         <i class='bx bx-user-plus icon'></i>
                             <span class="text nav-text">Alta Medico</span>
                         </a>
