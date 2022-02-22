@@ -107,7 +107,7 @@
             <h1>Clinica ADSI</h1>
             <div class="input">
                 <i class='bx bx-user input__lock'></i>
-                <input type="text" name="usu" placeholder="Usuario/a o DNI" class="input__password" required>
+                <input type="text" name="usu" placeholder="Nombre de usuario/a o DNI" class="input__password" required>
             </div>
             <br />
             <div class="input">
@@ -119,7 +119,6 @@
             </div>
             <p><?php echo "<strong>$error</strong>"; ?></p>
             <p><?php echo "$aviso"; ?></p>
-            <br/>
             <input type="submit" class="button" name="login" value="Iniciar sesion">
         </form>
     </div>

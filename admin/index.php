@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="../assets/css/style.css">
+    <link rel="stylesheet" href="../paciente/style.css">
     <link href='https://unpkg.com/boxicons@2.1.1/css/boxicons.min.css' rel='stylesheet'>
     <title>Administrador | Clinica ADSI</title>
 </head>
@@ -37,7 +37,7 @@ session_start();
                     <li class="nav-link">
                         <a href="alta-medico.php">
                         <i class='bx bx-user-plus icon'></i>
-                            <span class="text nav-text">Alta Médico</span>
+                            <span class="text nav-text">Alta Medico</span>
                         </a>
                     </li>
                 </ul>
@@ -55,8 +55,10 @@ session_start();
     <section class="home">
         <div class="text">
             <h1>Alta Usuario</h1>
-            <p>Por favor, seleciona un usuario en la barra de navegacion lateral para proceder a registrar.</p>
+            <p>Por favor seleciona un usuario para registrar en la barra de navegacion lateral</p>
         </div>
+
+
     </section>
     <script src="../assets/js/bar-script.js"></script>
 </body>
