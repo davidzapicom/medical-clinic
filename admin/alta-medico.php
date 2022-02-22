@@ -9,19 +9,12 @@
     <link href='https://unpkg.com/boxicons@2.1.1/css/boxicons.min.css' rel='stylesheet'>
     <title>Administrador - Alta Medico | Clinica ADSI</title>
 </head>
-
 <body>
     <?php
     session_start();
     $error = "";
     $aviso = "";
     if (isset($_POST['login'])) {
-        
-        $apellidos = $_POST['apellidos'];
-
-
-
-
         $inuser = "INSERT INTO usuarios ('dniUsu','usuLogin','usuPassword','usuEstado','usutipo') VALUES ('$_POST[dni]', '$_POST[nombre]','$_POST[password]','$_POST[estado]','$_POST[tipo]')";
         $inmed = "INSERT INTO medicos ('dniMed','medNombres','medApellidos','medEspecialidad','medTelefono','medCorreo') VALUES ('$_POST[dni]','$_POST[nombre]','$_POST[apellidos]','$_POST[especialidad]','$_POST[telefono]','$_POST[email]')";
         $result = mysqli_query($_SESSION["con"], $inuser);
