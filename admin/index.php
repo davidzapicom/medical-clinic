@@ -37,7 +37,7 @@ session_start();
                     <li class="nav-link">
                         <a href="alta-medico.php">
                         <i class='bx bx-user-plus icon'></i>
-                            <span class="text nav-text">Alta Medico</span>
+                            <span class="text nav-text">Alta Médico</span>
                         </a>
                     </li>
                 </ul>
@@ -55,10 +55,8 @@ session_start();
     <section class="home">
         <div class="text">
             <h1>Alta Usuario</h1>
-            <p>Por favor seleciona un usuario para registrar en la barra de navegacion lateral</p>
+            <p>Por favor, seleciona un usuario en la barra de navegacion lateral para proceder a registrar.</p>
         </div>
-
-
     </section>
     <script src="../assets/js/bar-script.js"></script>
 </body>
