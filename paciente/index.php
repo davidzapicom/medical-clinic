@@ -4,9 +4,9 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="../paciente/style.css">
     <link href='https://unpkg.com/boxicons@2.1.1/css/boxicons.min.css' rel='stylesheet'>
-    <title>Paciente | Clinica ADSI</title>
+    <title>Administrador | Clinica ADSI</title>
 </head>
 <body>
 <?php
@@ -20,7 +20,7 @@ session_start();
                 </span>
                 <div class="text logo-text">
                     <span class="name">Clinica ADSI</span>
-                    <span class="profession"><p class="ufl"><strong><?php echo $_SESSION['name']. '</strong> | ' .$_SESSION['usutipo']; ?></p></span>
+                    <span class="profession"><p class="ufl"><strong><?php echo $_SESSION["name"]. '</strong> | ' .$_SESSION['usutipo']; ?></p></span>
                 </div>
             </div>
             <i class='bx bx-chevron-right toggle'></i>
@@ -29,9 +29,15 @@ session_start();
             <div class="menu">
                 <ul class="menu-links">
                     <li class="nav-link">
-                        <a href="#">
-                            <i class='bx bxs-calendar icon'></i>
-                            <span class="text nav-text">Citas</span>
+                        <a href="alta-paciente.php">
+                        <i class='bx bx-user icon'></i>
+                            <span class="text nav-text">Alta Paciente</span>
+                        </a>
+                    </li>
+                    <li class="nav-link">
+                        <a href="alta-medico.php">
+                        <i class='bx bx-user-plus icon'></i>
+                            <span class="text nav-text">Alta Medico</span>
                         </a>
                     </li>
                 </ul>
@@ -48,20 +54,9 @@ session_start();
     </nav>
     <section class="home">
         <div class="text">
-            <h1>Mis Citas</h1>
+            <h1>Alta Usuario</h1>
+            <p>Por favor seleciona un usuario para registrar en la barra de navegacion lateral</p>
         </div>
-
-
-
-
-
-
-
-
-
-
-
-
     </section>
     <script src="../assets/js/bar-script.js"></script>
 </body>
