@@ -32,6 +32,13 @@ h1 {
     color: #0C102B;
 }
 
+p {
+    color: #0C102B;
+}
+
+.white {
+    color: white;
+}
 /* ===== Sidebar ===== */
  .sidebar{
     position: fixed;

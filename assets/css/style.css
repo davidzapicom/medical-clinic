@@ -23,15 +23,8 @@ body {
   height: 100vh;
 }
 
-form {
-  width: 100%;
-}
-
 h1 {
   color: var(--container-color);
-}
-
-h1 {
   display: inline;
 }
 
