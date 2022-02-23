@@ -103,7 +103,9 @@
                     <option value="Activo">Activo</option>
                     <option value="Inactivo">Inactivo</option>
                 </select>
-                <input type="text" name="tipo" placeholder="Rol" value="Médico" class="input__password" required>
+                <br />
+                <label for="tipo">Rol</label>
+                <input type="text" name="tipo" value="Médico" class="input__password" required>
                 <br />
                 <p><?php echo "<strong>$error</strong>"; ?></p>
                 <p><?php echo "$aviso"; ?></p>
