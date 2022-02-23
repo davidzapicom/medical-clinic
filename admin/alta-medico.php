@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -8,6 +9,7 @@
     <link href='https://unpkg.com/boxicons@2.1.1/css/boxicons.min.css' rel='stylesheet'>
     <title>Administrador | Clinica ADSI</title>
 </head>
+
 <body>
     <?php
     session_start();
@@ -36,14 +38,6 @@
             $inusu = "INSERT INTO usuarios (dniUsu,usuLogin,usuPassword,usuEstado,usutipo) VALUES ('$_POST[dni]','$_POST[usuario]','$_POST[password]','$_POST[estado]','$_SESSION[tipo]')";
             if (mysqli_query($con, $inmed) && mysqli_query($con, $inusu)) {
                 $error = "Usuario insertado correctamente.";
-                $aviso = "El formulario se vaciará a continuación.";
-
-
-
-
-
-
-
                 $_SESSION['usuario'] = "";
                 $_SESSION['nombre'] = "";
                 $_SESSION['apellidos'] = "";
@@ -55,13 +49,6 @@
                 $_SESSION['password2'] = "";
                 $_SESSION['estado'] = "";
                 $_SESSION['tipo'] = "";
-
-
-
-
-
-
-                
             } else {
                 $error = "ERROR: no se ha podido insertar el usuario.";
                 $aviso = "Vuelve a intentarlo.";
@@ -124,7 +111,7 @@
                 <br />
                 <input type="text" name="especialidad" placeholder="Especialidad" value="<?php echo $_SESSION['especialidad']; ?>" required>
                 <br />
-                <input type="tel" name="telefono" placeholder="Teléfono" value="<?php echo $_SESSION['telefono']; ?>" required>
+                <input type="tel" name="telefono" placeholder="Teléfono (000 000 000)" pattern="[0-9]{3}-[0-9]{3}-[0-9]{3}" value="<?php echo $_SESSION['telefono']; ?>" required>
                 <br />
                 <input type="email" name="email" placeholder="Email" value="<?php echo $_SESSION['email']; ?>" required>
                 <br />
@@ -151,4 +138,5 @@
     </section>
     <script src="../assets/js/bar-script.js"></script>
 </body>
+
 </html>

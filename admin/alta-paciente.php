@@ -15,6 +15,47 @@
     session_start();
     $error = "";
     $aviso = "";
+    if (isset($_POST['alta'])) {
+        $_SESSION['usuario'] = $_POST['usuario'];
+        $_SESSION['nombre'] = $_POST['nombre'];
+        $_SESSION['apellidos'] = $_POST['apellidos'];
+        $_SESSION['especialidad'] = $_POST['especialidad'];
+        $_SESSION['telefono'] = $_POST['telefono'];
+        $_SESSION['email'] = $_POST['email'];
+        $_SESSION['dni'] = $_POST['dni'];
+        $_SESSION['password'] = $_POST['password'];
+        $_SESSION['password2'] = $_POST['password2'];
+        $_SESSION['estado'] = $_POST['estado'];
+        $_SESSION['tipo'] = "Médico";
+        if ($_POST['password'] != $_POST['password2']) {
+            $error = "Las contraseñas no coinciden.";
+            $aviso = "Comprueba las contrasñas e intentalo de nuevo.";
+            $_SESSION['password'] = "";
+            $_SESSION['password2'] = "";
+        } else {
+            $con = mysqli_connect('localhost', 'administrador', '', 'Clinica');
+            $inmed = "INSERT INTO pacientes (dniPac,pacNombres,pacApellidos,pacFechaNacimiento,pacSexo) VALUES ('$_POST[dni]','$_POST[nombre]','$_POST[apellidos]','$_POST[especialidad]','$_POST[telefono]','$_POST[correo]')";
+            $inusu = "INSERT INTO usuarios (dniUsu,usuLogin,usuPassword,usuEstado,usutipo) VALUES ('$_POST[dni]','$_POST[usuario]','$_POST[password]','$_POST[estado]','$_SESSION[tipo]')";
+            if (mysqli_query($con, $inmed) && mysqli_query($con, $inusu)) {
+                $error = "Usuario insertado correctamente.";
+                $_SESSION['usuario'] = "";
+                $_SESSION['nombre'] = "";
+                $_SESSION['apellidos'] = "";
+                $_SESSION['especialidad'] = "";
+                $_SESSION['telefono'] = "";
+                $_SESSION['email'] = "";
+                $_SESSION['dni'] = "";
+                $_SESSION['password'] = "";
+                $_SESSION['password2'] = "";
+                $_SESSION['estado'] = "";
+                $_SESSION['tipo'] = "";
+            } else {
+                $error = "ERROR: no se ha podido insertar el usuario.";
+                $aviso = "Vuelve a intentarlo.";
+            }
+            mysqli_close($con);
+        }
+    }
 
 
 
