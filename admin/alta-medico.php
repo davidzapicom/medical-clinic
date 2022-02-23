@@ -15,6 +15,24 @@
     session_start();
     $error = "";
     $aviso = "";
+    if (isset($_POST['alta'])) {
+        if ($_POST['password'] != $_POST['password2']) {
+            $error = "Las contraseñas no coinciden.";
+            $aviso = "Comprueba las contrasñas e intentalo de nuevo.";
+        } else {
+            $con = mysqli_connect('localhost', 'administrador', 'administrador', 'Clinica');
+            $inmed = "INSERT INTO medicos () VALUES ()";
+            $inusu = "INSERT INTO usuarios () VALUES ()";
+            if (mysqli_query($con, $inmed) && mysqli_query($con, $inusu)) {
+                $error = "Articulo insertado correctamente.";
+                $aviso = "El formulario se vaciará a continuación.";
+            } else {
+                $error = "ERROR: no se ha podido insertar el articulo.";
+                $aviso = "Vuelve a intentarlo.";
+            }
+            mysqli_close($con);
+        }
+    }
     ?>
     <nav class="sidebar close">
         <header>
