@@ -21,8 +21,8 @@
             $aviso = "Comprueba las contrasñas e intentalo de nuevo.";
         } else {
             $con = mysqli_connect('localhost', 'administrador', 'administrador', 'Clinica');
-            $inmed = "INSERT INTO medicos () VALUES ()";
-            $inusu = "INSERT INTO usuarios () VALUES ()";
+            $inmed = "INSERT INTO medicos ('dniMed','medNombres','medApellidos','medEspecialidad','medTelefono','medCorreo') VALUES ('$_POST[dni]','$_POST[nombre]','$_POST[apellidos]','$_POST[especialidad]','$_POST[telefono]','$_POST[correo]')";
+            $inusu = "INSERT INTO usuarios ('dniUsu','usuLogin','usuPassword','usuEstado','usutipo') VALUES ('$_POST[dni]','$_POST[usuario]','$_POST[password]','$_POST[estado]','$_POST[tipo]')";
             if (mysqli_query($con, $inmed) && mysqli_query($con, $inusu)) {
                 $error = "Articulo insertado correctamente.";
                 $aviso = "El formulario se vaciará a continuación.";
@@ -103,7 +103,7 @@
                     <option value="Activo">Activo</option>
                     <option value="Inactivo">Inactivo</option>
                 </select>
-                <input type="text" name="rol" placeholder="Rol" value="Médico" class="input__password" required>
+                <input type="text" name="tipo" placeholder="Rol" value="Médico" class="input__password" required>
                 <br />
                 <p><?php echo "<strong>$error</strong>"; ?></p>
                 <p><?php echo "$aviso"; ?></p>
