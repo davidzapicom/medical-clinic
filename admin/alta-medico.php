@@ -1,6 +1,5 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -9,23 +8,46 @@
     <link href='https://unpkg.com/boxicons@2.1.1/css/boxicons.min.css' rel='stylesheet'>
     <title>Administrador | Clinica ADSI</title>
 </head>
-
 <body>
     <?php
     session_start();
     $error = "";
     $aviso = "";
     if (isset($_POST['alta'])) {
+        $_SESSION['usuario'] = $_POST['usuario'];
+        $_SESSION['nombre'] = $_POST['nombre'];
+        $_SESSION['apellidos'] = $_POST['apellidos'];
+        $_SESSION['especialidad'] = $_POST['especialidad'];
+        $_SESSION['telefono'] = $_POST['telefono'];
+        $_SESSION['email'] = $_POST['email'];
+        $_SESSION['dni'] = $_POST['dni'];
+        $_SESSION['password'] = $_POST['password'];
+        $_SESSION['password2'] = $_POST['password2'];
+        $_SESSION['estado'] = $_POST['estado'];
+        $_SESSION['tipo'] = "Médico";
         if ($_POST['password'] != $_POST['password2']) {
             $error = "Las contraseñas no coinciden.";
             $aviso = "Comprueba las contrasñas e intentalo de nuevo.";
+            $_SESSION['password'] = "";
+            $_SESSION['password2'] = "";
         } else {
-            $con = mysqli_connect('localhost', 'administrador', 'administrador', 'Clinica');
+            $con = mysqli_connect('localhost', 'administrador', '', 'Clinica');
             $inmed = "INSERT INTO medicos ('dniMed','medNombres','medApellidos','medEspecialidad','medTelefono','medCorreo') VALUES ('$_POST[dni]','$_POST[nombre]','$_POST[apellidos]','$_POST[especialidad]','$_POST[telefono]','$_POST[correo]')";
-            $inusu = "INSERT INTO usuarios ('dniUsu','usuLogin','usuPassword','usuEstado','usutipo') VALUES ('$_POST[dni]','$_POST[usuario]','$_POST[password]','$_POST[estado]','$_POST[tipo]')";
+            $inusu = "INSERT INTO usuarios ('dniUsu','usuLogin','usuPassword','usuEstado','usutipo') VALUES ('$_POST[dni]','$_POST[usuario]','$_POST[password]','$_POST[estado]','$_SESSION[tipo]')";
             if (mysqli_query($con, $inmed) && mysqli_query($con, $inusu)) {
                 $error = "Articulo insertado correctamente.";
                 $aviso = "El formulario se vaciará a continuación.";
+                $_SESSION['usuario'] = "";
+                $_SESSION['nombre'] = "";
+                $_SESSION['apellidos'] = "";
+                $_SESSION['especialidad'] = "";
+                $_SESSION['telefono'] = "";
+                $_SESSION['email'] = "";
+                $_SESSION['dni'] = "";
+                $_SESSION['password'] = "";
+                $_SESSION['password2'] = "";
+                $_SESSION['estado'] = "";
+                $_SESSION['tipo'] = "";
             } else {
                 $error = "ERROR: no se ha podido insertar el articulo.";
                 $aviso = "Vuelve a intentarlo.";
@@ -80,32 +102,32 @@
         <div class="text">
             <h1>Alta Médico</h1>
             <form action="#" method="post">
-                <input type="text" name="nombre" placeholder="Nombre de usuario" class="input__password" required>
+                <input type="text" name="usuario" placeholder="Nombre de usuario" value="<?php echo $_SESSION['usuario']; ?>" required>
                 <br />
-                <input type="text" name="nombre" placeholder="Nombre" class="input__password" required>
+                <input type="text" name="nombre" placeholder="Nombre" value="<?php echo $_SESSION['nombre']; ?>" required>
                 <br />
-                <input type="text" name="apellidos" placeholder="Apellidos" class="input__password" required>
+                <input type="text" name="apellidos" placeholder="Apellidos" value="<?php echo $_SESSION['apellidos']; ?>" required>
                 <br />
-                <input type="text" name="especialidad" placeholder="Especialidad" class="input__password" required>
+                <input type="text" name="especialidad" placeholder="Especialidad" value="<?php echo $_SESSION['especialidad']; ?>" required>
                 <br />
-                <input type="tel" name="telefono" placeholder="Teléfono" class="input__password" required>
+                <input type="tel" name="telefono" placeholder="Teléfono" value="<?php echo $_SESSION['telefono']; ?>" required>
                 <br />
-                <input type="email" name="email" placeholder="Email" class="input__password" required>
+                <input type="email" name="email" placeholder="Email" value="<?php echo $_SESSION['email']; ?>" required>
                 <br />
-                <input type="text" name="dni" placeholder="DNI" class="input__password" required>
+                <input type="text" name="dni" placeholder="DNI" value="<?php echo $_SESSION['dni']; ?>" required>
                 <br />
                 <div class="input">
-                    <input type="password" name="password" placeholder="Contraseña" class="input__password" id="input-pass" required>
-                    <input type="password" name="password2" placeholder="Contraseña otra vez" class="input__password" id="input-pass" required>
+                    <input type="password" name="password" placeholder="Contraseña" value="<?php echo $_SESSION['password']; ?>" required>
+                    <input type="password" name="password2" placeholder="Contraseña otra vez" value="<?php echo $_SESSION['password2']; ?>" required>
                 </div>
                 <label for="estado">Estado</label>
-                <select name="estado" id="estado" required>
+                <select name="estado" id="estado" value="<?php echo $_SESSION['estado']; ?>" required>
                     <option value="Activo">Activo</option>
                     <option value="Inactivo">Inactivo</option>
                 </select>
                 <br />
                 <label for="tipo">Rol</label>
-                <input type="text" name="tipo" value="Médico" class="input__password" required>
+                <input type="text" name="tipo" value="Médico" readonly>
                 <br />
                 <p><?php echo "<strong>$error</strong>"; ?></p>
                 <p><?php echo "$aviso"; ?></p>
@@ -115,5 +137,4 @@
     </section>
     <script src="../assets/js/bar-script.js"></script>
 </body>
-
 </html>

@@ -20,17 +20,6 @@
 
 
 
-
-
-
-
-
-
-
-
-
-
-
     
     ?>
     <nav class="sidebar close">
@@ -79,16 +68,16 @@
         <div class="text">
             <h1>Alta Paciente</h1>
             <form action="#" method="post">
-                <input type="text" name="id" placeholder="Identificación" class="input__password" required>
+                <input type="text" name="id" placeholder="Identificación" required>
                 <br />
-                <input type="text" name="nombre" placeholder="Nombre de usuario" class="input__password" required>
+                <input type="text" name="nombre" placeholder="Nombre de usuario" required>
                 <br />
-                <input type="text" name="nombre" placeholder="Nombre" class="input__password" required>
+                <input type="text" name="nombre" placeholder="Nombre" required>
                 <br />
-                <input type="text" name="apellidos" placeholder="Apellidos" class="input__password" required>
+                <input type="text" name="apellidos" placeholder="Apellidos" required>
                 <br />
                 <label for="fechanacimiento">Fecha nacimiento</label>
-                <input type="date" name="fechanacimiento" class="input__password" required>
+                <input type="date" name="fechanacimiento" required>
                 <br />
                 <label for="sexo">Sexo</label>
                 <select name="sexo" id="sexo" required>
@@ -96,8 +85,8 @@
                     <option value="Femenino">Femenino</option>
                 </select>
                 <div class="input">
-                    <input type="password" name="password" placeholder="Contraseña" class="input__password" id="input-pass" required>
-                    <input type="password" name="password2" placeholder="Contraseña otra vez" class="input__password" id="input-pass" required>
+                    <input type="password" name="password" placeholder="Contraseña" required>
+                    <input type="password" name="password2" placeholder="Contraseña otra vez" required>
                 </div>
                 <p><?php echo "<strong>$error</strong>"; ?></p>
                 <p><?php echo "$aviso"; ?></p>
