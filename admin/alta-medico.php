@@ -32,11 +32,18 @@
             $_SESSION['password2'] = "";
         } else {
             $con = mysqli_connect('localhost', 'administrador', '', 'Clinica');
-            $inmed = "INSERT INTO medicos ('dniMed','medNombres','medApellidos','medEspecialidad','medTelefono','medCorreo') VALUES ('$_POST[dni]','$_POST[nombre]','$_POST[apellidos]','$_POST[especialidad]','$_POST[telefono]','$_POST[correo]')";
-            $inusu = "INSERT INTO usuarios ('dniUsu','usuLogin','usuPassword','usuEstado','usutipo') VALUES ('$_POST[dni]','$_POST[usuario]','$_POST[password]','$_POST[estado]','$_SESSION[tipo]')";
+            $inmed = "INSERT INTO medicos (dniMed,medNombres,medApellidos,medEspecialidad,medTelefono,medCorreo) VALUES ('$_POST[dni]','$_POST[nombre]','$_POST[apellidos]','$_POST[especialidad]','$_POST[telefono]','$_POST[correo]')";
+            $inusu = "INSERT INTO usuarios (dniUsu,usuLogin,usuPassword,usuEstado,usutipo) VALUES ('$_POST[dni]','$_POST[usuario]','$_POST[password]','$_POST[estado]','$_SESSION[tipo]')";
             if (mysqli_query($con, $inmed) && mysqli_query($con, $inusu)) {
                 $error = "Usuario insertado correctamente.";
                 $aviso = "El formulario se vaciará a continuación.";
+
+
+
+
+
+
+
                 $_SESSION['usuario'] = "";
                 $_SESSION['nombre'] = "";
                 $_SESSION['apellidos'] = "";
@@ -48,6 +55,13 @@
                 $_SESSION['password2'] = "";
                 $_SESSION['estado'] = "";
                 $_SESSION['tipo'] = "";
+
+
+
+
+
+
+                
             } else {
                 $error = "ERROR: no se ha podido insertar el usuario.";
                 $aviso = "Vuelve a intentarlo.";
