@@ -57,8 +57,6 @@ session_start();
             <h1>Alta Usuario</h1>
             <p>Por favor seleciona un usuario para registrar en la barra de navegacion lateral</p>
         </div>
-
-
     </section>
     <script src="../assets/js/bar-script.js"></script>
 </body>
