@@ -38,17 +38,9 @@
             $inusu = "INSERT INTO usuarios (dniUsu,usuLogin,usuPassword,usuEstado,usutipo) VALUES ('$_POST[dni]','$_POST[usuario]','$_POST[password]','$_POST[estado]','$_SESSION[tipo]')";
             if (mysqli_query($con, $inmed) && mysqli_query($con, $inusu)) {
                 $error = "Usuario insertado correctamente.";
-                $_SESSION['usuario'] = "";
-                $_SESSION['nombre'] = "";
-                $_SESSION['apellidos'] = "";
-                $_SESSION['especialidad'] = "";
-                $_SESSION['telefono'] = "";
-                $_SESSION['email'] = "";
-                $_SESSION['dni'] = "";
-                $_SESSION['password'] = "";
-                $_SESSION['password2'] = "";
-                $_SESSION['estado'] = "";
-                $_SESSION['tipo'] = "";
+                $_SESSION['usuario'] = $_SESSION['nombre'] = $_SESSION['apellidos'] = $_SESSION['especialidad'] = "";
+                $_SESSION['telefono'] = $_SESSION['email'] = $_SESSION['dni'] = $_SESSION['password'] = "";
+                $_SESSION['password2'] = $_SESSION['estado'] = $_SESSION['tipo'] = "";
             } else {
                 $error = "ERROR: no se ha podido insertar el usuario.";
                 $aviso = "Vuelve a intentarlo.";
