@@ -1,20 +1,17 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="../paciente/style.css">
+    <link rel="stylesheet" href="../assets/css/style-sidebar.css">
     <link href='https://unpkg.com/boxicons@2.1.1/css/boxicons.min.css' rel='stylesheet'>
     <title>Administrador | Clinica ADSI</title>
 </head>
-
 <body>
     <?php
     session_start();
-    $error = "";
-    $aviso = "";
+    $error = $aviso = "";
     if (isset($_POST['alta'])) {
         $_SESSION['usuario'] = $_POST['usuario'];
         $_SESSION['nombre'] = $_POST['nombre'];
@@ -30,8 +27,7 @@
         if ($_POST['password'] != $_POST['password2']) {
             $error = "Las contraseñas no coinciden.";
             $aviso = "Comprueba las contrasñas e intentalo de nuevo.";
-            $_SESSION['password'] = "";
-            $_SESSION['password2'] = "";
+            $_SESSION['password'] = $_SESSION['password2'] = "";
         } else {
             $con = mysqli_connect('localhost', 'administrador', '', 'Clinica');
             $inmed = "INSERT INTO pacientes (dniPac,pacNombres,pacApellidos,pacFechaNacimiento,pacSexo) VALUES ('$_POST[dni]','$_POST[nombre]','$_POST[apellidos]','$_POST[especialidad]','$_POST[telefono]','$_POST[correo]')";
@@ -48,12 +44,6 @@
             mysqli_close($con);
         }
     }
-
-
-
-
-
-    
     ?>
     <nav class="sidebar close">
         <header>

@@ -6,7 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="../assets/css/style-sidebar.css">
     <link href='https://unpkg.com/boxicons@2.1.1/css/boxicons.min.css' rel='stylesheet'>
-    <title>Paciente | Clinica ADSI</title>
+    <title>Paciente - Citas atendidas | Clinica ADSI</title>
 </head>
 <body>
 <?php
@@ -29,7 +29,7 @@ session_start();
             <div class="menu">
                 <ul class="menu-links">
                     <li class="nav-link">
-                        <a href="citas-atendidas.php">
+                        <a href="#">
                         <i class='bx bx-user icon'></i>
                             <span class="text nav-text">Citas Atendidas</span>
                         </a>
@@ -54,8 +54,13 @@ session_start();
     </nav>
     <section class="home">
         <div class="text">
-            <h1>Mis Citas</h1>
-            <p>Por favor seleciona una opcion en la barra de navegacion lateral.</p>
+            <h1>Mis Citas Pendientes</h1>
+
+
+
+
+
+
         </div>
     </section>
     <script src="../assets/js/bar-script.js"></script>

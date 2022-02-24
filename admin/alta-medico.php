@@ -1,6 +1,5 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -9,12 +8,10 @@
     <link href='https://unpkg.com/boxicons@2.1.1/css/boxicons.min.css' rel='stylesheet'>
     <title>Administrador | Clinica ADSI</title>
 </head>
-
 <body>
     <?php
     session_start();
-    $error = "";
-    $aviso = "";
+    $error = $aviso = "";
     if (isset($_POST['alta'])) {
         $_SESSION['usuario'] = $_POST['usuario'];
         $_SESSION['nombre'] = $_POST['nombre'];
@@ -30,8 +27,7 @@
         if ($_POST['password'] != $_POST['password2']) {
             $error = "Las contraseñas no coinciden.";
             $aviso = "Comprueba las contrasñas e intentalo de nuevo.";
-            $_SESSION['password'] = "";
-            $_SESSION['password2'] = "";
+            $_SESSION['password'] = $_SESSION['password2'] = "";
         } else {
             $con = mysqli_connect('localhost', 'administrador', '', 'Clinica');
             $inmed = "INSERT INTO medicos (dniMed,medNombres,medApellidos,medEspecialidad,medTelefono,medCorreo) VALUES ('$_SESSION[dni]','$_SESSION[nombre]','$_SESSION[apellidos]','$_SESSION[especialidad]','$_POST[telefono]','$_POST[correo]')";
@@ -131,5 +127,4 @@
     </section>
     <script src="../assets/js/bar-script.js"></script>
 </body>
-
 </html>

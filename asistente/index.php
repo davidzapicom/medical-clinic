@@ -6,7 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="../paciente/style.css">
     <link href='https://unpkg.com/boxicons@2.1.1/css/boxicons.min.css' rel='stylesheet'>
-    <title>Administrador | Clinica ADSI</title>
+    <title>Asistente | Clinica ADSI</title>
 </head>
 <body>
 <?php
@@ -66,7 +66,7 @@ session_start();
     </nav>
     <section class="home">
         <div class="text">
-            <h1>Menu Asistente</h1>
+            <h1>Menú Asistente</h1>
             <p>Por favor seleciona una opcion en la barra de navegacion lateral.</p>
         </div>
     </section>

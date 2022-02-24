@@ -4,9 +4,9 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="../paciente/style.css">
+    <link rel="stylesheet" href="../assets/css/style-sidebar.css">
     <link href='https://unpkg.com/boxicons@2.1.1/css/boxicons.min.css' rel='stylesheet'>
-    <title>Administrador | Clinica ADSI</title>
+    <title>Médico | Clinica ADSI</title>
 </head>
 <body>
 <?php
@@ -29,15 +29,21 @@ session_start();
             <div class="menu">
                 <ul class="menu-links">
                     <li class="nav-link">
-                        <a href="alta-paciente.php">
+                        <a href="citas-atendidas.php">
                         <i class='bx bx-user icon'></i>
-                            <span class="text nav-text">Alta Paciente</span>
+                            <span class="text nav-text">Citas Atendidas</span>
                         </a>
                     </li>
                     <li class="nav-link">
-                        <a href="alta-medico.php">
+                        <a href="citas-pendientes.php">
                         <i class='bx bx-user-plus icon'></i>
-                            <span class="text nav-text">Alta Medico</span>
+                            <span class="text nav-text">Citas Pendientes</span>
+                        </a>
+                    </li>
+                    <li class="nav-link">
+                        <a href="citas-pendientes.php">
+                        <i class='bx bx-user-plus icon'></i>
+                            <span class="text nav-text">Ver Pacientes</span>
                         </a>
                     </li>
                 </ul>
