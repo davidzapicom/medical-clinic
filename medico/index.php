@@ -54,8 +54,8 @@ session_start();
     </nav>
     <section class="home">
         <div class="text">
-            <h1>Alta Usuario</h1>
-            <p>Por favor seleciona un usuario para registrar en la barra de navegacion lateral</p>
+            <h1>Menú Médico</h1>
+            <p>Por favor seleciona una opcion en la barra de navegacion lateral.</p>
         </div>
     </section>
     <script src="../assets/js/bar-script.js"></script>

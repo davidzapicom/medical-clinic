@@ -28,6 +28,18 @@ session_start();
         <div class="menu-bar">
             <div class="menu">
                 <ul class="menu-links">
+                <li class="nav-link">
+                        <a href="citas-atendidas.php">
+                        <i class='bx bx-user-plus icon'></i>
+                            <span class="text nav-text">Citas Atendidas</span>
+                        </a>
+                    </li>
+                    <li class="nav-link">
+                        <a href="nueva-cita.php">
+                        <i class='bx bx-user-plus icon'></i>
+                            <span class="text nav-text">Nueva Cita</span>
+                        </a>
+                    </li>
                     <li class="nav-link">
                         <a href="alta-paciente.php">
                         <i class='bx bx-user icon'></i>
@@ -35,9 +47,9 @@ session_start();
                         </a>
                     </li>
                     <li class="nav-link">
-                        <a href="alta-medico.php">
+                        <a href="ver-pacientes.php">
                         <i class='bx bx-user-plus icon'></i>
-                            <span class="text nav-text">Alta Medico</span>
+                            <span class="text nav-text">Ver Pacientes</span>
                         </a>
                     </li>
                 </ul>
@@ -54,8 +66,8 @@ session_start();
     </nav>
     <section class="home">
         <div class="text">
-            <h1>Alta Usuario</h1>
-            <p>Por favor seleciona un usuario para registrar en la barra de navegacion lateral</p>
+            <h1>Menu Asistente</h1>
+            <p>Por favor seleciona una opcion en la barra de navegacion lateral.</p>
         </div>
     </section>
     <script src="../assets/js/bar-script.js"></script>

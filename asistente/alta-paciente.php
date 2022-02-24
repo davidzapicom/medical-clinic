@@ -11,6 +11,20 @@
 <body>
 <?php
 session_start();
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 ?>
     <nav class="sidebar close">
         <header>
