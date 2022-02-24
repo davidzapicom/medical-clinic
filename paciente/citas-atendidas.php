@@ -11,6 +11,15 @@
 <body>
 <?php
 session_start();
+
+
+
+
+
+
+
+
+
 ?>
     <nav class="sidebar close">
         <header>
@@ -54,7 +63,7 @@ session_start();
     </nav>
     <section class="home">
         <div class="text">
-            <h1>Mis Citas Pendientes</h1>
+            <h1>Mis Citas Atendidas</h1>
 
 
 
