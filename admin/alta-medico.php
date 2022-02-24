@@ -45,10 +45,7 @@
                 $_SESSION['telefono'] = "";
                 $_SESSION['email'] = "";
                 $_SESSION['dni'] = "";
-                $_SESSION['password'] = "";
-                $_SESSION['password2'] = "";
-                $_SESSION['estado'] = "";
-                $_SESSION['tipo'] = "";
+                $_SESSION['password'] = $_SESSION['password2'] = $_SESSION['estado'] = $_SESSION['tipo'] = "";
             } else {
                 $error = "ERROR: no se ha podido insertar el usuario.";
                 $aviso = "Vuelve a intentarlo.";
