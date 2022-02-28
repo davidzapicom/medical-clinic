@@ -1,0 +1,208 @@
+/*=============== VARIABLES CSS ===============*/
+:root {
+  /*========== Colors ==========*/
+  --first-color: hsl(232, 54%, 43%);
+  --text-color: hsl(232, 8%, 35%);
+  --white-color: white;
+  --body-color: hsl(232, 45%, 90%);
+  --container-color: hsl(232, 54%, 11%);
+}
+
+/*=============== INPUT PASSWORD ===============*/
+* {
+  box-sizing: border-box;
+  font-family: 'Poppins', sans-serif;
+  text-decoration: none;
+}
+
+body {
+  place-items: center;
+  display: grid;
+  margin: 20px;
+  width: 100%;
+  height: 100vh;
+}
+
+h1 {
+  color: var(--container-color);
+  display: inline;
+}
+
+.input {
+  position: relative;
+  background-color: var(--container-color);
+  padding: 1.35rem 1.25rem;
+  border-radius: .5rem;
+  display: flex;
+  align-items: center;
+  column-gap: .75rem;
+}
+
+.input__lock, .input__icon {
+  font-size: 1.25rem;
+  z-index: 1;
+}
+
+.input__lock, .input__password {
+  color: var(--white-color);
+}
+
+.input__icon {
+  color: var(--container-color);
+  cursor: pointer;
+  margin-left: 150px;
+}
+
+.input__password {
+  background: transparent;
+  border: none;
+  outline: none;
+  font-size: 14px;
+  z-index: 1;
+  width: 60%;
+}
+
+.input__password::placeholder {
+  color: var(--white-color);
+}
+
+.input__overlay {
+  width: 32px;
+  height: 32px;
+  background-color: var(--white-color);
+  position: absolute;
+  right: .9rem;
+  border-radius: 50%;
+  z-index: 0;
+  transition: .4s ease-in-out;
+}
+
+/* Transition effect */
+.overlay-content {
+  width: 100%;
+  height: 100%;
+  border-radius: .5rem;
+  right: 0;
+}
+
+.overlay-content ~ .input__lock {
+  color: var(--container-color);
+}
+
+.overlay-content ~ .input__password,
+.overlay-content ~ .input__password::placeholder {
+  color: var(--text-color);
+}
+
+input[data-error] {
+  background-color: white;
+  color: blue;
+}
+
+.button{
+  width: 100%;
+  padding: 1rem;
+  font-size: var(--normal-font-size);
+  outline: none;
+  border: none;
+  margin-bottom: 3rem;
+  background-color: transparent;
+  border:  2px solid var(--container-color);
+  color: var(--container-color);
+  border-radius: .5rem;
+  cursor: pointer;
+  transition: .3s;
+}
+
+.button:hover{
+  background-color: var(--container-color);
+  box-shadow: 0px 20px 36px rgba(0, 0, 0, 0.452);
+  color: white;
+}
+
+
+
+
+
+
+
+
+
+button.logout:hover{
+  cursor: pointer;
+}
+
+button.logout {
+  background: transparent; 
+  outline: none;
+  position: relative;
+  border: 2px solid #111;
+  padding: 15px 50px;
+  overflow: hidden;
+  top: 0;
+}
+
+button.logout:hover:before{
+  opacity: 1; 
+  transform: translate(0,0);
+}
+
+button.logout:before{
+  content: attr(data-hover);
+  position: absolute;
+  top: 1.1em; 
+  left: 0;
+  width: 100%;
+  text-transform: uppercase;
+  letter-spacing: 3px;
+  font-weight: 800;
+  font-size: .8em;
+  opacity: 0;
+  transform: translate(-100%,0);
+  transition: all .3s ease-in-out;
+}
+
+button.logout:hover div{
+  opacity: 0; 
+  transform: translate(100%,0);
+}
+
+button.logout div{
+  text-transform: uppercase;
+  letter-spacing: 3px;
+  font-weight: 800;
+  font-size: .8em;
+  transition: all .3s ease-in-out;
+}
+
+
+p.ufl::first-letter {
+  text-transform: uppercase;
+}
+
+
+.form {
+  min-width: 400px;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

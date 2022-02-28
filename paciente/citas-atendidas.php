@@ -1,15 +1,13 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="../assets/css/style-sidebar.css">
+    <link rel="stylesheet" href="../assets/css/style.css">
     <link href='https://unpkg.com/boxicons@2.1.1/css/boxicons.min.css' rel='stylesheet'>
     <title>Paciente - Citas atendidas | Clinica ADSI</title>
 </head>
-
 <body>
     <?php
     session_start();
@@ -19,7 +17,7 @@
         exit();
     }
 
-    $sql = "SELECT * FROM pacientes;";
+    $sql = "SELECT citas.citFecha,citas.citHora,medicos.medNombres,medicos.medApellidos,consultorios.conNombre,citas.citEstado,citas.CitObservaciones FROM citas,medicos,consultorios WHERE citas.citPaciente='$_SESSION[dni]' AND citas.citEstado='Atendido' AND citas.citMedico=medicos.dniMed AND citas.citConsultorio=consultorios.idConsultorio;";
     $result = mysqli_query($conexion, $sql);
     $filas = mysqli_num_rows($result);
     ?>
@@ -32,7 +30,7 @@
                 <div class="text logo-text">
                     <span class="name">Clinica ADSI</span>
                     <span class="profession">
-                        <p class="ufl"><strong><?php echo $_SESSION["name"] . '</strong> | ' . $_SESSION['usutipo']; ?></p>
+                        <p class="ufl white"><strong><?php echo $_SESSION["name"] . '</strong> | ' . $_SESSION['usutipo']; ?></p>
                     </span>
                 </div>
             </div>
@@ -43,13 +41,13 @@
                 <ul class="menu-links">
                     <li class="nav-link">
                         <a href="#">
-                            <i class='bx bx-user icon'></i>
+                            <i class='bx bx-calendar-x icon' ></i>
                             <span class="text nav-text">Citas Atendidas</span>
                         </a>
                     </li>
                     <li class="nav-link">
                         <a href="citas-pendientes.php">
-                            <i class='bx bx-user-plus icon'></i>
+                            <i class='bx bx-calendar-check icon' ></i>
                             <span class="text nav-text">Citas Pendientes</span>
                         </a>
                     </li>
@@ -74,11 +72,11 @@
                 <table cellpadding="0" cellspacing="0" border="0">
                     <thead>
                         <tr>
-                            <th>Identificación</th>
-                            <th>Nombres</th>
-                            <th>Apellidos</th>
-                            <th>Fecha Nacimiento</th>
-                            <th>Sexo</th>
+                            <th>Fecha</th>
+                            <th>Hora</th>
+                            <th>Médico</th>
+                            <th>Consultorio</th>
+                            <th>Observaciones</th>
                         </tr>
                     </thead>
                 </table>
@@ -93,14 +91,14 @@
                                 <tr>
                                     <td><?php echo $registro[0]; ?></td>
                                     <td><?php echo $registro[1]; ?></td>
-                                    <td><?php echo $registro[2]; ?></td>
-                                    <td><?php echo $registro[3]; ?></td>
+                                    <td><?php echo $registro[2]. ' ' .$registro[3]; ?></td>
                                     <td><?php echo $registro[4]; ?></td>
+                                    <td><?php echo $registro[5]; ?></td>
                                 </tr>
                         <?php
                             }
                         } else {
-                            echo "<tr><tdNo hay pacientes en el registro</td></tr>";
+                            echo "<tr><td>No hay pacientes en el registro</td></tr>";
                         }
                         mysqli_close($conexion);
                         ?>

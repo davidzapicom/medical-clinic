@@ -5,7 +5,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/boxicons@latest/css/boxicons.min.css">
-    <link rel="stylesheet" href="assets/css/style.css">
+    <link rel="stylesheet" href="assets/css/main.css">
     <style>
         body {
             display: grid;
@@ -32,6 +32,7 @@
         $result = mysqli_query($_SESSION["con"], $sentencia);
         $fetch = mysqli_fetch_assoc($result);
         $_SESSION['name'] = $fetch['usuLogin'];
+        $_SESSION['dni'] = $fetch['dniUsu'];
         $_SESSION['usutipo'] = $fetch['usutipo'];
         if (mysqli_num_rows($result) == 0) {
             $sentencia = 'SELECT * FROM usuarios WHERE usuLogin="' . $_SESSION["usu"] . '" OR dniUsu="' . $_SESSION["usu"] . '"';
