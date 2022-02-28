@@ -30,13 +30,13 @@ session_start();
                 <ul class="menu-links">
                     <li class="nav-link">
                         <a href="citas-atendidas.php">
-                        <i class='bx bx-user icon'></i>
+                        <i class='bx bx-calendar-minus icon' ></i>
                             <span class="text nav-text">Citas Atendidas</span>
                         </a>
                     </li>
                     <li class="nav-link">
                         <a href="citas-pendientes.php">
-                        <i class='bx bx-user-plus icon'></i>
+                        <i class='bx bx-calendar-check icon'></i>
                             <span class="text nav-text">Citas Pendientes</span>
                         </a>
                     </li>

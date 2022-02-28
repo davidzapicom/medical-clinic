@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -8,19 +9,20 @@
     <link href='https://unpkg.com/boxicons@2.1.1/css/boxicons.min.css' rel='stylesheet'>
     <title>Paciente - Citas atendidas | Clinica ADSI</title>
 </head>
+
 <body>
-<?php
-session_start();
+    <?php
+    session_start();
+    $conexion = mysqli_connect('localhost', 'administrador', '', 'Clinica');
+    if (mysqli_connect_errno()) {
+        printf("Conexión fallida %s\n", mysqli_connect_error());
+        exit();
+    }
 
-
-
-
-
-
-
-
-
-?>
+    $sql = "SELECT * FROM pacientes;";
+    $result = mysqli_query($conexion, $sql);
+    $filas = mysqli_num_rows($result);
+    ?>
     <nav class="sidebar close">
         <header>
             <div class="image-text">
@@ -29,7 +31,9 @@ session_start();
                 </span>
                 <div class="text logo-text">
                     <span class="name">Clinica ADSI</span>
-                    <span class="profession"><p class="ufl"><strong><?php echo $_SESSION["name"]. '</strong> | ' .$_SESSION['usutipo']; ?></p></span>
+                    <span class="profession">
+                        <p class="ufl"><strong><?php echo $_SESSION["name"] . '</strong> | ' . $_SESSION['usutipo']; ?></p>
+                    </span>
                 </div>
             </div>
             <i class='bx bx-chevron-right toggle'></i>
@@ -39,13 +43,13 @@ session_start();
                 <ul class="menu-links">
                     <li class="nav-link">
                         <a href="#">
-                        <i class='bx bx-user icon'></i>
+                            <i class='bx bx-user icon'></i>
                             <span class="text nav-text">Citas Atendidas</span>
                         </a>
                     </li>
                     <li class="nav-link">
                         <a href="citas-pendientes.php">
-                        <i class='bx bx-user-plus icon'></i>
+                            <i class='bx bx-user-plus icon'></i>
                             <span class="text nav-text">Citas Pendientes</span>
                         </a>
                     </li>
@@ -64,14 +68,49 @@ session_start();
     <section class="home">
         <div class="text">
             <h1>Mis Citas Atendidas</h1>
-
-
-
-
-
-
+        </div>
+        <div class="tabla">
+            <div class="tbl-header">
+                <table cellpadding="0" cellspacing="0" border="0">
+                    <thead>
+                        <tr>
+                            <th>Identificación</th>
+                            <th>Nombres</th>
+                            <th>Apellidos</th>
+                            <th>Fecha Nacimiento</th>
+                            <th>Sexo</th>
+                        </tr>
+                    </thead>
+                </table>
+            </div>
+            <div class="tbl-content">
+                <table cellpadding="0" cellspacing="0" border="0">
+                    <tbody>
+                        <?php
+                        if ($filas != 0) {
+                            while ($registro = mysqli_fetch_row($result)) {
+                        ?>
+                                <tr>
+                                    <td><?php echo $registro[0]; ?></td>
+                                    <td><?php echo $registro[1]; ?></td>
+                                    <td><?php echo $registro[2]; ?></td>
+                                    <td><?php echo $registro[3]; ?></td>
+                                    <td><?php echo $registro[4]; ?></td>
+                                </tr>
+                        <?php
+                            }
+                        } else {
+                            echo "<tr><tdNo hay pacientes en el registro</td></tr>";
+                        }
+                        mysqli_close($conexion);
+                        ?>
+                    </tbody>
+                </table>
+            </div>
         </div>
     </section>
     <script src="../assets/js/bar-script.js"></script>
+    <script src="assets/js/table-script.js"></script>
 </body>
+
 </html>
