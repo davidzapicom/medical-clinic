@@ -27,33 +27,40 @@
         $_SESSION['estado'] = $_POST['estado'];
         $_SESSION['tipo'] = "Médico";
 
-        $_SESSION['con'] = mysqli_connect('localhost', 'administrador', '', 'Clinica');
-        $selectususarios = "SELECT * FROM usuarios where dniUsu='$_SESSION[dnimedico]'";
-        $result = mysqli_query($con, $selectususarios);
+        if ($_SESSION['usutipo'] == 'Administrador') {
+            $_SESSION['con'] = mysqli_connect('localhost', 'administrador', '', 'Clinica');
+            $selectususarios = "SELECT * FROM medicos where dniMed='$_SESSION[dnimedico]'";
+            $result = mysqli_query($_SESSION['con'], $selectususarios);
 
-        if (mysqli_num_rows($result) != 0) {
-            $error = "Ya hay un usuario resgistrado con ese DNI.";
-        } else {
-            if ($_POST['password'] != $_POST['password2']) {
-                $error = "Las contraseñas no coinciden.";
-                $aviso = "Comprueba las contrasñas e intentalo de nuevo.";
-                $_SESSION['password'] = $_SESSION['password2'] = "";
+            if (mysqli_num_rows($result) != 0) {
+                $error = "Ya hay un usuario resgistrado con ese DNI.";
+                $aviso = "Compruebe el DNI / inicie sesión.";
             } else {
-                $inmed = "INSERT INTO medicos (dniMed,medNombres,medApellidos,medEspecialidad,medTelefono,medCorreo) VALUES ('$_SESSION[dnimedico]','$_SESSION[nombre]','$_SESSION[apellidos]','$_SESSION[especialidad]','$_POST[telefono]','$_POST[correo]')";
-                $inusu = "INSERT INTO usuarios (dniUsu,usuLogin,usuPassword,usuEstado,usutipo) VALUES ('$_SESSION[dnimedico]','$_SESSION[usuario]','$_SESSION[password]','$_SESSION[estado]','$_SESSION[tipo]')";
-                if (mysqli_query($_SESSION['con'], $inmed) && mysqli_query($_SESSION['con'], $inusu)) {
-                    $error = "Usuario insertado correctamente.";
-                    $_SESSION['usuario'] = $_SESSION['nombre'] = $_SESSION['apellidos'] = "";
-                    $_SESSION['especialidad'] = $_SESSION['telefono'] = $_SESSION['email'] = "";
-                    $_SESSION['dnimedico'] = $_SESSION['password'] = $_SESSION['password2'] = "";
-                    $_SESSION['estado'] = $_SESSION['tipo'] = "";
+                if ($_POST['password'] != $_POST['password2']) {
+                    $error = "Las contraseñas no coinciden.";
+                    $aviso = "Comprueba las contraseñas e intentalo de nuevo.";
+                    $_SESSION['password'] = $_SESSION['password2'] = "";
                 } else {
-                    $error = "ERROR: no se ha podido insertar el usuario.";
-                    $aviso = "Vuelve a intentarlo.";
+                    $inmed = "INSERT INTO medicos (dniMed,medNombres,medApellidos,medEspecialidad,medTelefono,medCorreo) VALUES ('$_SESSION[dnimedico]','$_SESSION[nombre]','$_SESSION[apellidos]','$_SESSION[especialidad]','$_POST[telefono]','$_POST[correo]')";
+                    $inusu = "INSERT INTO usuarios (dniUsu,usuLogin,usuPassword,usuEstado,usutipo) VALUES ('$_SESSION[dnimedico]','$_SESSION[usuario]','$_SESSION[password]','$_SESSION[estado]','$_SESSION[tipo]')";
+                    if (mysqli_query($_SESSION['con'], $inmed) && mysqli_query($_SESSION['con'], $inusu)) {
+                        $error = "Usuario insertado correctamente.";
+                        $_SESSION['usuario'] = $_SESSION['nombre'] = $_SESSION['apellidos'] = "";
+                        $_SESSION['especialidad'] = $_SESSION['telefono'] = $_SESSION['email'] = "";
+                        $_SESSION['dnimedico'] = $_SESSION['password'] = $_SESSION['password2'] = "";
+                        $_SESSION['estado'] = $_SESSION['tipo'] = "";
+                    } else {
+                        $error = "ERROR: no se ha podido insertar el usuario.";
+                        $aviso = "Vuelve a intentarlo.";
+                    }
                 }
             }
-        }
-        mysqli_close($_SESSION['con']);
+            mysqli_close($_SESSION['con']);
+        } else {
+            $error = "No tienes permisos.";
+            $aviso = "Inicie sesión como administrador.";
+            header("Refresh:4; url=../logout.php", true);
+        } 
     }
     ?>
     <nav class="sidebar close">
