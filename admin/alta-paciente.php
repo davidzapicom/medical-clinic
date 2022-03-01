@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="../assets/css/style-sidebar.css">
+    <link rel="stylesheet" href="../assets/css/style.css">
     <link href='https://unpkg.com/boxicons@2.1.1/css/boxicons.min.css' rel='stylesheet'>
     <title>Administrador | Clinica ADSI</title>
 </head>
@@ -19,7 +19,7 @@
         $_SESSION['especialidad'] = $_POST['especialidad'];
         $_SESSION['telefono'] = $_POST['telefono'];
         $_SESSION['email'] = $_POST['email'];
-        $_SESSION['dni'] = $_POST['dni'];
+        $_SESSION['dnipaciente'] = $_POST['dnipaciente'];
         $_SESSION['password'] = $_POST['password'];
         $_SESSION['password2'] = $_POST['password2'];
         $_SESSION['estado'] = $_POST['estado'];
@@ -30,12 +30,12 @@
             $_SESSION['password'] = $_SESSION['password2'] = "";
         } else {
             $con = mysqli_connect('localhost', 'administrador', '', 'Clinica');
-            $inmed = "INSERT INTO pacientes (dniPac,pacNombres,pacApellidos,pacFechaNacimiento,pacSexo) VALUES ('$_POST[dni]','$_POST[nombre]','$_POST[apellidos]','$_POST[especialidad]','$_POST[telefono]','$_POST[correo]')";
-            $inusu = "INSERT INTO usuarios (dniUsu,usuLogin,usuPassword,usuEstado,usutipo) VALUES ('$_POST[dni]','$_POST[usuario]','$_POST[password]','$_POST[estado]','$_SESSION[tipo]')";
+            $inmed = "INSERT INTO pacientes (dniPac,pacNombres,pacApellidos,pacFechaNacimiento,pacSexo) VALUES ('$_POST[dnipaciente]','$_POST[nombre]','$_POST[apellidos]','$_POST[especialidad]','$_POST[telefono]','$_POST[correo]')";
+            $inusu = "INSERT INTO usuarios (dniUsu,usuLogin,usuPassword,usuEstado,usutipo) VALUES ('$_POST[dnipaciente]','$_POST[usuario]','$_POST[password]','$_POST[estado]','$_SESSION[tipo]')";
             if (mysqli_query($con, $inmed) && mysqli_query($con, $inusu)) {
                 $error = "Usuario insertado correctamente.";
                 $_SESSION['usuario'] = $_SESSION['nombre'] = $_SESSION['apellidos'] = $_SESSION['especialidad'] = "";
-                $_SESSION['telefono'] = $_SESSION['email'] = $_SESSION['dni'] = $_SESSION['password'] = "";
+                $_SESSION['telefono'] = $_SESSION['email'] = $_SESSION['dnipaciente'] = $_SESSION['password'] = "";
                 $_SESSION['password2'] = $_SESSION['estado'] = $_SESSION['tipo'] = "";
             } else {
                 $error = "ERROR: no se ha podido insertar el usuario.";
@@ -91,7 +91,7 @@
         <div class="text">
             <h1>Alta Paciente</h1>
             <form action="#" method="post">
-                <input type="text" name="id" placeholder="Identificación" required>
+                <input type="text" name="dnipaciente" placeholder="DNI" required>
                 <br />
                 <input type="text" name="nombre" placeholder="Nombre de usuario" required>
                 <br />
