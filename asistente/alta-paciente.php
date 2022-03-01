@@ -54,7 +54,7 @@
                 <div class="text logo-text">
                     <span class="name">Clinica ADSI</span>
                     <span class="profession">
-                        <p class="ufl"><strong><?php echo $_SESSION["name"] . '</strong> | ' . $_SESSION['usutipo']; ?></p>
+                        <p class="ufl white"><strong><?php echo $_SESSION["name"] . '</strong> | ' . $_SESSION['usutipo']; ?></p>
                     </span>
                 </div>
             </div>

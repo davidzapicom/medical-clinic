@@ -70,69 +70,66 @@
     <section class="home">
         <div class="text">
             <h1>Atender Cita</h1>
-            <p><?php var_dump($_SESSION['atenderpaciente']); ?></p>
         </div>
         <form action="#" method="POST" class="atenderCita">
-            <fieldset>
-                <table border="1" style="text-align: center;">
-                    <tr>
-                        <th>DNI paciente</th>
-                        <td><?php echo $dni; ?></td>
-                    </tr>
-                    <tr>
-                        <th>Nombre paciente</th>
-                        <?php
 
-                        $sql = "SELECT pacNombres,pacApellidos FROM pacientes WHERE dniPac='$nif';";
-                        $result = mysqli_query($conexion, $sql);
-                        $registro = mysqli_fetch_row($result);
+            <table border="1" style="text-align: center;">
+                <tr>
+                    <th>DNI paciente</th>
+                    <td><?php echo $dni; ?></td>
+                </tr>
+                <tr>
+                    <th>Nombre paciente</th>
+                    <?php
+
+                    $sql = "SELECT pacNombres,pacApellidos FROM pacientes WHERE dniPac='$nif';";
+                    $result = mysqli_query($conexion, $sql);
+                    $registro = mysqli_fetch_row($result);
 
 
-                        ?>
-                        <td><?php echo $nombre . " " . $apellido; ?></td>
-                    </tr>
-                    <tr>
-                        <th>Fecha cita</th>
-                        <td><?php echo $fecha; ?></td>
-                    </tr>
-                    <tr>
-                        <th>Hora cita</th>
-                        <td><?php echo $hora; ?></td>
-                    </tr>
-                    <tr>
-                        <th>Observaciones</th>
-                        <td><textarea name="obs" placeholder="Escriba aquí las observaciones del paciente" style="box-sizing: border-box; width: 350px; height: 200px; resize: none; overflow: auto;" required="required"></textarea></td>
-                    </tr>
-                    <tr>
-                        <td colspan="2"><input type="submit" name="atender" value="Enviar"></td>
-                    </tr>
-                </table>
-            </fieldset>
+                    ?>
+                    <td><?php echo $nombre . " " . $apellido; ?></td>
+                </tr>
+                <tr>
+                    <th>Fecha cita</th>
+                    <td><?php echo $fecha; ?></td>
+                </tr>
+                <tr>
+                    <th>Hora cita</th>
+                    <td><?php echo $hora; ?></td>
+                </tr>
+                <tr>
+                    <th>Observaciones</th>
+                    <td><textarea name="obs" placeholder="Escriba aquí las observaciones del paciente" style="box-sizing: border-box; width: 350px; height: 200px; resize: none; overflow: auto;" required="required"></textarea></td>
+                </tr>
+                <tr>
+                    <td colspan="2"><input type="submit" name="atender" value="Continuar"></td>
+                </tr>
+            </table>
         </form>
-<?php
+        <?php
         if (isset($_POST['atender'])) {
-		$observaciones=$_POST['obs'];
-		$sql="UPDATE citas SET citEstado='Atendido', CitObservaciones='$observaciones' WHERE citPaciente='$nif' AND citFecha='$fecha' AND citHora='$hora';";
-		if (mysqli_query($conexion, $sql)) {
-			 	$mensajeregistro="Se han registrado las observaciones con éxito, redirigiéndole a la página anterior";
-	?>
-	
-	<div id="modalB" style="display: block;" class="modal opacidad">
-    	<div class="modal-cont cajaModal">
-    		<div class="contenedor">
-    			<p><?php echo $mensajeregistro; ?></p>
-    		</div>
-    	</div>
-    </div>
+            $observaciones = $_POST['obs'];
+            $sql = "UPDATE citas SET citEstado='Atendido', CitObservaciones='$observaciones' WHERE citPaciente='$nif' AND citFecha='$fecha' AND citHora='$hora';";
+            if (mysqli_query($conexion, $sql)) {
+                $mensajeregistro = "Se han registrado las observaciones con éxito, redirigiéndole a la página anterior";
+        ?>
 
-	<?php		 	
-			 	header("Refresh:3; url=citas-pendientes.php", true);
-			}
-		else {
-			echo " <br> Error: " . $sql . "<br>" . mysqli_error($conexion);
-		}
-	}
-    ?>
+                <div id="modalB" style="display: block;" class="modal opacidad">
+                    <div class="modal-cont cajaModal">
+                        <div class="contenedor">
+                            <p><?php echo $mensajeregistro; ?></p>
+                        </div>
+                    </div>
+                </div>
+
+        <?php
+                header("Refresh:3; url=citas-pendientes.php", true);
+            } else {
+                echo " <br> Error: " . $sql . "<br>" . mysqli_error($conexion);
+            }
+        }
+        ?>
     </section>
     <script src="../assets/js/bar-script.js"></script>
     <script src="../assets/js/table-script.js"></script>
