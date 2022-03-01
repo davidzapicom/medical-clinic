@@ -19,7 +19,7 @@
         exit();
     }
 
-    $sql = "SELECT citas.citFecha,citas.citHora,pacientes.pacNombres,pacientes.pacApellidos,consultorios.conNombre,citas.CitObservaciones FROM citas,medicos,consultorios,pacientes WHERE citas.citMedico='$_SESSION[dni]' AND citas.citEstado='Asignado' AND citas.citMedico=medicos.dniMed AND citas.citConsultorio=consultorios.idConsultorio AND citas.citPaciente=pacientes.dniPac";
+    $sql = "SELECT citas.citFecha,citas.citHora,pacientes.dniPac,pacientes.pacNombres,pacientes.pacApellidos,consultorios.conNombre,citas.CitObservaciones FROM citas,medicos,consultorios,pacientes WHERE citas.citMedico='$_SESSION[dni]' AND citas.citEstado='Asignado' AND citas.citMedico=medicos.dniMed AND citas.citConsultorio=consultorios.idConsultorio AND citas.citPaciente=pacientes.dniPac";
     $result = mysqli_query($conexion, $sql);
     $filas = mysqli_num_rows($result);
 
@@ -88,6 +88,7 @@
                         <tr>
                             <th>Fecha</th>
                             <th>Hora</th>
+                            <th>Dni</th>
                             <th>Paciente</th>
                             <th>Consultorio</th>
                             <th>Observaciones</th>
@@ -106,10 +107,11 @@
                                 <tr>
                                     <td><?php echo $registro[0]; ?></td>
                                     <td><?php echo $registro[1]; ?></td>
-                                    <td><?php echo $registro[2]. ' ' .$registro[3]; ?></td>
-                                    <td><?php echo $registro[4]; ?></td>
+                                    <td><?php echo $registro[2]; ?></td>
+                                    <td><?php echo $registro[3]. ' ' .$registro[4]; ?></td>
                                     <td><?php echo $registro[5]; ?></td>
-                                    <td><button type="submit" name="ac[]" value=<?php echo $registro[0].",".$registro[1].",".$registro[2]; ?>>Atender</button></td>
+                                    <td><?php echo $registro[6]; ?></td>
+                                    <td><button type="submit" name="ac[]" value=<?php echo $registro[0].",".$registro[1].",".$registro[2].",".$registro[3].",".$registro[4]; ?>>Atender</button></td>
                                 </tr>
                         <?php
                             }

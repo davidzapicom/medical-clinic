@@ -21,7 +21,9 @@
 
     $fecha = $_SESSION['atenderpaciente'][0];
     $hora = $_SESSION['atenderpaciente'][1];
-    $nombre = $_SESSION['atenderpaciente'][2];
+    $dni = $_SESSION['atenderpaciente'][2];
+    $nombre = $_SESSION['atenderpaciente'][3];
+    $apellido = $_SESSION['atenderpaciente'][4];
     ?>
     <nav class="sidebar close">
         <header>
@@ -75,7 +77,7 @@
                 <table border="1" style="text-align: center;">
                     <tr>
                         <th>DNI paciente</th>
-                        <td><?php echo $nif; ?></td>
+                        <td><?php echo $dni; ?></td>
                     </tr>
                     <tr>
                         <th>Nombre paciente</th>
@@ -87,7 +89,7 @@
 
 
                         ?>
-                        <td><?php echo $registro[0] . " " . $registro[1]; ?></td>
+                        <td><?php echo $nombre . " " . $apellido; ?></td>
                     </tr>
                     <tr>
                         <th>Fecha cita</th>
@@ -124,7 +126,7 @@
     </div>
 
 	<?php		 	
-			 	header("Refresh:3; url=citasPendientes.php", true);
+			 	header("Refresh:3; url=citas-pendientes.php", true);
 			}
 		else {
 			echo " <br> Error: " . $sql . "<br>" . mysqli_error($conexion);
