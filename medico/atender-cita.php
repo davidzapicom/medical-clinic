@@ -19,9 +19,9 @@
         exit();
     }
 
-    $nif = $_SESSION['atenderpaciente'][0];
-    $fecha = $_SESSION['atenderpaciente'][1];
-    $hora = $_SESSION['atenderpaciente'][2];
+    $fecha = $_SESSION['atenderpaciente'][0];
+    $hora = $_SESSION['atenderpaciente'][1];
+    $nombre = $_SESSION['atenderpaciente'][2];
     ?>
     <nav class="sidebar close">
         <header>
@@ -68,10 +68,10 @@
     <section class="home">
         <div class="text">
             <h1>Atender Cita</h1>
+            <p><?php var_dump($_SESSION['atenderpaciente']); ?></p>
         </div>
         <form action="#" method="POST" class="atenderCita">
             <fieldset>
-                <legend>Atender cita</legend>
                 <table border="1" style="text-align: center;">
                     <tr>
                         <th>DNI paciente</th>

@@ -25,8 +25,8 @@
 
 
 
-    if (isset($_POST['atender'])) {
-		foreach ($_POST['atender'] as $value) {
+    if (isset($_POST['ac'])) {
+		foreach ($_POST['ac'] as $value) {
 			$pac=explode(",", $value);
 		}
 		$_SESSION['atenderpaciente']=$pac;
@@ -109,7 +109,7 @@
                                     <td><?php echo $registro[2]. ' ' .$registro[3]; ?></td>
                                     <td><?php echo $registro[4]; ?></td>
                                     <td><?php echo $registro[5]; ?></td>
-                                    <td><button type="submit" name="atender" value=<?php echo $registro[5].",".$registro[0].",".$registro[1]; ?>">Atender<br/></button></td>
+                                    <td><button type="submit" name="ac[]" value=<?php echo $registro[0].",".$registro[1].",".$registro[2]; ?>>Atender</button></td>
                                 </tr>
                         <?php
                             }
