@@ -17,8 +17,8 @@
         exit();
     }
 
-    $sql = "SELECT DISTINCT pacientes.dniPac, pacientes.pacNombres, pacientes.pacApellidos, pacientes.pacFechaNacimiento, pacientes.pacSexo FROM pacientes,medicos,citas WHERE citas.citMedico= '$_SESSION[dni]'";
-    $result = mysqli_query($conexion, $sql);
+   $sql = "SELECT DISTINCT pacientes.* FROM pacientes,citas,medicos WHERE citas.citPaciente=pacientes.dniPac AND citas.citMedico='$_SESSION[dni]'"; 
+   $result = mysqli_query($conexion, $sql);
     $filas = mysqli_num_rows($result);
     ?>
     <nav class="sidebar close">
@@ -91,9 +91,9 @@
                                 <tr>
                                     <td><?php echo $registro[0]; ?></td>
                                     <td><?php echo $registro[1]; ?></td>
-                                    <td><?php echo $registro[2]. ' ' .$registro[3]; ?></td>
+                                    <td><?php echo $registro[2]; ?></td>
+                                    <td><?php echo $registro[3]; ?></td>
                                     <td><?php echo $registro[4]; ?></td>
-                                    <td><?php echo $registro[5]; ?></td>
                                 </tr>
                         <?php
                             }

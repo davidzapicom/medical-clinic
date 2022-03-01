@@ -4,14 +4,23 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="../paciente/style.css">
+    <link rel="stylesheet" href="../assets/css/style.css">
     <link href='https://unpkg.com/boxicons@2.1.1/css/boxicons.min.css' rel='stylesheet'>
-    <title>Administrador | Clinica ADSI</title>
+    <title>Médico - Mis pacientes | Clinica ADSI</title>
 </head>
 <body>
-<?php
-session_start();
-?>
+    <?php
+    session_start();
+    $conexion = mysqli_connect('localhost', 'administrador', '', 'Clinica');
+    if (mysqli_connect_errno()) {
+        printf("Conexión fallida %s\n", mysqli_connect_error());
+        exit();
+    }
+
+   $sql = "SELECT DISTINCT pacientes.* FROM pacientes,citas,medicos"; 
+   $result = mysqli_query($conexion, $sql);
+    $filas = mysqli_num_rows($result);
+    ?>
     <nav class="sidebar close">
         <header>
             <div class="image-text">
@@ -20,24 +29,26 @@ session_start();
                 </span>
                 <div class="text logo-text">
                     <span class="name">Clinica ADSI</span>
-                    <span class="profession"><p class="ufl"><strong><?php echo $_SESSION["name"]. '</strong> | ' .$_SESSION['usutipo']; ?></p></span>
+                    <span class="profession">
+                        <p class="ufl white"><strong><?php echo $_SESSION["name"] . '</strong> | ' . $_SESSION['usutipo']; ?></p>
+                    </span>
                 </div>
             </div>
             <i class='bx bx-chevron-right toggle'></i>
         </header>
         <div class="menu-bar">
-            <div class="menu">
+        <div class="menu">
                 <ul class="menu-links">
                     <li class="nav-link">
-                        <a href="alta-paciente.php">
-                        <i class='bx bx-user icon'></i>
-                            <span class="text nav-text">Alta Paciente</span>
+                        <a href="citas-atendidas.php">
+                            <i class='bx bx-calendar-check icon'></i>
+                            <span class="text nav-text">Citas Atendidas</span>
                         </a>
                     </li>
                     <li class="nav-link">
-                        <a href="alta-medico.php">
-                        <i class='bx bx-user-plus icon'></i>
-                            <span class="text nav-text">Alta Medico</span>
+                        <a href="#">
+                            <i class='bx bx-calendar-minus icon' ></i>
+                            <span class="text nav-text">Citas Pendientes</span>
                         </a>
                     </li>
                 </ul>
@@ -54,10 +65,49 @@ session_start();
     </nav>
     <section class="home">
         <div class="text">
-            <h1>Alta Usuario</h1>
-            <p>Por favor seleciona un usuario para registrar en la barra de navegacion lateral</p>
+            <h1>Mis Pacientes</h1>
+        </div>
+        <div class="tabla">
+            <div class="tbl-header">
+                <table cellpadding="0" cellspacing="0" border="0">
+                    <thead>
+                        <tr>
+                            <th>DNI</th>
+                            <th>Nombre</th>
+                            <th>Apellidos</th>
+                            <th>Fecha Nacimiento</th>
+                            <th>Sexo</th>
+                        </tr>
+                    </thead>
+                </table>
+            </div>
+            <div class="tbl-content">
+                <table cellpadding="0" cellspacing="0" border="0">
+                    <tbody>
+                        <?php
+                        if ($filas != 0) {
+                            while ($registro = mysqli_fetch_row($result)) {
+                        ?>
+                                <tr>
+                                    <td><?php echo $registro[0]; ?></td>
+                                    <td><?php echo $registro[1]; ?></td>
+                                    <td><?php echo $registro[2]; ?></td>
+                                    <td><?php echo $registro[3]; ?></td>
+                                    <td><?php echo $registro[4]; ?></td>
+                                </tr>
+                        <?php
+                            }
+                        } else {
+                            echo "<tr><td>No hay pacientes en el registro</td></tr>";
+                        }
+                        mysqli_close($conexion);
+                        ?>
+                    </tbody>
+                </table>
+            </div>
         </div>
     </section>
     <script src="../assets/js/bar-script.js"></script>
+    <script src="assets/js/table-script.js"></script>
 </body>
 </html>
