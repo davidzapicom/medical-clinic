@@ -20,7 +20,7 @@ session_start();
                 </span>
                 <div class="text logo-text">
                     <span class="name">Clinica ADSI</span>
-                    <span class="profession"><p class="ufl"><strong><?php echo $_SESSION["name"]. '</strong> | ' .$_SESSION['usutipo']; ?></p></span>
+                    <span class="profession"><p class="ufl white"><strong><?php echo $_SESSION["name"]. '</strong> | ' .$_SESSION['usutipo']; ?></p></span>
                 </div>
             </div>
             <i class='bx bx-chevron-right toggle'></i>
@@ -30,13 +30,13 @@ session_start();
                 <ul class="menu-links">
                     <li class="nav-link">
                         <a href="citas-atendidas.php">
-                        <i class='bx bx-calendar-minus icon' ></i>
+                            <i class='bx bx-calendar-check icon'></i>
                             <span class="text nav-text">Citas Atendidas</span>
                         </a>
                     </li>
                     <li class="nav-link">
                         <a href="citas-pendientes.php">
-                        <i class='bx bx-calendar-check icon'></i>
+                            <i class='bx bx-calendar-minus icon' ></i>
                             <span class="text nav-text">Citas Pendientes</span>
                         </a>
                     </li>

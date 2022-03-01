@@ -17,7 +17,7 @@
         exit();
     }
 
-    $sql = "SELECT citas.citFecha,citas.citHora,medicos.medNombres,medicos.medApellidos,consultorios.conNombre,citas.citEstado,citas.CitObservaciones FROM citas,medicos,consultorios WHERE citas.citPaciente='$_SESSION[dni]' AND citas.citEstado='Atendido' AND citas.citMedico=medicos.dniMed AND citas.citConsultorio=consultorios.idConsultorio;";
+    $sql = "SELECT citas.citFecha,citas.citHora,medicos.medNombres,medicos.medApellidos,consultorios.conNombre,citas.CitObservaciones FROM citas,medicos,consultorios WHERE citas.citPaciente='$_SESSION[dni]' AND citas.citEstado='Atendido' AND citas.citMedico=medicos.dniMed AND citas.citConsultorio=consultorios.idConsultorio;";
     $result = mysqli_query($conexion, $sql);
     $filas = mysqli_num_rows($result);
     ?>
@@ -37,17 +37,17 @@
             <i class='bx bx-chevron-right toggle'></i>
         </header>
         <div class="menu-bar">
-            <div class="menu">
+        <div class="menu">
                 <ul class="menu-links">
                     <li class="nav-link">
                         <a href="#">
-                            <i class='bx bx-calendar-x icon' ></i>
+                            <i class='bx bx-calendar-check icon'></i>
                             <span class="text nav-text">Citas Atendidas</span>
                         </a>
                     </li>
                     <li class="nav-link">
                         <a href="citas-pendientes.php">
-                            <i class='bx bx-calendar-check icon' ></i>
+                            <i class='bx bx-calendar-minus icon' ></i>
                             <span class="text nav-text">Citas Pendientes</span>
                         </a>
                     </li>
