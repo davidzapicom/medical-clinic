@@ -17,7 +17,7 @@
         exit();
     }
 
-   $sql = "SELECT DISTINCT pacientes.* FROM pacientes,citas,medicos"; 
+   $sql = "SELECT DISTINCT * FROM pacientes"; 
    $result = mysqli_query($conexion, $sql);
     $filas = mysqli_num_rows($result);
     ?>

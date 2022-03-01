@@ -17,7 +17,7 @@
         exit();
     }
 
-    $sql = "SELECT citas.citFecha,citas.citHora,medicos.medNombres,medicos.medApellidos,consultorios.conNombre,citas.CitObservaciones FROM citas,medicos,consultorios WHERE citas.citPaciente='$_SESSION[dni]' AND citas.citEstado='Atendido' AND citas.citMedico=medicos.dniMed AND citas.citConsultorio=consultorios.idConsultorio;";
+    $sql = "SELECT citas.citFecha,citas.citHora,medicos.medNombres,medicos.medApellidos,consultorios.conNombre,citas.CitObservaciones FROM citas,medicos,consultorios WHERE citas.citMedico='$_SESSION[dni]' AND citas.citEstado='Atendido' AND citas.citMedico=medicos.dniMed AND citas.citConsultorio=consultorios.idConsultorio";
     $result = mysqli_query($conexion, $sql);
     $filas = mysqli_num_rows($result);
     ?>
