@@ -45,60 +45,20 @@
                 $error = "Contraseña incorrecta.";
             }
             $aviso = "Por favor, intentelo de nuevo.";
-    ?>
-            <script>
-                setTimeout(saltar, 2000);
-
-                function saltar() {
-                    location.replace("index.php");
-                }
-            </script>
-            <?php
+            header("Refresh:2; url=index.php", true);
         } else {
             if ($_SESSION['usutipo'] == 'Paciente') {
                 $error = '<p class="ufl"><strong>' . $_SESSION["name"] . '</strong>, bienvenid@! <br/>Por favor, espere mientras es redirigid@.</p>';
-            ?>
-                <script>
-                    setTimeout(saltar, 2500);
-
-                    function saltar() {
-                        location.replace("paciente/index.php");
-                    }
-                </script>
-            <?php
+                header("Refresh:2.5; url=paciente/index.php", true);
             } else if ($_SESSION['usutipo'] == 'Medico') {
                 $error = '<p class="ufl"><strong>' . $_SESSION["name"] . '</strong>, bienvenid@! <br/>Por favor, espere mientras es redirigid@.</p>';
-            ?>
-                <script>
-                    setTimeout(saltar, 2500);
-
-                    function saltar() {
-                        location.replace("medico/index.php");
-                    }
-                </script>
-            <?php
+                header("Refresh:2.5; url=medico/index.php", true);
             } else if ($_SESSION['usutipo'] == 'Asistente') {
                 $error = '<p class="ufl"><strong>' . $_SESSION["name"] . '</strong>, bienvenid@! <br/>Por favor, espere mientras es redirigid@.</p>';
-            ?>
-                <script>
-                    setTimeout(saltar, 2500);
-
-                    function saltar() {
-                        location.replace("asistente/index.php");
-                    }
-                </script>
-            <?php
+                header("Refresh:2.5; url=asistente/index.php", true);
             } else {
                 $error = '<p class="ufl"><strong>' . $_SESSION["name"] . '</strong>, bienvenid@! <br/>Por favor, espere mientras es redirigid@.</p>';
-            ?>
-                <script>
-                    setTimeout(saltar, 2500);
-
-                    function saltar() {
-                        location.replace("admin/index.php");
-                    }
-                </script>
-    <?php
+                header("Refresh:2.5; url=admin/index.php", true);
             }
         }
     }
