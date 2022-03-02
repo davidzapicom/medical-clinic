@@ -11,14 +11,14 @@
 <body>
     <?php
     session_start();
-    $conexion = mysqli_connect('localhost', 'administrador', '', 'Clinica');
+    $con = mysqli_connect('localhost', '$_SESSION[usutipo]', 'mEdrrr033IcO', 'Clinica');
     if (mysqli_connect_errno()) {
         printf("Conexión fallida %s\n", mysqli_connect_error());
         exit();
     }
 
    $sql = "SELECT DISTINCT pacientes.* FROM pacientes,citas,medicos WHERE citas.citPaciente=pacientes.dniPac AND citas.citMedico='$_SESSION[dni]'"; 
-   $result = mysqli_query($conexion, $sql);
+   $result = mysqli_query($con, $sql);
     $filas = mysqli_num_rows($result);
     ?>
     <nav class="sidebar close">
@@ -100,7 +100,7 @@
                         } else {
                             echo "<tr><td>No hay pacientes en el registro</td></tr>";
                         }
-                        mysqli_close($conexion);
+                        mysqli_close($con);
                         ?>
                     </tbody>
                 </table>

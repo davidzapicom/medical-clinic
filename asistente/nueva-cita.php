@@ -29,7 +29,7 @@
     //         $aviso = "Comprueba las contrasñas e intentalo de nuevo.";
     //         $_SESSION['password'] = $_SESSION['password2'] = "";
     //     } else {
-    //         $con = mysqli_connect('localhost', 'administrador', '', 'Clinica');
+    //         $con = mysqli_connect('localhost', 'Asistente', 'Ass86teN33', 'Clinica');
     //         $inmed = "INSERT INTO pacientes (dniPac,pacNombres,pacApellidos,pacFechaNacimiento,pacSexo) VALUES ('$_POST[dnipaciente]','$_POST[nombre]','$_POST[apellidos]','$_POST[especialidad]','$_POST[telefono]','$_POST[correo]')";
     //         $inusu = "INSERT INTO usuarios (dniUsu,usuLogin,usuPassword,usuEstado,usutipo) VALUES ('$_POST[dnipaciente]','$_POST[usuario]','$_POST[password]','$_POST[estado]','$_SESSION[tipo]')";
     //         if (mysqli_query($con, $inmed) && mysqli_query($con, $inusu)) {
@@ -63,16 +63,28 @@
         <div class="menu-bar">
             <div class="menu">
                 <ul class="menu-links">
+                <li class="nav-link">
+                        <a href="citas-atendidas.php">
+                            <i class='bx bx-calendar-check icon'></i>
+                            <span class="text nav-text">Citas Atendidas</span>
+                        </a>
+                    </li>
                     <li class="nav-link">
                         <a href="#">
+                            <i class='bx bx-calendar-plus icon'></i>
+                            <span class="text nav-text">Nueva Cita</span>
+                        </a>
+                    </li>
+                    <li class="nav-link">
+                        <a href="alta-paciente.php">
                             <i class='bx bx-user icon'></i>
                             <span class="text nav-text">Alta Paciente</span>
                         </a>
                     </li>
                     <li class="nav-link">
-                        <a href="alta-medico.php">
-                            <i class='bx bx-user-plus icon'></i>
-                            <span class="text nav-text">Alta Medico</span>
+                        <a href="ver-pacientes.php">
+                            <i class='bx bxs-user-badge icon'></i>
+                            <span class="text nav-text">Ver Pacientes</span>
                         </a>
                     </li>
                 </ul>

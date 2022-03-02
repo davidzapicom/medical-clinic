@@ -9,9 +9,9 @@
     <title>Asistente | Clinica ADSI</title>
 </head>
 <body>
-<?php
-session_start();
-?>
+    <?php
+    session_start();
+    ?>
     <nav class="sidebar close">
         <header>
             <div class="image-text">
@@ -20,7 +20,9 @@ session_start();
                 </span>
                 <div class="text logo-text">
                     <span class="name">Clinica ADSI</span>
-                    <span class="profession"><p class="ufl white "><strong><?php echo $_SESSION["name"]. '</strong> | ' .$_SESSION['usutipo']; ?></p></span>
+                    <span class="profession">
+                        <p class="ufl white "><strong><?php echo $_SESSION["name"] . '</strong> | ' . $_SESSION['usutipo']; ?></p>
+                    </span>
                 </div>
             </div>
             <i class='bx bx-chevron-right toggle'></i>
@@ -28,27 +30,27 @@ session_start();
         <div class="menu-bar">
             <div class="menu">
                 <ul class="menu-links">
-                <li class="nav-link">
+                    <li class="nav-link">
                         <a href="citas-atendidas.php">
-                        <i class='bx bx-user-plus icon'></i>
+                            <i class='bx bx-calendar-check icon'></i>
                             <span class="text nav-text">Citas Atendidas</span>
                         </a>
                     </li>
                     <li class="nav-link">
                         <a href="nueva-cita.php">
-                        <i class='bx bx-user-plus icon'></i>
+                            <i class='bx bx-calendar-plus icon'></i>
                             <span class="text nav-text">Nueva Cita</span>
                         </a>
                     </li>
                     <li class="nav-link">
                         <a href="alta-paciente.php">
-                        <i class='bx bx-user icon'></i>
+                            <i class='bx bx-user icon'></i>
                             <span class="text nav-text">Alta Paciente</span>
                         </a>
                     </li>
                     <li class="nav-link">
                         <a href="ver-pacientes.php">
-                        <i class='bx bx-user-plus icon'></i>
+                            <i class='bx bxs-user-badge icon'></i>
                             <span class="text nav-text">Ver Pacientes</span>
                         </a>
                     </li>

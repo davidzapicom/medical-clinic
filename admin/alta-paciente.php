@@ -26,7 +26,7 @@
         $_SESSION['tipo'] = "Paciente";
 
         if ($_SESSION['usutipo'] == 'Administrador') {
-            $_SESSION['con'] = mysqli_connect('localhost', 'administrador', '', 'Clinica');
+            $_SESSION['con'] = mysqli_connect('localhost', 'Administrador', 'a2d7mTT4', 'Clinica');
             $selectususarios = "SELECT * FROM pacientes where dniPac='$_SESSION[dnipaciente]'";
             $result = mysqli_query($_SESSION['con'], $selectususarios);
 

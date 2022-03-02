@@ -27,18 +27,18 @@
         $_SESSION['usu'] = $_POST['usu'];
         $password = $_POST['pass'];
         //$cif = hash_hmac('sha512', '$password', 'secret');
-        $_SESSION["con"] = mysqli_connect('localhost', 'administrador', '', 'Clinica');
+        $con = mysqli_connect('localhost', 'Acceso', 'take55AcceSs38', 'Clinica');
         $sentencia = 'SELECT * FROM usuarios WHERE usuLogin="' . $_SESSION["usu"] . '" OR dniUsu="' . $_SESSION["usu"] . '" AND usuPassword="' . $password . '"';
-        $result = mysqli_query($_SESSION["con"], $sentencia);
+        $result = mysqli_query($con, $sentencia);
         $fetch = mysqli_fetch_assoc($result);
         $_SESSION['name'] = $fetch['usuLogin'];
         $_SESSION['dni'] = $fetch['dniUsu'];
         $_SESSION['usutipo'] = $fetch['usutipo'];
         if (mysqli_num_rows($result) == 0) {
             $sentencia = 'SELECT * FROM usuarios WHERE usuLogin="' . $_SESSION["usu"] . '" OR dniUsu="' . $_SESSION["usu"] . '"';
-            $result2 = mysqli_query($_SESSION["con"], $sentencia);
+            $result2 = mysqli_query($con, $sentencia);
             $fetch = mysqli_fetch_assoc($result2);
-            mysqli_close($_SESSION["con"]);
+            mysqli_close($con);
             if (mysqli_num_rows($result2) == 0) {
                 $error = "Usuario inexistente.";
             } else {

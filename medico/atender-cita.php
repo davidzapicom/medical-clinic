@@ -13,7 +13,7 @@
 <body>
     <?php
     session_start();
-    $conexion = mysqli_connect('localhost', 'administrador', '', 'Clinica');
+    $con = mysqli_connect('localhost', 'Medico', 'mEdrrr033IcO', 'Clinica');
     if (mysqli_connect_errno()) {
         printf("Conexión fallida %s\n", mysqli_connect_error());
         exit();
@@ -83,7 +83,7 @@
                     <?php
 
                     $sql = "SELECT pacNombres,pacApellidos FROM pacientes WHERE dniPac='$nif';";
-                    $result = mysqli_query($conexion, $sql);
+                    $result = mysqli_query($con, $sql);
                     $registro = mysqli_fetch_row($result);
 
 
@@ -126,7 +126,7 @@
         <?php
                 header("Refresh:3; url=citas-pendientes.php", true);
             } else {
-                echo " <br> Error: " . $sql . "<br>" . mysqli_error($conexion);
+                echo " <br> Error: " . $sql . "<br>" . mysqli_error($con);
             }
         }
         ?>
