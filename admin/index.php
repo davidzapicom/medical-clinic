@@ -59,8 +59,5 @@ session_start();
         </div>
     </section>
     <script src="../assets/js/bar-script.js"></script>
-    <?php
-    mysqli_close($_SESSION["con"]);
-    ?>
 </body>
 </html>

@@ -100,7 +100,7 @@
                         <?php
                             }
                         } else {
-                            echo "<tr><td>No hay pacientes en el registro</td></tr>";
+                            echo "<tr><td>No hay citas para mostrar.</td></tr>";
                         }
                         mysqli_close($con);
                         ?>

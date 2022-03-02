@@ -6,7 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="../assets/css/style.css">
     <link href='https://unpkg.com/boxicons@2.1.1/css/boxicons.min.css' rel='stylesheet'>
-    <title>Médico - Mis pacientes | Clinica ADSI</title>
+    <title>Asistente - Pacientes | Clinica ADSI</title>
 </head>
 <body>
     <?php

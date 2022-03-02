@@ -16,17 +16,18 @@
         $_SESSION['usuario'] = $_POST['usuario'];
         $_SESSION['nombre'] = $_POST['nombre'];
         $_SESSION['apellidos'] = $_POST['apellidos'];
-        $_SESSION['especialidad'] = $_POST['especialidad'];
-        $_SESSION['telefono'] = $_POST['telefono'];
-        $_SESSION['email'] = $_POST['email'];
         $_SESSION['dnipaciente'] = $_POST['dnipaciente'];
         $_SESSION['password'] = $_POST['password'];
         $_SESSION['password2'] = $_POST['password2'];
-        $_SESSION['estado'] = $_POST['estado'];
-        $_SESSION['tipo'] = "Paciente";
+        $_SESSION['sexo'] = $_POST['sexo'];
+        $_SESSION['fechanacimiento'] = date('Y-m-d', strtotime($_POST['fechanacimiento']));
 
         if ($_SESSION['usutipo'] == 'Administrador') {
             $con = mysqli_connect('localhost', 'Administrador', 'a2d7mTT4', 'Clinica');
+            if (mysqli_connect_errno()) {
+                printf("Conexión fallida %s\n", mysqli_connect_error());
+                exit();
+            }
             $selectususarios = "SELECT * FROM pacientes where dniPac='$_SESSION[dnipaciente]'";
             $result = mysqli_query($con, $selectususarios);
 
@@ -40,13 +41,11 @@
                     $_SESSION['password'] = $_SESSION['password2'] = "";
                 } else {
                     $cif = hash_hmac('sha512', '$password', 'secret');
-                    $inpac = "INSERT INTO pacientes (dniPac,pacNombres,pacApellidos,pacFechaNacimiento,pacSexo) VALUES ('$_SESSION[dnipaciente]','$_SESSION[nombre]','$_SESSION[apellidos]','$_SESSION[especialidad]','$_SESSION[telefono]','$_SESSION[correo]')";
-                    $inusu = "INSERT INTO usuarios (dniUsu,usuLogin,usuPassword,usuEstado,usutipo) VALUES ('$_SESSION[dnipaciente]','$_SESSION[usuario]','$cif','$_SESSION[estado]','$_SESSION[tipo]')";
+                    $inpac = "INSERT INTO pacientes (dniPac,pacNombres,pacApellidos,pacFechaNacimiento,pacSexo) VALUES ('$_SESSION[dnipaciente]','$_SESSION[nombre]','$_SESSION[apellidos]','$_SESSION[fechanacimiento]','$_SESSION[sexo]')";
+                    $inusu = "INSERT INTO usuarios (dniUsu,usuLogin,usuPassword,usuEstado,usutipo) VALUES ('$_SESSION[dnipaciente]','$_SESSION[usuario]','$cif','Activo','Paciente')";
                     if (mysqli_query($con, $inpac) && mysqli_query($con, $inusu)) {
                         $error = "Usuario insertado correctamente.";
-                        $_SESSION['usuario'] = $_SESSION['nombre'] = $_SESSION['apellidos'] = $_SESSION['especialidad'] = "";
-                        $_SESSION['telefono'] = $_SESSION['email'] = $_SESSION['dnipaciente'] = $_SESSION['password'] = "";
-                        $_SESSION['password2'] = $_SESSION['estado'] = $_SESSION['tipo'] = "";
+                        $_SESSION['usuario'] = $_SESSION['nombre'] = $_SESSION['apellidos'] = $_SESSION['dnipaciente'] = $_SESSION['password'] = $_SESSION['password2'] = $_SESSION['sexo'] = $_SESSION['fechanacimiento'] = "";
                     } else {
                         $error = "ERROR: no se ha podido insertar el usuario.";
                         $aviso = "Vuelve a intentarlo.";
@@ -107,25 +106,23 @@
         <div class="text">
             <h1>Alta Paciente</h1>
             <form action="#" method="post">
-                <input type="text" name="dnipaciente" placeholder="DNI" required>
+                <input type="text" name="dnipaciente" placeholder="DNI" value="<?php echo $_SESSION['dnipaciente']; ?>" required>
                 <br />
-                <input type="text" name="usuario" placeholder="Nombre de usuario" required>
+                <input type="text" name="usuario" placeholder="Nombre de usuario" value="<?php echo $_SESSION['usuario']; ?>" required>
                 <br />
-                <input type="text" name="nombre" placeholder="Nombre" required>
+                <input type="text" name="nombre" placeholder="Nombre" value="<?php echo $_SESSION['nombre']; ?>" required>
                 <br />
-                <input type="text" name="apellidos" placeholder="Apellidos" required>
+                <input type="text" name="apellidos" placeholder="Apellidos" value="<?php echo $_SESSION['apellidos']; ?>" required>
                 <br />
                 <label for="fechanacimiento">Fecha nacimiento</label>
-                <input type="date" name="fechanacimiento" required>
+                <input type="date" name="fechanacimiento" value="<?php echo $_SESSION['fechanacimiento']; ?>" required>
                 <br />
                 <label for="sexo">Sexo</label>
-                <select name="sexo" id="sexo" required>
-                    <option value="Masculino">Masculino</option>
-                    <option value="Femenino">Femenino</option>
-                </select>
+                <input type="radio" name="sexo" <?php if ($sexo=="Mujer") "checked";?> value="Mujer">Mujer
+                <input type="radio" name="sexo" <?php if ($sexo=="Hombre") "checked";?> value="Hombre">Hombre
                 <div class="input">
-                    <input type="password" name="password" placeholder="Contraseña" required>
-                    <input type="password" name="password2" placeholder="Contraseña otra vez" required>
+                    <input type="password" name="password" placeholder="Contraseña" rvalue="<?php echo $_SESSION['password']; ?>" equired>
+                    <input type="password" name="password2" placeholder="Contraseña otra vez" value="<?php echo $_SESSION['password2']; ?>" required>
                 </div>
                 <p><?php echo "<strong>$error</strong>"; ?></p>
                 <p><?php echo "$aviso"; ?></p>

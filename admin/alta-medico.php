@@ -27,6 +27,10 @@
 
         if ($_SESSION['usutipo'] == 'Administrador') {
             $con = mysqli_connect('localhost', 'Administrador', 'a2d7mTT4', 'Clinica');
+            if (mysqli_connect_errno()) {
+                printf("Conexión fallida %s\n", mysqli_connect_error());
+                exit();
+            }
             $selectususarios = "SELECT * FROM medicos where dniMed='$_SESSION[dnimedico]'";
             $result = mysqli_query($con, $selectususarios);
 

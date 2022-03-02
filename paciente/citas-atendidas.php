@@ -16,10 +16,13 @@
         printf("Conexión fallida %s\n", mysqli_connect_error());
         exit();
     }
+    
+    if ($_SESSION['usutipo'] == 'Paciente') {
 
     $sql = "SELECT citas.citFecha,citas.citHora,medicos.medNombres,medicos.medApellidos,consultorios.conNombre,citas.CitObservaciones FROM citas,medicos,consultorios WHERE citas.citPaciente='$_SESSION[dni]' AND citas.citEstado='Atendido' AND citas.citMedico=medicos.dniMed AND citas.citConsultorio=consultorios.idConsultorio;";
     $result = mysqli_query($con, $sql);
     $filas = mysqli_num_rows($result);
+    }
     ?>
     <nav class="sidebar close">
         <header>
@@ -98,7 +101,7 @@
                         <?php
                             }
                         } else {
-                            echo "<tr><td>No hay pacientes en el registro</td></tr>";
+                            echo "<tr><td>No hay citas para mostrar.</td></tr>";
                         }
                         mysqli_close($con);
                         ?>

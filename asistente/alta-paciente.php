@@ -1,6 +1,5 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -9,7 +8,6 @@
     <link href='https://unpkg.com/boxicons@2.1.1/css/boxicons.min.css' rel='stylesheet'>
     <title>Asistente - Alta paciente| Clinica ADSI</title>
 </head>
-
 <body>
     <?php
     session_start();
@@ -148,5 +146,4 @@
     </section>
     <script src="../assets/js/bar-script.js"></script>
 </body>
-
 </html>

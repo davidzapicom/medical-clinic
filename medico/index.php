@@ -41,8 +41,8 @@ session_start();
                         </a>
                     </li>
                     <li class="nav-link">
-                        <a href="citas-pendientes.php">
-                        <i class='bx bx-user-plus icon'></i>
+                        <a href="ver-pacientes.php">
+                        <i class='bx bxs-user-badge icon'></i>
                             <span class="text nav-text">Ver Pacientes</span>
                         </a>
                     </li>
