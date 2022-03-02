@@ -18,14 +18,13 @@
         $_SESSION['usuario'] = $_POST['usuario'];
         $_SESSION['nombre'] = $_POST['nombre'];
         $_SESSION['apellidos'] = $_POST['apellidos'];
-        $_SESSION['especialidad'] = $_POST['especialidad'];
-        $_SESSION['telefono'] = $_POST['telefono'];
-        $_SESSION['email'] = $_POST['email'];
         $_SESSION['dnipaciente'] = $_POST['dnipaciente'];
+        $_SESSION['fechanacimiento'] = $_POST['fechanacimiento'];
         $_SESSION['password'] = $_POST['password'];
         $_SESSION['password2'] = $_POST['password2'];
-        $_SESSION['estado'] = $_POST['estado'];
-        $_SESSION['tipo'] = "Paciente";
+        $_SESSION['sexo'] = $_POST['sexo'];
+        $_SESSION['tipo'] = "Paciente"; 
+        $_SESSION['estado'] = "Activo"; 
 
         if ($_SESSION['usutipo'] == 'Asistente') {
             $con = mysqli_connect('localhost', 'Asistente', 'Ass86teN33', 'Clinica');
@@ -42,13 +41,13 @@
                     $_SESSION['password'] = $_SESSION['password2'] = "";
                 } else {
                     $cif = hash_hmac('sha512', '$password', 'secret');
-                    $inpac = "INSERT INTO pacientes (dniPac,pacNombres,pacApellidos,pacFechaNacimiento,pacSexo) VALUES ('$_POST[dnipaciente]','$_POST[nombre]','$_POST[apellidos]','$_POST[especialidad]','$_POST[telefono]','$_POST[correo]')";
-                    $inusu = "INSERT INTO usuarios (dniUsu,usuLogin,usuPassword,usuEstado,usutipo) VALUES ('$_POST[dnipaciente]','$_POST[usuario]','$cif','$_POST[estado]','$_SESSION[tipo]')";
+                    $inpac = "INSERT INTO pacientes (dniPac,pacNombres,pacApellidos,pacFechaNacimiento,pacSexo) VALUES ('$_SESSION[dnipaciente]','$_SESSION[nombre]','$_SESSION[apellidos]','$_SESSION[fechanacimiento]','$_SESSION[sexo]')";
+                    $inusu = "INSERT INTO usuarios (dniUsu,usuLogin,usuPassword,usuEstado,usutipo) VALUES ('$_SESSION[dnipaciente]','$_SESSION[usuario]','$cif','$_SESSION[estado]','$_SESSION[tipo]')";
                     if (mysqli_query($con, $inpac) && mysqli_query($con, $inusu)) {
                         $error = "Usuario insertado correctamente.";
-                        $_SESSION['usuario'] = $_SESSION['nombre'] = $_SESSION['apellidos'] = $_SESSION['especialidad'] = "";
-                        $_SESSION['telefono'] = $_SESSION['email'] = $_SESSION['dnipaciente'] = $_SESSION['password'] = "";
-                        $_SESSION['password2'] = $_SESSION['estado'] = $_SESSION['tipo'] = "";
+                        $_SESSION['usuario'] = $_SESSION['nombre'] = $_SESSION['apellidos'] = "";
+                        $_SESSION['dnipaciente'] = $_SESSION['password'] = $_SESSION['fechanacimiento'] = "";
+                        $_SESSION['password2'] = $_SESSION['estado'] = $_SESSION['tipo'] = $_SESSION['sexo'] = "";
                     } else {
                         $error = "ERROR: no se ha podido insertar el usuario.";
                         $aviso = "Vuelve a intentarlo.";
@@ -123,7 +122,7 @@
             <form action="#" method="post">
                 <input type="text" name="dnipaciente" placeholder="DNI" required>
                 <br />
-                <input type="text" name="nombre" placeholder="Nombre de usuario" required>
+                <input type="text" name="usuario" placeholder="Nombre de usuario" required>
                 <br />
                 <input type="text" name="nombre" placeholder="Nombre" required>
                 <br />
