@@ -27,7 +27,7 @@
         <header>
             <div class="image-text">
                 <span class="image">
-                    <img src="../assets/img/scene.jpg" alt="">
+                    <img src="../assets/img/scene.jpg" alt="foto perfil">
                 </span>
                 <div class="text logo-text">
                     <span class="name">Clinica ADSI</span>
