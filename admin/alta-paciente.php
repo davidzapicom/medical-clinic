@@ -6,7 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="../assets/css/style.css">
     <link href='https://unpkg.com/boxicons@2.1.1/css/boxicons.min.css' rel='stylesheet'>
-    <title>Administrador | Clinica ADSI</title>
+    <title>Administrador - Alta paciente| Clinica ADSI</title>
 </head>
 <body>
     <?php
@@ -23,25 +23,40 @@
         $_SESSION['password'] = $_POST['password'];
         $_SESSION['password2'] = $_POST['password2'];
         $_SESSION['estado'] = $_POST['estado'];
-        $_SESSION['tipo'] = "Médico";
-        if ($_POST['password'] != $_POST['password2']) {
-            $error = "Las contraseñas no coinciden.";
-            $aviso = "Comprueba las contrasñas e intentalo de nuevo.";
-            $_SESSION['password'] = $_SESSION['password2'] = "";
-        } else {
-            $con = mysqli_connect('localhost', 'administrador', '', 'Clinica');
-            $inmed = "INSERT INTO pacientes (dniPac,pacNombres,pacApellidos,pacFechaNacimiento,pacSexo) VALUES ('$_POST[dnipaciente]','$_POST[nombre]','$_POST[apellidos]','$_POST[especialidad]','$_POST[telefono]','$_POST[correo]')";
-            $inusu = "INSERT INTO usuarios (dniUsu,usuLogin,usuPassword,usuEstado,usutipo) VALUES ('$_POST[dnipaciente]','$_POST[usuario]','$_POST[password]','$_POST[estado]','$_SESSION[tipo]')";
-            if (mysqli_query($con, $inmed) && mysqli_query($con, $inusu)) {
-                $error = "Usuario insertado correctamente.";
-                $_SESSION['usuario'] = $_SESSION['nombre'] = $_SESSION['apellidos'] = $_SESSION['especialidad'] = "";
-                $_SESSION['telefono'] = $_SESSION['email'] = $_SESSION['dnipaciente'] = $_SESSION['password'] = "";
-                $_SESSION['password2'] = $_SESSION['estado'] = $_SESSION['tipo'] = "";
+        $_SESSION['tipo'] = "Paciente";
+
+        if ($_SESSION['usutipo'] == 'Administrador') {
+            $_SESSION['con'] = mysqli_connect('localhost', 'administrador', '', 'Clinica');
+            $selectususarios = "SELECT * FROM pacientes where dniPac='$_SESSION[dnipaciente]'";
+            $result = mysqli_query($_SESSION['con'], $selectususarios);
+
+            if (mysqli_num_rows($result) != 0) {
+                $error = "Ya hay un usuario resgistrado con ese DNI.";
+                $aviso = "Compruebe el DNI / inicie sesión.";
             } else {
-                $error = "ERROR: no se ha podido insertar el usuario.";
-                $aviso = "Vuelve a intentarlo.";
+                if ($_POST['password'] != $_POST['password2']) {
+                    $error = "Las contraseñas no coinciden.";
+                    $aviso = "Comprueba las contraseñas e intentalo de nuevo.";
+                    $_SESSION['password'] = $_SESSION['password2'] = "";
+                } else {
+                    $inpac = "INSERT INTO pacientes (dniPac,pacNombres,pacApellidos,pacFechaNacimiento,pacSexo) VALUES ('$_POST[dnipaciente]','$_POST[nombre]','$_POST[apellidos]','$_POST[especialidad]','$_POST[telefono]','$_POST[correo]')";
+                    $inusu = "INSERT INTO usuarios (dniUsu,usuLogin,usuPassword,usuEstado,usutipo) VALUES ('$_POST[dnipaciente]','$_POST[usuario]','$_POST[password]','$_POST[estado]','$_SESSION[tipo]')";
+                    if (mysqli_query($_SESSION['con'], $inpac) && mysqli_query($_SESSION['con'], $inusu)) {
+                        $error = "Usuario insertado correctamente.";
+                        $_SESSION['usuario'] = $_SESSION['nombre'] = $_SESSION['apellidos'] = $_SESSION['especialidad'] = "";
+                        $_SESSION['telefono'] = $_SESSION['email'] = $_SESSION['dnipaciente'] = $_SESSION['password'] = "";
+                        $_SESSION['password2'] = $_SESSION['estado'] = $_SESSION['tipo'] = "";
+                    } else {
+                        $error = "ERROR: no se ha podido insertar el usuario.";
+                        $aviso = "Vuelve a intentarlo.";
+                    }
+                }
             }
-            mysqli_close($con);
+            mysqli_close($_SESSION['con']);
+        } else {
+            $error = "No tienes permisos.";
+            $aviso = "Inicie sesión como administrador para poder realizar la operación.";
+            header("Refresh:4; url=../logout.php", true);
         }
     }
     ?>

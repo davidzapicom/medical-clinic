@@ -1,15 +1,13 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="../assets/css/style.css">
     <link href='https://unpkg.com/boxicons@2.1.1/css/boxicons.min.css' rel='stylesheet'>
-    <title>Administrador | Clinica ADSI</title>
+    <title>Administrador - Alta médico | Clinica ADSI</title>
 </head>
-
 <body>
     <?php
     session_start();
@@ -25,7 +23,7 @@
         $_SESSION['password'] = $_POST['password'];
         $_SESSION['password2'] = $_POST['password2'];
         $_SESSION['estado'] = $_POST['estado'];
-        $_SESSION['tipo'] = "Médico";
+        $_SESSION['tipo'] = "Medico";
 
         if ($_SESSION['usutipo'] == 'Administrador') {
             $_SESSION['con'] = mysqli_connect('localhost', 'administrador', '', 'Clinica');
@@ -58,7 +56,7 @@
             mysqli_close($_SESSION['con']);
         } else {
             $error = "No tienes permisos.";
-            $aviso = "Inicie sesión como administrador.";
+            $aviso = "Inicie sesión como administrador para poder realizar la operación.";
             header("Refresh:4; url=../logout.php", true);
         } 
     }
@@ -144,5 +142,4 @@
     </section>
     <script src="../assets/js/bar-script.js"></script>
 </body>
-
 </html>
