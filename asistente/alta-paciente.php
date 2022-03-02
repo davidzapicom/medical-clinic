@@ -28,9 +28,9 @@
         $_SESSION['tipo'] = "Paciente";
 
         if ($_SESSION['usutipo'] == 'Asistente') {
-            $_SESSION['con'] = mysqli_connect('localhost', 'Asistente', 'Ass86teN33', 'Clinica');
+            $con = mysqli_connect('localhost', 'Asistente', 'Ass86teN33', 'Clinica');
             $selectususarios = "SELECT * FROM pacientes where dniPac='$_SESSION[dnipaciente]'";
-            $result = mysqli_query($_SESSION['con'], $selectususarios);
+            $result = mysqli_query($con, $selectususarios);
 
             if (mysqli_num_rows($result) != 0) {
                 $error = "Ya hay un usuario resgistrado con ese DNI.";
@@ -41,9 +41,10 @@
                     $aviso = "Comprueba las contraseñas e intentalo de nuevo.";
                     $_SESSION['password'] = $_SESSION['password2'] = "";
                 } else {
+                    $cif = hash_hmac('sha512', '$password', 'secret');
                     $inpac = "INSERT INTO pacientes (dniPac,pacNombres,pacApellidos,pacFechaNacimiento,pacSexo) VALUES ('$_POST[dnipaciente]','$_POST[nombre]','$_POST[apellidos]','$_POST[especialidad]','$_POST[telefono]','$_POST[correo]')";
-                    $inusu = "INSERT INTO usuarios (dniUsu,usuLogin,usuPassword,usuEstado,usutipo) VALUES ('$_POST[dnipaciente]','$_POST[usuario]','$_POST[password]','$_POST[estado]','$_SESSION[tipo]')";
-                    if (mysqli_query($_SESSION['con'], $inpac) && mysqli_query($_SESSION['con'], $inusu)) {
+                    $inusu = "INSERT INTO usuarios (dniUsu,usuLogin,usuPassword,usuEstado,usutipo) VALUES ('$_POST[dnipaciente]','$_POST[usuario]','$cif','$_POST[estado]','$_SESSION[tipo]')";
+                    if (mysqli_query($con, $inpac) && mysqli_query($con, $inusu)) {
                         $error = "Usuario insertado correctamente.";
                         $_SESSION['usuario'] = $_SESSION['nombre'] = $_SESSION['apellidos'] = $_SESSION['especialidad'] = "";
                         $_SESSION['telefono'] = $_SESSION['email'] = $_SESSION['dnipaciente'] = $_SESSION['password'] = "";
@@ -54,7 +55,7 @@
                     }
                 }
             }
-            mysqli_close($_SESSION['con']);
+            mysqli_close($con);
         } else {
             $error = "No tienes permisos.";
             $aviso = "Inicie sesión como administrador para poder realizar la operación.";

@@ -39,8 +39,9 @@
                     $aviso = "Comprueba las contraseñas e intentalo de nuevo.";
                     $_SESSION['password'] = $_SESSION['password2'] = "";
                 } else {
+                    $cif = hash_hmac('sha512', '$password', 'secret');
                     $inpac = "INSERT INTO pacientes (dniPac,pacNombres,pacApellidos,pacFechaNacimiento,pacSexo) VALUES ('$_SESSION[dnipaciente]','$_SESSION[nombre]','$_SESSION[apellidos]','$_SESSION[especialidad]','$_SESSION[telefono]','$_SESSION[correo]')";
-                    $inusu = "INSERT INTO usuarios (dniUsu,usuLogin,usuPassword,usuEstado,usutipo) VALUES ('$_SESSION[dnipaciente]','$_SESSION[usuario]','$_SESSION[password]','$_SESSION[estado]','$_SESSION[tipo]')";
+                    $inusu = "INSERT INTO usuarios (dniUsu,usuLogin,usuPassword,usuEstado,usutipo) VALUES ('$_SESSION[dnipaciente]','$_SESSION[usuario]','$cif','$_SESSION[estado]','$_SESSION[tipo]')";
                     if (mysqli_query($con, $inpac) && mysqli_query($con, $inusu)) {
                         $error = "Usuario insertado correctamente.";
                         $_SESSION['usuario'] = $_SESSION['nombre'] = $_SESSION['apellidos'] = $_SESSION['especialidad'] = "";

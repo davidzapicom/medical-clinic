@@ -39,13 +39,13 @@
                     $aviso = "Comprueba las contraseñas e intentalo de nuevo.";
                     $_SESSION['password'] = $_SESSION['password2'] = "";
                 } else {
-                    //$cif = hash_hmac('sha512', '$password', 'secret');
+                    $cif = hash_hmac('sha512', '$password', 'secret');
                     $inmed = "INSERT INTO medicos (dniMed,medNombres,medApellidos,medEspecialidad,medTelefono,medCorreo) VALUES ('$_SESSION[dnimedico]','$_SESSION[nombre]','$_SESSION[apellidos]','$_SESSION[especialidad]','$_SESSION[telefono]','$_SESSION[correo]')";
-                    $inusu = "INSERT INTO usuarios (dniUsu,usuLogin,usuPassword,usuEstado,usutipo) VALUES ('$_SESSION[dnimedico]','$_SESSION[usuario]','$password','$_SESSION[estado]','$_SESSION[tipo]')";
+                    $inusu = "INSERT INTO usuarios (dniUsu,usuLogin,usuPassword,usuEstado,usutipo) VALUES ('$_SESSION[dnimedico]','$_SESSION[usuario]','$cif','$_SESSION[estado]','$_SESSION[tipo]')";
                     if (mysqli_query($con, $inmed) && mysqli_query($con, $inusu)) {
                         $error = "Usuario insertado correctamente.";
                         $_SESSION['usuario'] = $_SESSION['nombre'] = $_SESSION['apellidos'] = "";
-                        $_SESSION['especialidad'] = $_SESSION['telefono'] = $_SESSION['email'] = "";
+                        $_SESSION['especialidad'] = $_SESSION['telefono'] = $_SESSION['correo'] = "";
                         $_SESSION['dnimedico'] = $_SESSION['password'] = $_SESSION['password2'] = "";
                         $_SESSION['estado'] = $_SESSION['tipo'] = "";
                     } else {
@@ -60,7 +60,7 @@
             $aviso = "Inicie sesión como administrador para poder realizar la operación.";
             header("Refresh:4; url=../logout.php", true);
         } 
-    }
+    } else {
     ?>
     <nav class="sidebar close">
         <header>
@@ -141,6 +141,9 @@
             </form>
         </div>
     </section>
+    <?php
+    }
+    ?>
     <script src="../assets/js/bar-script.js"></script>
 </body>
 </html>
