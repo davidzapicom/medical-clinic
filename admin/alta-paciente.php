@@ -42,7 +42,7 @@
                     $_SESSION['password'] = $_SESSION['password2'] = "";
                 } else {
                     $cif = hash_hmac('sha512', '$password', 'secret');
-                    $inpac = "INSERT INTO pacientes (dniPac,pacNombres,pacApellidos,pacFechaNacimiento,pacSexo) VALUES ('$_SESSION[dnipaciente]','$_SESSION[nombre]','$_SESSION[apellidos]','$_SESSION[fechanacimiento]','$_POST[sexo]')";
+                    $inpac = "INSERT INTO pacientes (dniPac,pacNombres,pacApellidos,pacFechaNacimiento,pacSexo) VALUES ('$_SESSION[dnipaciente]','$_SESSION[nombre]','$_SESSION[apellidos]','$_SESSION[fechanacimiento]','$_SESSION[sexo]')";
                     $inusu = "INSERT INTO usuarios (dniUsu,usuLogin,usuPassword,usuEstado,usutipo) VALUES ('$_SESSION[dnipaciente]','$_SESSION[usuario]','$cif','Activo','Paciente')";
                     if (mysqli_query($con, $inpac) && mysqli_query($con, $inusu)) {
                         $error = "Usuario insertado correctamente.";
