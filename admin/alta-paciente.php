@@ -10,6 +10,7 @@
 </head>
 <body>
     <?php
+    ini_set("display_errors", true);
     session_start();
     $error = $aviso = "";
     if (isset($_POST['alta'])) {
@@ -118,8 +119,8 @@
                 <input type="date" name="fechanacimiento" value="<?php echo $_SESSION['fechanacimiento']; ?>" required>
                 <br />
                 <label for="sexo">Sexo</label>
-                <input type="radio" name="sexo" <?php if ($sexo=="Mujer") "checked";?> value="Mujer">Mujer
-                <input type="radio" name="sexo" <?php if ($sexo=="Hombre") "checked";?> value="Hombre">Hombre
+                <input type="radio" name="sexo" value="Mujer">Mujer
+                <input type="radio" name="sexo" value="Hombre">Hombre
                 <div class="input">
                     <input type="password" name="password" placeholder="Contraseña" rvalue="<?php echo $_SESSION['password']; ?>" equired>
                     <input type="password" name="password2" placeholder="Contraseña otra vez" value="<?php echo $_SESSION['password2']; ?>" required>
