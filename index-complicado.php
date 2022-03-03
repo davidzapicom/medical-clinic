@@ -67,8 +67,13 @@
         <form action="#" method="post">
             <h1>Clinica ADSI</h1>
             <div class="input">
+            <i class='bx bx-dialpad-alt icon'></i>
+                <input type="text" name="dni" placeholder="DNI" class="input__password" required>
+            </div>
+            <br />
+            <div class="input">
                 <i class='bx bx-user input__lock'></i>
-                <input type="text" name="usu" placeholder="Nombre de usuario/a o DNI" class="input__password" required>
+                <input type="text" name="usu" placeholder="Nombre de usuario/a" class="input__password" required>
             </div>
             <br />
             <div class="input">
