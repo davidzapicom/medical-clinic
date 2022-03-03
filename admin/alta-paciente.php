@@ -6,7 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="../assets/css/style.css">
     <link href='https://unpkg.com/boxicons@2.1.1/css/boxicons.min.css' rel='stylesheet'>
-    <title>Administrador - Alta paciente| Clinica ADSI</title>
+    <title>Administrador - Alta paciente | Clinica ADSI</title>
 </head>
 <body>
     <?php
@@ -42,7 +42,7 @@
                     $_SESSION['password'] = $_SESSION['password2'] = "";
                 } else {
                     $cif = hash_hmac('sha512', '$password', 'secret');
-                    $inpac = "INSERT INTO pacientes (dniPac,pacNombres,pacApellidos,pacFechaNacimiento,pacSexo) VALUES ('$_SESSION[dnipaciente]','$_SESSION[nombre]','$_SESSION[apellidos]','$_SESSION[fechanacimiento]','$_SESSION[sexo]')";
+                    $inpac = "INSERT INTO pacientes (dniPac,pacNombres,pacApellidos,pacFechaNacimiento,pacSexo) VALUES ('$_SESSION[dnipaciente]','$_SESSION[nombre]','$_SESSION[apellidos]','$_SESSION[fechanacimiento]','$_POST[sexo]')";
                     $inusu = "INSERT INTO usuarios (dniUsu,usuLogin,usuPassword,usuEstado,usutipo) VALUES ('$_SESSION[dnipaciente]','$_SESSION[usuario]','$cif','Activo','Paciente')";
                     if (mysqli_query($con, $inpac) && mysqli_query($con, $inusu)) {
                         $error = "Usuario insertado correctamente.";
@@ -107,23 +107,23 @@
         <div class="text">
             <h1>Alta Paciente</h1>
             <form action="#" method="post">
-                <input type="text" name="dnipaciente" placeholder="DNI" value="<?php echo $_SESSION['dnipaciente']; ?>" required>
+                <input type="text" name="dnipaciente" placeholder="DNI" value="<?php if (isset($_POST['alta'])) echo $_SESSION['dnipaciente']; ?>" required>
                 <br />
-                <input type="text" name="usuario" placeholder="Nombre de usuario" value="<?php echo $_SESSION['usuario']; ?>" required>
+                <input type="text" name="usuario" placeholder="Nombre de usuario" value="<?php if (isset($_POST['alta'])) echo $_SESSION['usuario']; ?>" required>
                 <br />
-                <input type="text" name="nombre" placeholder="Nombre" value="<?php echo $_SESSION['nombre']; ?>" required>
+                <input type="text" name="nombre" placeholder="Nombre" value="<?php if (isset($_POST['alta'])) echo $_SESSION['nombre']; ?>" required>
                 <br />
-                <input type="text" name="apellidos" placeholder="Apellidos" value="<?php echo $_SESSION['apellidos']; ?>" required>
+                <input type="text" name="apellidos" placeholder="Apellidos" value="<?php if (isset($_POST['alta'])) echo $_SESSION['apellidos']; ?>" required>
                 <br />
                 <label for="fechanacimiento">Fecha nacimiento</label>
-                <input type="date" name="fechanacimiento" value="<?php echo $_SESSION['fechanacimiento']; ?>" required>
+                <input type="date" name="fechanacimiento" value="<?php if (isset($_POST['alta'])) echo $_SESSION['fechanacimiento']; ?>" required>
                 <br />
                 <label for="sexo">Sexo</label>
-                <input type="radio" name="sexo" value="Mujer">Mujer
-                <input type="radio" name="sexo" value="Hombre">Hombre
+                <input type="radio" name="sexo" <?php if (isset($_SESSION['sexo']) && $_SESSION['sexo'] == "Mujer") echo "checked";?> value="Mujer" required>Mujer
+                <input type="radio" name="sexo" <?php if (isset($_SESSION['sexo']) && $_SESSION['sexo'] == "Hombre") echo "checked";?> value="Hombre" required>Hombre
                 <div class="input">
-                    <input type="password" name="password" placeholder="Contraseña" rvalue="<?php echo $_SESSION['password']; ?>" equired>
-                    <input type="password" name="password2" placeholder="Contraseña otra vez" value="<?php echo $_SESSION['password2']; ?>" required>
+                    <input type="password" name="password" placeholder="Contraseña" value="<?php if (isset($_POST['alta'])) echo $_SESSION['password']; ?>" equired>
+                    <input type="password" name="password2" placeholder="Contraseña otra vez" value="<?php if (isset($_POST['alta'])) echo $_SESSION['password2']; ?>" required>
                 </div>
                 <p><?php echo "<strong>$error</strong>"; ?></p>
                 <p><?php echo "$aviso"; ?></p>
