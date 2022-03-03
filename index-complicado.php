@@ -21,21 +21,22 @@
 <body>
     <?php
     session_start();
-    $error = "";
-    $aviso = "";
+    $error = $aviso = "";
     if (isset($_POST['login'])) {
         $_SESSION['usu'] = $_POST['usu'];
+        $_SESSION['dni'] = $_POST['dni'];
         $password = $_POST['pass'];
         $cif = hash_hmac('sha512', '$password', 'secret');
         $con = mysqli_connect('localhost', 'Acceso', 'take55AcceSs38', 'Clinica');
-        $sentencia = 'SELECT * FROM usuarios WHERE usuLogin="' . $_SESSION["usu"] . '" OR dniUsu="' . $_SESSION["usu"] . '" AND usuPassword="' . $cif . '"';
+        $sentencia = 'SELECT * FROM usuarios WHERE usuLogin="' . $_SESSION["usu"] . '" AND dniUsu="' . $_SESSION["dni"] . '" AND usuPassword="' . $cif . '"';
         $result = mysqli_query($con, $sentencia);
         $fetch = mysqli_fetch_assoc($result);
         $_SESSION['name'] = $fetch['usuLogin'];
-        $_SESSION['dni'] = $fetch['dniUsu'];
         $_SESSION['usutipo'] = $fetch['usutipo'];
+        echo $_SESSION['usutipo'];
+
         if (mysqli_num_rows($result) == 0) {
-            $sentencia = 'SELECT * FROM usuarios WHERE usuLogin="' . $_SESSION["usu"] . '" OR dniUsu="' . $_SESSION["usu"] . '"';
+            $sentencia = 'SELECT * FROM usuarios WHERE usuLogin="' . $_SESSION["usu"] . '" AND dniUsu="' . $_SESSION["dni"] . '"';
             $result2 = mysqli_query($con, $sentencia);
             $fetch = mysqli_fetch_assoc($result2);
             mysqli_close($con);
@@ -45,8 +46,14 @@
                 $error = "Contraseña incorrecta.";
             }
             $aviso = "Por favor, intentelo de nuevo.";
-            header("Refresh:2; url=index.php", true);
+            header("Refresh:2; url=index-complicado.php", true);
         } else {
+
+
+
+
+
+
             if ($_SESSION['usutipo'] == 'Paciente') {
                 $error = '<p class="ufl"><strong>' . $_SESSION["name"] . '</strong>, bienvenid@! <br/>Por favor, espere mientras es redirigid@.</p>';
                 header("Refresh:2.5; url=paciente/index.php", true);

@@ -21,8 +21,7 @@
 <body>
     <?php
     session_start();
-    $error = "";
-    $aviso = "";
+    $error = $aviso = "";
     if (isset($_POST['login'])) {
         $_SESSION['usu'] = $_POST['usu'];
         $password = $_POST['pass'];
