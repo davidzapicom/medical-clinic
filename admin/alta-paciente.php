@@ -119,8 +119,8 @@
                 <input type="date" name="fechanacimiento" value="<?php if (isset($_POST['alta'])) echo $_SESSION['fechanacimiento']; ?>" required>
                 <br />
                 <label for="sexo">Sexo</label>
-                <input type="radio" name="sexo" <?php if (isset($_SESSION['sexo']) && $_SESSION['sexo'] == "Mujer") echo "checked";?> value="Mujer" required>Mujer
-                <input type="radio" name="sexo" <?php if (isset($_SESSION['sexo']) && $_SESSION['sexo'] == "Hombre") echo "checked";?> value="Hombre" required>Hombre
+                <input type="radio" name="sexo" <?php if (isset($_SESSION['sexo']) && $_SESSION['sexo'] == "Masculino") echo "checked";?> value="Masculino" required>Masculino
+                <input type="radio" name="sexo" <?php if (isset($_SESSION['sexo']) && $_SESSION['sexo'] == "Femenino") echo "checked";?> value="Femenino" required>Femenino
                 <div class="input">
                     <input type="password" name="password" placeholder="Contraseña" value="<?php if (isset($_POST['alta'])) echo $_SESSION['password']; ?>" equired>
                     <input type="password" name="password2" placeholder="Contraseña otra vez" value="<?php if (isset($_POST['alta'])) echo $_SESSION['password2']; ?>" required>
