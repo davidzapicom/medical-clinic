@@ -109,14 +109,14 @@
             <form action="#" method="post">
                 <input type="text" name="dnipaciente" placeholder="DNI" value="<?php if (isset($_POST['alta'])) echo $_SESSION['dnipaciente']; ?>" required>
                 <br />
-                <input type="text" name="usuario" placeholder="Nombre de usuario" value="<?php if (isset($_POST['alta'])) echo $_SESSION['usuario']; ?>" required>
+                <input type="text" name="usuario" placeholder="Nombre de usuario" value="<?php if (isset($_POST['alta'])) echo $_SESSION['usuario']; ?>" pattern="[A-Za-z]" maxlength="8" oninvalid="setCustomValidity('Introduce como máximo 8 carácteres y que sean letras.')" required>
                 <br />
-                <input type="text" name="nombre" placeholder="Nombre" value="<?php if (isset($_POST['alta'])) echo $_SESSION['nombre']; ?>" required>
+                <input type="text" name="nombre" placeholder="Nombre" value="<?php if (isset($_POST['alta'])) echo $_SESSION['nombre']; ?>" pattern="[A-Za-z]" maxlength="8" required>
                 <br />
-                <input type="text" name="apellidos" placeholder="Apellidos" value="<?php if (isset($_POST['alta'])) echo $_SESSION['apellidos']; ?>" required>
+                <input type="text" name="apellidos" placeholder="Apellidos" value="<?php if (isset($_POST['alta'])) echo $_SESSION['apellidos']; ?>" pattern="[A-Za-z]" maxlength="15" required>
                 <br />
                 <label for="fechanacimiento">Fecha nacimiento</label>
-                <input type="date" name="fechanacimiento" value="<?php if (isset($_POST['alta'])) echo $_SESSION['fechanacimiento']; ?>" required>
+                <input type="date" name="fechanacimiento" value="<?php if (isset($_POST['alta'])) echo $_SESSION['fechanacimiento']; ?>" min="1900-01-01" required>
                 <br />
                 <label for="sexo">Sexo</label>
                 <input type="radio" name="sexo" <?php if (isset($_SESSION['sexo']) && $_SESSION['sexo'] == "Masculino") echo "checked";?> value="Masculino" required>Masculino

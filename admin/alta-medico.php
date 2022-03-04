@@ -112,15 +112,15 @@
         <div class="text">
             <h1>Alta Médico</h1>
             <form action="#" method="post">
-                <input type="text" name="usuario" placeholder="Nombre de usuario" value="<?php echo $_SESSION['usuario']; ?>" required>
+                <input type="text" name="usuario" placeholder="Nombre de usuario" value="<?php echo $_SESSION['usuario']; ?>" pattern="[A-Za-z]" maxlength="8" required>
                 <br />
-                <input type="text" name="nombre" placeholder="Nombre" value="<?php echo $_SESSION['nombre']; ?>" required>
+                <input type="text" name="nombre" placeholder="Nombre" value="<?php echo $_SESSION['nombre']; ?>" maxlength="10" required>
                 <br />
-                <input type="text" name="apellidos" placeholder="Apellidos" value="<?php echo $_SESSION['apellidos']; ?>" required>
+                <input type="text" name="apellidos" placeholder="Apellidos" value="<?php echo $_SESSION['apellidos']; ?>" maxlength="15" required>
                 <br />
-                <input type="text" name="especialidad" placeholder="Especialidad" value="<?php echo $_SESSION['especialidad']; ?>" required>
+                <input type="text" name="especialidad" placeholder="Especialidad" value="<?php echo $_SESSION['especialidad']; ?>" maxlength="10" required>
                 <br />
-                <input type="tel" name="telefono" placeholder="Teléfono (000 000 000)" pattern="[0-9]{3}-[0-9]{3}-[0-9]{3}" value="<?php echo $_SESSION['telefono']; ?>" required>
+                <input type="tel" name="telefono" placeholder="Teléfono (000-000-000)" pattern="[0-9]{3}-[0-9]{3}-[0-9]{3}" value="<?php echo $_SESSION['telefono']; ?>" required>
                 <br />
                 <input type="email" name="correo" placeholder="Correo" value="<?php echo $_SESSION['correo']; ?>" required>
                 <br />
