@@ -20,33 +20,39 @@
 </head>
 <body>
     <?php
+    ini_set("display_errors", true);
     session_start();
     $error = $aviso = "";
     if (isset($_POST['login'])) {
-        $_SESSION['usu'] = $_POST['usu'];
+        $_SESSION['name'] = $_POST['usu'];
         $_SESSION['dni'] = $_POST['dni'];
         $password = $_POST['pass'];
         $cif = hash_hmac('sha512', '$password', 'secret');
         $con = mysqli_connect('localhost', 'Acceso', 'take55AcceSs38', 'Clinica');
-        $sentencia = 'SELECT * FROM usuarios WHERE usuLogin="' . $_SESSION["usu"] . '" AND dniUsu="' . $_SESSION["dni"] . '" AND usuPassword="' . $cif . '"';
+        $sentencia = 'SELECT * FROM usuarios WHERE dniUsu="' . $_SESSION["dni"] . '" AND (usuLogin="' . $_SESSION["name"] . '" AND usuPassword="' . $cif . '")';
         $result = mysqli_query($con, $sentencia);
+        if (mysqli_connect_errno()) {
+            printf("Conexión fallida %s\n", mysqli_connect_error());
+            exit();
+        }
         $fetch = mysqli_fetch_assoc($result);
-        $_SESSION['name'] = $fetch['usuLogin'];
-        $_SESSION['usutipo'] = $fetch['usutipo'];
-        echo $_SESSION['usutipo'];
+        // $_SESSION['usutipo'] = $fetch['usutipo'];
+
+        var_dump($fetch);
 
         if (mysqli_num_rows($result) == 0) {
-            $sentencia = 'SELECT * FROM usuarios WHERE usuLogin="' . $_SESSION["usu"] . '" AND dniUsu="' . $_SESSION["dni"] . '"';
-            $result2 = mysqli_query($con, $sentencia);
-            $fetch = mysqli_fetch_assoc($result2);
-            mysqli_close($con);
-            if (mysqli_num_rows($result2) == 0) {
-                $error = "Usuario inexistente.";
-            } else {
-                $error = "Contraseña incorrecta.";
-            }
-            $aviso = "Por favor, intentelo de nuevo.";
-            header("Refresh:2; url=index-complicado.php", true);
+            $error = "Usuario inexistente";
+            // $sentencia = 'SELECT * FROM usuarios WHERE usuLogin="' . $_SESSION["name"] . '" AND dniUsu="' . $_SESSION["dni"] . '"';
+            // $result2 = mysqli_query($con, $sentencia);
+            // $fetch = mysqli_fetch_assoc($result2);
+            // mysqli_close($con);
+            // if (mysqli_num_rows($result2) == 0) {
+            //     $error = "Usuario inexistente.";
+            // } else {
+            //     $error = "Contraseña incorrecta.";
+            // }
+            // $aviso = "Por favor, intentelo de nuevo.";
+            // header("Refresh:2; url=index-complicado.php", true);
         } else {
 
 
@@ -74,7 +80,7 @@
         <form action="#" method="post">
             <h1>Clinica ADSI</h1>
             <div class="input">
-            <i class='bx bx-dialpad-alt icon'></i>
+            <i class='bx bx-dialpad-alt input__lock'></i>
                 <input type="text" name="dni" placeholder="DNI" class="input__password" required>
             </div>
             <br />
