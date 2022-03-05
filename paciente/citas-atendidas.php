@@ -18,10 +18,13 @@
     }
     
     if ($_SESSION['usutipo'] == 'Paciente') {
-
     $sql = "SELECT citas.citFecha,citas.citHora,medicos.medNombres,medicos.medApellidos,consultorios.conNombre,citas.CitObservaciones FROM citas,medicos,consultorios WHERE citas.citPaciente='$_SESSION[dni]' AND citas.citEstado='Atendido' AND citas.citMedico=medicos.dniMed AND citas.citConsultorio=consultorios.idConsultorio;";
     $result = mysqli_query($con, $sql);
     $filas = mysqli_num_rows($result);
+    } else {
+        $error = "No tienes permisos.";
+        $aviso = "Inicie sesión como paciente para poder realizar la operación.";
+        header("Refresh:4; url=../logout.php", true);
     }
     ?>
     <nav class="sidebar close">
