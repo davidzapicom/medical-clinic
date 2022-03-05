@@ -54,10 +54,7 @@
                         $inusu = "INSERT INTO usuarios (dniUsu,usuLogin,usuPassword,usuEstado,usutipo) VALUES ('$_SESSION[dnimedico]','$_SESSION[usuario]','$cif','$_SESSION[estado]','$_SESSION[tipo]')";
                         if (mysqli_query($con, $inmed) && mysqli_query($con, $inusu)) {
                             $error = "Usuario insertado correctamente.";
-                            $_SESSION['usuario'] = $_SESSION['nombre'] = $_SESSION['apellidos'] = "";
-                            $_SESSION['especialidad'] = $_SESSION['telefono'] = $_SESSION['correo'] = "";
-                            $_SESSION['dnimedico'] = $_SESSION['password'] = $_SESSION['password2'] = "";
-                            $_SESSION['estado'] = $_SESSION['tipo'] = "";
+                            $_SESSION['usuario'] = $_SESSION['nombre'] = $_SESSION['apellidos'] = $_SESSION['especialidad'] = $_SESSION['telefono'] = $_SESSION['correo'] = $_SESSION['dnimedico'] = $_SESSION['password'] = $_SESSION['password2'] = $_SESSION['estado'] = $_SESSION['tipo'] = "";
                         } else {
                             $error = "ERROR: no se ha podido insertar el usuario.";
                             $aviso = "Vuelve a intentarlo.";
@@ -127,11 +124,11 @@
                 <br />
                 <input type="text" name="especialidad" placeholder="Especialidad" value="<?php echo $_SESSION['especialidad']; ?>" maxlength="10" oninvalid="this.setCustomValidity('Debes introducir letras.')" oninput="this.setCustomValidity('')" required>
                 <br />
-                <input type="tel" name="telefono" placeholder="Teléfono (000-000-000)" value="<?php echo $_SESSION['telefono']; ?>" pattern="[0-9]{3}-[0-9]{3}-[0-9]{3}" oninvalid="this.setCustomValidity('Debes introducir solo numeros y letras.')" oninput="this.setCustomValidity('')" required>
+                <input type="tel" name="telefono" placeholder="Teléfono (000-000-000)" value="<?php echo $_SESSION['telefono']; ?>" pattern="[0-9]{3}-[0-9]{3}-[0-9]{3}" maxlength="15" oninvalid="this.setCustomValidity('Debes introducir solo numeros y letras.')" oninput="this.setCustomValidity('')" required>
                 <br />
-                <input type="email" name="correo" placeholder="Correo" value="<?php echo $_SESSION['correo']; ?>" pattern="[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Za-z]{1,63}$" oninvalid="this.setCustomValidity('Debes introducir un email válido.')" oninput="this.setCustomValidity('')" required>
+                <input type="email" name="correo" placeholder="Correo" value="<?php echo $_SESSION['correo']; ?>" pattern="[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Za-z]{1,63}$" maxlength="30" oninvalid="this.setCustomValidity('Debes introducir un email válido.')" oninput="this.setCustomValidity('')" required>
                 <br />
-                <input type="text" name="dnimedico" placeholder="DNI" value="<?php echo $_SESSION['dnimedico']; ?>" oninvalid="this.setCustomValidity('Debes introducir ocho numeros y una letra.')" oninput="this.setCustomValidity('')" required>
+                <input type="text" name="dnimedico" placeholder="DNI" value="<?php echo $_SESSION['dnimedico']; ?>" pattern="[0-9]{8}[A-Za-z]{1}" maxlength="10" oninvalid="this.setCustomValidity('Debes introducir ocho numeros y una letra.')" oninput="this.setCustomValidity('')" required>
                 <br />
                 <div class="input">
                     <input type="password" name="password" placeholder="Contraseña" value="<?php echo $_SESSION['password']; ?>" required>
