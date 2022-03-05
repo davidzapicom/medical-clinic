@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -8,6 +9,7 @@
     <link href='https://unpkg.com/boxicons@2.1.1/css/boxicons.min.css' rel='stylesheet'>
     <title>Administrador - Alta médico | Clinica ADSI</title>
 </head>
+
 <body>
     <?php
     session_start();
@@ -43,18 +45,23 @@
                     $aviso = "Comprueba las contraseñas e intentalo de nuevo.";
                     $_SESSION['password'] = $_SESSION['password2'] = "";
                 } else {
-                    $cif = hash_hmac('sha512', '$password', 'secret');
-                    $inmed = "INSERT INTO medicos (dniMed,medNombres,medApellidos,medEspecialidad,medTelefono,medCorreo) VALUES ('$_SESSION[dnimedico]','$_SESSION[nombre]','$_SESSION[apellidos]','$_SESSION[especialidad]','$_SESSION[telefono]','$_SESSION[correo]')";
-                    $inusu = "INSERT INTO usuarios (dniUsu,usuLogin,usuPassword,usuEstado,usutipo) VALUES ('$_SESSION[dnimedico]','$_SESSION[usuario]','$cif','$_SESSION[estado]','$_SESSION[tipo]')";
-                    if (mysqli_query($con, $inmed) && mysqli_query($con, $inusu)) {
-                        $error = "Usuario insertado correctamente.";
-                        $_SESSION['usuario'] = $_SESSION['nombre'] = $_SESSION['apellidos'] = "";
-                        $_SESSION['especialidad'] = $_SESSION['telefono'] = $_SESSION['correo'] = "";
-                        $_SESSION['dnimedico'] = $_SESSION['password'] = $_SESSION['password2'] = "";
-                        $_SESSION['estado'] = $_SESSION['tipo'] = "";
+                    if (!preg_match("#.*^(?=.{8,20})(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*\W).*$#", $_SESSION['password'])) {
+                        $error = "La contraseña debe tener al menos 8 caracteres, un numero, una mayúscula, una minúscula y un carácter especial.";
+                        $_SESSION['password'] = $_SESSION['password2'] = "";
                     } else {
-                        $error = "ERROR: no se ha podido insertar el usuario.";
-                        $aviso = "Vuelve a intentarlo.";
+                        $cif = hash_hmac('sha512', '$password', 'secret');
+                        $inmed = "INSERT INTO medicos (dniMed,medNombres,medApellidos,medEspecialidad,medTelefono,medCorreo) VALUES ('$_SESSION[dnimedico]','$_SESSION[nombre]','$_SESSION[apellidos]','$_SESSION[especialidad]','$_SESSION[telefono]','$_SESSION[correo]')";
+                        $inusu = "INSERT INTO usuarios (dniUsu,usuLogin,usuPassword,usuEstado,usutipo) VALUES ('$_SESSION[dnimedico]','$_SESSION[usuario]','$cif','$_SESSION[estado]','$_SESSION[tipo]')";
+                        if (mysqli_query($con, $inmed) && mysqli_query($con, $inusu)) {
+                            $error = "Usuario insertado correctamente.";
+                            $_SESSION['usuario'] = $_SESSION['nombre'] = $_SESSION['apellidos'] = "";
+                            $_SESSION['especialidad'] = $_SESSION['telefono'] = $_SESSION['correo'] = "";
+                            $_SESSION['dnimedico'] = $_SESSION['password'] = $_SESSION['password2'] = "";
+                            $_SESSION['estado'] = $_SESSION['tipo'] = "";
+                        } else {
+                            $error = "ERROR: no se ha podido insertar el usuario.";
+                            $aviso = "Vuelve a intentarlo.";
+                        }
                     }
                 }
             }
@@ -63,8 +70,8 @@
             $error = "No tienes permisos.";
             $aviso = "Inicie sesión como administrador para poder realizar la operación.";
             header("Refresh:4; url=../logout.php", true);
-        } 
-    } else {
+        }
+    }
     ?>
     <nav class="sidebar close">
         <header>
@@ -112,19 +119,19 @@
         <div class="text">
             <h1>Alta Médico</h1>
             <form action="#" method="post">
-                <input type="text" name="usuario" placeholder="Nombre de usuario" value="<?php echo $_SESSION['usuario']; ?>" pattern="[A-Za-z]" maxlength="8" required>
+                <input type="text" name="usuario" placeholder="Nombre de usuario" value="<?php echo $_SESSION['usuario']; ?>" pattern="[A-Za-z0-9]+" maxlength="10" oninvalid="this.setCustomValidity('Debes introducir solo letras y numeros.')" oninput="this.setCustomValidity('')" required>
                 <br />
-                <input type="text" name="nombre" placeholder="Nombre" value="<?php echo $_SESSION['nombre']; ?>" maxlength="10" required>
+                <input type="text" name="nombre" placeholder="Nombre" value="<?php echo $_SESSION['nombre']; ?>" maxlength="10" oninvalid="this.setCustomValidity('Debes introducir solo letras.')" oninput="this.setCustomValidity('')" required>
                 <br />
-                <input type="text" name="apellidos" placeholder="Apellidos" value="<?php echo $_SESSION['apellidos']; ?>" maxlength="15" required>
+                <input type="text" name="apellidos" placeholder="Apellidos" value="<?php echo $_SESSION['apellidos']; ?>" maxlength="15" oninvalid="this.setCustomValidity('Debes introducir solo letras.')" oninput="this.setCustomValidity('')" required>
                 <br />
-                <input type="text" name="especialidad" placeholder="Especialidad" value="<?php echo $_SESSION['especialidad']; ?>" maxlength="10" required>
+                <input type="text" name="especialidad" placeholder="Especialidad" value="<?php echo $_SESSION['especialidad']; ?>" maxlength="10" oninvalid="this.setCustomValidity('Debes introducir letras.')" oninput="this.setCustomValidity('')" required>
                 <br />
-                <input type="tel" name="telefono" placeholder="Teléfono (000-000-000)" pattern="[0-9]{3}-[0-9]{3}-[0-9]{3}" value="<?php echo $_SESSION['telefono']; ?>" required>
+                <input type="tel" name="telefono" placeholder="Teléfono (000-000-000)" value="<?php echo $_SESSION['telefono']; ?>" pattern="[0-9]{3}-[0-9]{3}-[0-9]{3}" oninvalid="this.setCustomValidity('Debes introducir solo numeros y letras.')" oninput="this.setCustomValidity('')" required>
                 <br />
-                <input type="email" name="correo" placeholder="Correo" value="<?php echo $_SESSION['correo']; ?>" required>
+                <input type="email" name="correo" placeholder="Correo" value="<?php echo $_SESSION['correo']; ?>" pattern="[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Za-z]{1,63}$" oninvalid="this.setCustomValidity('Debes introducir un email válido.')" oninput="this.setCustomValidity('')" required>
                 <br />
-                <input type="text" name="dnimedico" placeholder="DNI" value="<?php echo $_SESSION['dnimedico']; ?>" required>
+                <input type="text" name="dnimedico" placeholder="DNI" value="<?php echo $_SESSION['dnimedico']; ?>" oninvalid="this.setCustomValidity('Debes introducir ocho numeros y una letra.')" oninput="this.setCustomValidity('')" required>
                 <br />
                 <div class="input">
                     <input type="password" name="password" placeholder="Contraseña" value="<?php echo $_SESSION['password']; ?>" required>
@@ -145,9 +152,7 @@
             </form>
         </div>
     </section>
-    <?php
-    }
-    ?>
     <script src="../assets/js/bar-script.js"></script>
 </body>
+
 </html>
