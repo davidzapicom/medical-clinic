@@ -9,41 +9,61 @@
     <title>Asistente - Nueva cita | Clinica ADSI</title>
 </head>
 <body>
-    <?php
+<?php
     session_start();
     $error = $aviso = "";
-    // if (isset($_POST['alta'])) {
-    //     $_SESSION['usuario'] = $_POST['usuario'];
-    //     $_SESSION['nombre'] = $_POST['nombre'];
-    //     $_SESSION['apellidos'] = $_POST['apellidos'];
-    //     $_SESSION['especialidad'] = $_POST['especialidad'];
-    //     $_SESSION['telefono'] = $_POST['telefono'];
-    //     $_SESSION['email'] = $_POST['email'];
-    //     $_SESSION['dnipaciente'] = $_POST['dnipaciente'];
-    //     $_SESSION['password'] = $_POST['password'];
-    //     $_SESSION['password2'] = $_POST['password2'];
-    //     $_SESSION['estado'] = $_POST['estado'];
-    //     $_SESSION['tipo'] = "Médico";
-    //     if ($_POST['password'] != $_POST['password2']) {
-    //         $error = "Las contraseñas no coinciden.";
-    //         $aviso = "Comprueba las contrasñas e intentalo de nuevo.";
-    //         $_SESSION['password'] = $_SESSION['password2'] = "";
-    //     } else {
-    //         $con = mysqli_connect('localhost', 'Asistente', 'Ass86teN33', 'Clinica');
-    //         $inmed = "INSERT INTO pacientes (dniPac,pacNombres,pacApellidos,pacFechaNacimiento,pacSexo) VALUES ('$_POST[dnipaciente]','$_POST[nombre]','$_POST[apellidos]','$_POST[especialidad]','$_POST[telefono]','$_POST[correo]')";
-    //         $inusu = "INSERT INTO usuarios (dniUsu,usuLogin,usuPassword,usuEstado,usutipo) VALUES ('$_POST[dnipaciente]','$_POST[usuario]','$_POST[password]','$_POST[estado]','$_SESSION[tipo]')";
-    //         if (mysqli_query($con, $inmed) && mysqli_query($con, $inusu)) {
-    //             $error = "Usuario insertado correctamente.";
-    //             $_SESSION['usuario'] = $_SESSION['nombre'] = $_SESSION['apellidos'] = $_SESSION['especialidad'] = "";
-    //             $_SESSION['telefono'] = $_SESSION['email'] = $_SESSION['dnipaciente'] = $_SESSION['password'] = "";
-    //             $_SESSION['password2'] = $_SESSION['estado'] = $_SESSION['tipo'] = "";
-    //         } else {
-    //             $error = "ERROR: no se ha podido insertar el usuario.";
-    //             $aviso = "Vuelve a intentarlo.";
-    //         }
-    //         mysqli_close($con);
-    //     }
-    // }
+    if (isset($_POST['alta'])) {
+        $_SESSION['usuario'] = $_POST['usuario'];
+        $_SESSION['nombre'] = $_POST['nombre'];
+        $_SESSION['apellidos'] = $_POST['apellidos'];
+        $_SESSION['dnipaciente'] = $_POST['dnipaciente'];
+        $_SESSION['password'] = $_POST['password'];
+        $_SESSION['password2'] = $_POST['password2'];
+        $_SESSION['sexo'] = $_POST['sexo'];
+        $_SESSION['fechanacimiento'] = date('Y-m-d', strtotime($_POST['fechanacimiento']));
+
+        if ($_SESSION['usutipo'] == 'Asistente') {
+            $con = mysqli_connect('localhost', 'Asistente', 'Ass86teN33', 'Clinica');
+            if (mysqli_connect_errno()) {
+                printf("Conexión fallida %s\n", mysqli_connect_error());
+                exit();
+            }
+            $selectususarios = "SELECT * FROM pacientes where dniPac='$_SESSION[dnipaciente]'";
+            $result = mysqli_query($con, $selectususarios);
+
+            if (mysqli_num_rows($result) != 0) {
+                $error = "Ya hay un usuario resgistrado con ese DNI.";
+                $aviso = "Compruebe el DNI / inicie sesión.";
+            } else {
+                if ($_POST['password'] != $_POST['password2']) {
+                    $error = "Las contraseñas no coinciden.";
+                    $aviso = "Comprueba las contraseñas e intentalo de nuevo.";
+                    $_SESSION['password'] = $_SESSION['password2'] = "";
+                } else {
+                    if (!preg_match("#.*^(?=.{8,20})(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*\W).*$#", $_SESSION['password'])) {
+                        $error = "La contraseña debe tener al menos 8 caracteres, un numero, una mayúscula, una minúscula y un carácter especial.";
+                        $_SESSION['password'] = $_SESSION['password2'] = "";
+                    } else {
+                        $cif = hash_hmac('sha512', '$password', 'secret');
+                        $inpac = "INSERT INTO pacientes (dniPac,pacNombres,pacApellidos,pacFechaNacimiento,pacSexo) VALUES ('$_SESSION[dnipaciente]','$_SESSION[nombre]','$_SESSION[apellidos]','$_SESSION[fechanacimiento]','$_SESSION[sexo]')";
+                        $inusu = "INSERT INTO usuarios (dniUsu,usuLogin,usuPassword,usuEstado,usutipo) VALUES ('$_SESSION[dnipaciente]','$_SESSION[usuario]','$cif','Activo','Paciente')";
+                        if (mysqli_query($con, $inpac) && mysqli_query($con, $inusu)) {
+                            $error = "Usuario insertado correctamente.";
+                            $_SESSION['usuario'] = $_SESSION['nombre'] = $_SESSION['apellidos'] = $_SESSION['dnipaciente'] = $_SESSION['password'] = $_SESSION['password2'] = $_SESSION['sexo'] = $_SESSION['fechanacimiento'] = "";
+                        } else {
+                            $error = "ERROR: no se ha podido insertar el usuario.";
+                            $aviso = "Vuelve a intentarlo.";
+                        }
+                    }
+                }
+            }
+            mysqli_close($con);
+        } else {
+            $error = "No tienes permisos.";
+            $aviso = "Inicie sesión como administrador para poder realizar la operación.";
+            header("Refresh:4; url=../logout.php", true);
+        }
+    }
     ?>
     <nav class="sidebar close">
         <header>
@@ -101,31 +121,29 @@
     </nav>
     <section class="home">
         <div class="text">
-            <h1>Alta Paciente</h1>
+            <h1>Nueva Cita</h1>
             <form action="#" method="post">
-                <!-- <input type="text" name="dnipaciente" placeholder="DNI" required>
+                <input type="text" name="dnipaciente" placeholder="DNI Paciente" required>
                 <br />
-                <input type="text" name="nombre" placeholder="Nombre de usuario" required>
+                <input type="text" name="dnimedico" placeholder="DNI Médico" required>
                 <br />
                 <input type="text" name="nombre" placeholder="Nombre" required>
                 <br />
                 <input type="text" name="apellidos" placeholder="Apellidos" required>
                 <br />
-                <label for="fechanacimiento">Fecha nacimiento</label>
-                <input type="date" name="fechanacimiento" required>
+                <input type="number" name="consultorio" placeholder="Consultorio" required>
+                <br />
+                <label for="fechacita">Fecha</label>
+                <input type="date" name="fechacita" required>
                 <br />
                 <label for="sexo">Sexo</label>
                 <select name="sexo" id="sexo" required>
                     <option value="Masculino">Masculino</option>
                     <option value="Femenino">Femenino</option>
                 </select>
-                <div class="input">
-                    <input type="password" name="password" placeholder="Contraseña" required>
-                    <input type="password" name="password2" placeholder="Contraseña otra vez" required>
-                </div>
                 <p><?php echo "<strong>$error</strong>"; ?></p>
                 <p><?php echo "$aviso"; ?></p>
-                <input type="submit" class="button" name="alta" value="Alta"> -->
+                <input type="submit" class="button" name="alta" value="Insertar cita">
             </form>
         </div>
     </section>
