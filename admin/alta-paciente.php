@@ -114,13 +114,13 @@
         <div class="text">
             <h1>Alta Paciente</h1>
             <form action="#" method="post">
-                <input type="text" name="dnipaciente" placeholder="DNI" value="<?php if (isset($_POST['alta'])) echo $_SESSION['dnipaciente']; ?>"  pattern="[0-9]{8}[A-Za-z]{1}" maxlength="10" oninvalid="this.setCustomValidity('Debes introducir 8 numeros y 1 letra')" oninput="this.setCustomValidity('')" required>
+                <input type="text" name="dnipaciente" placeholder="DNI" value="<?php if (isset($_POST['alta'])) echo $_SESSION['dnipaciente']; ?>"  pattern="[0-9]{8}[A-Za-z]{1}" maxlength="10" oninvalid="this.setCustomValidity('Debes introducir 8 numeros y 1 letra.')" oninput="this.setCustomValidity('')" required>
                 <br />
-                <input type="text" name="usuario" placeholder="Nombre de usuario" value="<?php if (isset($_POST['alta'])) echo $_SESSION['usuario']; ?>" pattern="[A-Za-z0-9]+" maxlength="10" required>
+                <input type="text" name="usuario" placeholder="Nombre de usuario" value="<?php if (isset($_POST['alta'])) echo $_SESSION['usuario']; ?>" pattern="[A-Za-z0-9]+" maxlength="10" oninvalid="this.setCustomValidity('Debes introducir solo numeros y letras.')" oninput="this.setCustomValidity('')" required>
                 <br />
-                <input type="text" name="nombre" placeholder="Nombre" value="<?php if (isset($_POST['alta'])) echo $_SESSION['nombre']; ?>" pattern="[A-Za-z]+" maxlength="10" required>
+                <input type="text" name="nombre" placeholder="Nombre" value="<?php if (isset($_POST['alta'])) echo $_SESSION['nombre']; ?>" pattern="[A-Za-z]+" maxlength="10" oninvalid="this.setCustomValidity('Debes introducir solo letras.')" oninput="this.setCustomValidity('')" required>
                 <br />
-                <input type="text" name="apellidos" placeholder="Apellidos" value="<?php if (isset($_POST['alta'])) echo $_SESSION['apellidos']; ?>" pattern="[A-Za-z[ ]A-Za-z]+" maxlength="20" required>
+                <input type="text" name="apellidos" placeholder="Apellidos" value="<?php if (isset($_POST['alta'])) echo $_SESSION['apellidos']; ?>" pattern="[A-Za-z[ ]A-Za-z]+" maxlength="20" oninvalid="this.setCustomValidity('Debes introducir solo letras.')" oninput="this.setCustomValidity('')" required>
                 <br />
                 <label for="fechanacimiento">Fecha nacimiento</label>
                 <input type="date" name="fechanacimiento" value="<?php if (isset($_POST['alta'])) echo $_SESSION['fechanacimiento']; ?>" min="1900-01-01" max="<?= date('Y-m-d'); ?>" required>
