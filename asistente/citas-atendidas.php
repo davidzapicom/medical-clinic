@@ -12,7 +12,6 @@
 
 <body>
     <?php
-    ini_set("display_errors", true);
     session_start();
     $con = mysqli_connect('localhost', 'Asistente', 'Ass86teN33', 'Clinica');
     if (mysqli_connect_errno()) {

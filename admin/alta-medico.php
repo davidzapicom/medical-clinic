@@ -116,26 +116,26 @@
         <div class="text">
             <h1>Alta Médico</h1>
             <form action="#" method="post">
-                <input type="text" name="usuario" placeholder="Nombre de usuario" value="<?php echo $_SESSION['usuario']; ?>" pattern="[A-Za-z0-9]+" maxlength="10" oninvalid="this.setCustomValidity('Debes introducir solo letras y numeros.')" oninput="this.setCustomValidity('')" required>
+                <input type="text" name="usuario" placeholder="Nombre de usuario" value="<?php if (isset($_POST['alta'])) echo $_SESSION['usuario']; ?>" pattern="[A-Za-z0-9]+" maxlength="10" oninvalid="this.setCustomValidity('Debes introducir solo letras y numeros.')" oninput="this.setCustomValidity('')" required>
                 <br />
-                <input type="text" name="nombre" placeholder="Nombre" value="<?php echo $_SESSION['nombre']; ?>" maxlength="10" oninvalid="this.setCustomValidity('Debes introducir solo letras.')" oninput="this.setCustomValidity('')" required>
+                <input type="text" name="nombre" placeholder="Nombre" value="<?php if (isset($_POST['alta'])) echo $_SESSION['nombre']; ?>" maxlength="10" oninvalid="this.setCustomValidity('Debes introducir solo letras.')" oninput="this.setCustomValidity('')" required>
                 <br />
-                <input type="text" name="apellidos" placeholder="Apellidos" value="<?php echo $_SESSION['apellidos']; ?>" maxlength="15" oninvalid="this.setCustomValidity('Debes introducir solo letras.')" oninput="this.setCustomValidity('')" required>
+                <input type="text" name="apellidos" placeholder="Apellidos" value="<?php if (isset($_POST['alta'])) echo $_SESSION['apellidos']; ?>" maxlength="15" oninvalid="this.setCustomValidity('Debes introducir solo letras.')" oninput="this.setCustomValidity('')" required>
                 <br />
-                <input type="text" name="especialidad" placeholder="Especialidad" value="<?php echo $_SESSION['especialidad']; ?>" maxlength="10" oninvalid="this.setCustomValidity('Debes introducir letras.')" oninput="this.setCustomValidity('')" required>
+                <input type="text" name="especialidad" placeholder="Especialidad" value="<?php if (isset($_POST['alta'])) echo $_SESSION['especialidad']; ?>" maxlength="10" oninvalid="this.setCustomValidity('Debes introducir letras.')" oninput="this.setCustomValidity('')" required>
                 <br />
-                <input type="tel" name="telefono" placeholder="Teléfono (000-000-000)" value="<?php echo $_SESSION['telefono']; ?>" pattern="[0-9]{3}-[0-9]{3}-[0-9]{3}" maxlength="15" oninvalid="this.setCustomValidity('Debes introducir solo numeros y letras.')" oninput="this.setCustomValidity('')" required>
+                <input type="tel" name="telefono" placeholder="Teléfono (000-000-000)" value="<?php if (isset($_POST['alta'])) echo $_SESSION['telefono']; ?>" pattern="[0-9]{3}-[0-9]{3}-[0-9]{3}" maxlength="15" oninvalid="this.setCustomValidity('Debes introducir solo numeros y letras.')" oninput="this.setCustomValidity('')" required>
                 <br />
-                <input type="email" name="correo" placeholder="Correo" value="<?php echo $_SESSION['correo']; ?>" pattern="[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Za-z]{1,63}$" maxlength="30" oninvalid="this.setCustomValidity('Debes introducir un email válido.')" oninput="this.setCustomValidity('')" required>
+                <input type="email" name="correo" placeholder="Correo" value="<?php if (isset($_POST['alta'])) echo $_SESSION['correo']; ?>" pattern="[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Za-z]{1,63}$" maxlength="30" oninvalid="this.setCustomValidity('Debes introducir un email válido.')" oninput="this.setCustomValidity('')" required>
                 <br />
-                <input type="text" name="dnimedico" placeholder="DNI" value="<?php echo $_SESSION['dnimedico']; ?>" pattern="[0-9]{8}[A-Za-z]{1}" maxlength="10" oninvalid="this.setCustomValidity('Debes introducir ocho numeros y una letra.')" oninput="this.setCustomValidity('')" required>
+                <input type="text" name="dnimedico" placeholder="DNI" value="<?php if (isset($_POST['alta'])) echo $_SESSION['dnimedico']; ?>" pattern="[0-9]{8}[A-Za-z]{1}" maxlength="10" oninvalid="this.setCustomValidity('Debes introducir ocho numeros y una letra.')" oninput="this.setCustomValidity('')" required>
                 <br />
                 <div class="input">
-                    <input type="password" name="password" placeholder="Contraseña" value="<?php echo $_SESSION['password']; ?>" required>
-                    <input type="password" name="password2" placeholder="Contraseña otra vez" value="<?php echo $_SESSION['password2']; ?>" required>
+                    <input type="password" name="password" placeholder="Contraseña" value="<?php if (isset($_POST['alta'])) echo $_SESSION['password']; ?>" required>
+                    <input type="password" name="password2" placeholder="Contraseña otra vez" value="<?php if (isset($_POST['alta'])) echo $_SESSION['password2']; ?>" required>
                 </div>
                 <label for="estado">Estado</label>
-                <select name="estado" id="estado" value="<?php echo $_SESSION['estado']; ?>" required>
+                <select name="estado" id="estado" value="<?php if (isset($_POST['alta'])) echo $_SESSION['estado']; ?>" required>
                     <option value="Activo">Activo</option>
                     <option value="Inactivo">Inactivo</option>
                 </select>

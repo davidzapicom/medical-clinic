@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -8,19 +9,20 @@
     <link href='https://unpkg.com/boxicons@2.1.1/css/boxicons.min.css' rel='stylesheet'>
     <title>Asistente - Nueva cita | Clinica ADSI</title>
 </head>
+
 <body>
-<?php
+    <?php
+    ini_set("display_errors", true);
     session_start();
     $error = $aviso = "";
     if (isset($_POST['alta'])) {
-        $_SESSION['usuario'] = $_POST['usuario'];
-        $_SESSION['nombre'] = $_POST['nombre'];
-        $_SESSION['apellidos'] = $_POST['apellidos'];
         $_SESSION['dnipaciente'] = $_POST['dnipaciente'];
-        $_SESSION['password'] = $_POST['password'];
-        $_SESSION['password2'] = $_POST['password2'];
-        $_SESSION['sexo'] = $_POST['sexo'];
-        $_SESSION['fechanacimiento'] = date('Y-m-d', strtotime($_POST['fechanacimiento']));
+        $_SESSION['dnimedico'] = $_POST['dnimedico'];
+        $_SESSION['consultorio'] = $_POST['consultorio'];
+        $_SESSION['observaciones'] = $_POST['observaciones'];
+        $_SESSION['fechacita'] = date('Y-m-d', strtotime($_POST['fechacita']));
+        $_SESSION['horacita'] = date('H:i:s', strtotime($_POST['horacita']));
+
 
         if ($_SESSION['usutipo'] == 'Asistente') {
             $con = mysqli_connect('localhost', 'Asistente', 'Ass86teN33', 'Clinica');
@@ -28,33 +30,28 @@
                 printf("Conexión fallida %s\n", mysqli_connect_error());
                 exit();
             }
-            $selectususarios = "SELECT * FROM pacientes where dniPac='$_SESSION[dnipaciente]'";
-            $result = mysqli_query($con, $selectususarios);
+            $selectpaciente = "SELECT * FROM pacientes where dniPac='$_SESSION[dnipaciente]'";
+            $selectmedico = "SELECT * FROM medicos where dniPac='$_SESSION[dnipaciente]'";
+            $resultpac = mysqli_query($con, $selectpaciente);
+            $resultmed = mysqli_query($con, $selectmedico);
 
-            if (mysqli_num_rows($result) != 0) {
-                $error = "Ya hay un usuario resgistrado con ese DNI.";
-                $aviso = "Compruebe el DNI / inicie sesión.";
+            if (mysqli_num_rows($resultpac) == 0 && mysqli_num_rows($resultmed) == 0) {
+                $error = "No hay ningún paciente ni médico resgistrados con esos DNIs.";
+                $aviso = "Compruebe los DNI y/o registre previamente el paciente. <br/><button><a href='alta-paciente.php'>Alta Paciente</a></button>.";
+            } else if (mysqli_num_rows($resultpac) == 0) {
+                $error = "No hay ningún paciente resgistrado con ese DNI.";
+                $aviso = "Compruebe el DNI o registre previamente el paciente. <br/><button><a href='alta-paciente.php'>Alta Paciente</a></button>.";
+            } else if (mysqli_num_rows($resultmed) == 0) {
+                $error = "No hay ningún médico resgistrado con ese DNI.";
+                $aviso = "Compruebe el DNI.";
             } else {
-                if ($_POST['password'] != $_POST['password2']) {
-                    $error = "Las contraseñas no coinciden.";
-                    $aviso = "Comprueba las contraseñas e intentalo de nuevo.";
-                    $_SESSION['password'] = $_SESSION['password2'] = "";
+                $ins = "INSERT INTO citas (idCita,citFecha,citHora,citPaciente,citMedico,citConsultorio,citEstado,citObservaciones) VALUES (NULL,'$_SESSION[fechacita]','$_SESSION[horacita]','$_SESSION[dnipaciente]','$_SESSION[dnimedico]','$_SESSION[consultorio]','Asignado','$_SESSION[observaciones]')";
+                if (mysqli_query($con, $ins)) {
+                    $error = "Cita insertada correctamente.";
+                    $_SESSION['dnipaciente'] =  $_SESSION['dnimedico'] =  $_SESSION['consultorio'] =  $_SESSION['observaciones'] =  $_SESSION['fechacita'] =  $_SESSION['horacita'] = "";
                 } else {
-                    if (!preg_match("#.*^(?=.{8,20})(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*\W).*$#", $_SESSION['password'])) {
-                        $error = "La contraseña debe tener al menos 8 caracteres, un numero, una mayúscula, una minúscula y un carácter especial.";
-                        $_SESSION['password'] = $_SESSION['password2'] = "";
-                    } else {
-                        $cif = hash_hmac('sha512', '$password', 'secret');
-                        $inpac = "INSERT INTO pacientes (dniPac,pacNombres,pacApellidos,pacFechaNacimiento,pacSexo) VALUES ('$_SESSION[dnipaciente]','$_SESSION[nombre]','$_SESSION[apellidos]','$_SESSION[fechanacimiento]','$_SESSION[sexo]')";
-                        $inusu = "INSERT INTO usuarios (dniUsu,usuLogin,usuPassword,usuEstado,usutipo) VALUES ('$_SESSION[dnipaciente]','$_SESSION[usuario]','$cif','Activo','Paciente')";
-                        if (mysqli_query($con, $inpac) && mysqli_query($con, $inusu)) {
-                            $error = "Usuario insertado correctamente.";
-                            $_SESSION['usuario'] = $_SESSION['nombre'] = $_SESSION['apellidos'] = $_SESSION['dnipaciente'] = $_SESSION['password'] = $_SESSION['password2'] = $_SESSION['sexo'] = $_SESSION['fechanacimiento'] = "";
-                        } else {
-                            $error = "ERROR: no se ha podido insertar el usuario.";
-                            $aviso = "Vuelve a intentarlo.";
-                        }
-                    }
+                    $error = "ERROR: no se ha podido insertar la cita.";
+                    $aviso = "Vuelve a intentarlo.";
                 }
             }
             mysqli_close($con);
@@ -83,7 +80,7 @@
         <div class="menu-bar">
             <div class="menu">
                 <ul class="menu-links">
-                <li class="nav-link">
+                    <li class="nav-link">
                         <a href="citas-atendidas.php">
                             <i class='bx bx-calendar-check icon'></i>
                             <span class="text nav-text">Citas Atendidas</span>
@@ -123,24 +120,30 @@
         <div class="text">
             <h1>Nueva Cita</h1>
             <form action="#" method="post">
-                <input type="text" name="dnipaciente" placeholder="DNI Paciente" required>
+                <input type="text" name="dnipaciente" placeholder="DNI Paciente" value="<?php if (isset($_POST['alta'])) echo $_SESSION['dnipaciente']; ?>" pattern="[0-9]{8}[A-Za-z]{1}" maxlength="10" oninvalid="this.setCustomValidity('Debes introducir ocho numeros y una letra.')" oninput="this.setCustomValidity('')" required>
                 <br />
-                <input type="text" name="dnimedico" placeholder="DNI Médico" required>
+                <input type="text" name="dnimedico" placeholder="DNI Médico" value="<?php if (isset($_POST['alta'])) echo $_SESSION['dnimedico']; ?>" pattern="[0-9]{8}[A-Za-z]{1}" maxlength="10" oninvalid="this.setCustomValidity('Debes introducir ocho numeros y una letra.')" oninput="this.setCustomValidity('')" required>
                 <br />
-                <input type="text" name="nombre" placeholder="Nombre" required>
-                <br />
-                <input type="text" name="apellidos" placeholder="Apellidos" required>
-                <br />
-                <input type="number" name="consultorio" placeholder="Consultorio" required>
+                <label for="consultorio">Consultorio</label>
+                <select name="consultorio" id="consultorio" value="<?php if (isset($_POST['alta'])) echo $_SESSION['consultorio']; ?>" required>
+                    <option value="1">Centro de Salud Oviedo</option>
+                    <option value="2">Centro de Salud Corvera</option>
+                    <option value="3">Centro de Salud Aviles</option>
+                    <option value="4">Centro de Salud Gijón</option>
+                    <option value="5">Centro de Salud Luarca</option>
+                    <option value="6">Hospital Universitario</option>
+                </select>
                 <br />
                 <label for="fechacita">Fecha</label>
-                <input type="date" name="fechacita" required>
+                <input type="date" name="fechacita" value="<?php if (isset($_POST['alta'])) echo $_SESSION['fechacita']; ?>" min="<?= date('Y-m-d'); ?>" max="2100-12-31" required>
                 <br />
-                <label for="sexo">Sexo</label>
-                <select name="sexo" id="sexo" required>
-                    <option value="Masculino">Masculino</option>
-                    <option value="Femenino">Femenino</option>
-                </select>
+
+                <label for="horacita">Hora</label>
+                <input type="time" id="horacita" name="horacita" min="09:00" max="20:30" required>
+                <small>La clínica atiende de 9:00 a 20:30.</small>
+                <br />
+                <textarea rows="6" cols="35" name="observaciones" class="form-control" placeholder="Observaciones" maxlength="150" value="<?php if (isset($_POST['alta'])) echo $_SESSION['observaciones']; ?>" required></textarea>
+                <br />
                 <p><?php echo "<strong>$error</strong>"; ?></p>
                 <p><?php echo "$aviso"; ?></p>
                 <input type="submit" class="button" name="alta" value="Insertar cita">
@@ -149,4 +152,5 @@
     </section>
     <script src="../assets/js/bar-script.js"></script>
 </body>
+
 </html>
