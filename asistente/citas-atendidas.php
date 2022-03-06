@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -8,6 +9,7 @@
     <link href='https://unpkg.com/boxicons@2.1.1/css/boxicons.min.css' rel='stylesheet'>
     <title>Paciente - Citas atendidas | Clinica ADSI</title>
 </head>
+
 <body>
     <?php
     ini_set("display_errors", true);
@@ -18,9 +20,15 @@
         exit();
     }
 
-    $sql = "SELECT citas.citFecha,citas.citHora,medicos.medNombres,medicos.medApellidos,consultorios.conNombre,citas.CitObservaciones FROM citas,medicos,consultorios WHERE citas.citEstado='Atendido' AND citas.citMedico=medicos.dniMed AND citas.citConsultorio=consultorios.idConsultorio";
-    $result = mysqli_query($con, $sql);
-    $filas = mysqli_num_rows($result);
+    if ($_SESSION['usutipo'] == 'Asistente') {
+        $sql = "SELECT citas.citFecha,citas.citHora,medicos.medNombres,medicos.medApellidos,consultorios.conNombre,citas.CitObservaciones FROM citas,medicos,consultorios WHERE citas.citEstado='Atendido' AND citas.citMedico=medicos.dniMed AND citas.citConsultorio=consultorios.idConsultorio";
+        $result = mysqli_query($con, $sql);
+        $filas = mysqli_num_rows($result);
+    } else {
+        $error = "No tienes permisos.";
+        $aviso = "Inicie sesión como administrador para poder realizar la operación.";
+        header("Refresh:4; url=../logout.php", true);
+    }
     ?>
     <nav class="sidebar close">
         <header>
@@ -38,9 +46,9 @@
             <i class='bx bx-chevron-right toggle'></i>
         </header>
         <div class="menu-bar">
-        <div class="menu">
+            <div class="menu">
                 <ul class="menu-links">
-                <li class="nav-link">
+                    <li class="nav-link">
                         <a href="#">
                             <i class='bx bx-calendar-check icon'></i>
                             <span class="text nav-text">Citas Atendidas</span>
@@ -104,7 +112,7 @@
                                 <tr>
                                     <td><?php echo $registro[0]; ?></td>
                                     <td><?php echo $registro[1]; ?></td>
-                                    <td><?php echo $registro[2]. ' ' .$registro[3]; ?></td>
+                                    <td><?php echo $registro[2] . ' ' . $registro[3]; ?></td>
                                     <td><?php echo $registro[4]; ?></td>
                                     <td><?php echo $registro[5]; ?></td>
                                 </tr>

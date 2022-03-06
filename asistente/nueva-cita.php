@@ -60,7 +60,7 @@
             mysqli_close($con);
         } else {
             $error = "No tienes permisos.";
-            $aviso = "Inicie sesión como administrador para poder realizar la operación.";
+            $aviso = "Inicie sesión como asistente para poder realizar la operación.";
             header("Refresh:4; url=../logout.php", true);
         }
     }

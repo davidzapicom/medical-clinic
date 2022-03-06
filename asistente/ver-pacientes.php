@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -8,6 +9,7 @@
     <link href='https://unpkg.com/boxicons@2.1.1/css/boxicons.min.css' rel='stylesheet'>
     <title>Asistente - Pacientes | Clinica ADSI</title>
 </head>
+
 <body>
     <?php
     session_start();
@@ -17,9 +19,16 @@
         exit();
     }
 
-   $sql = "SELECT DISTINCT * FROM pacientes"; 
-   $result = mysqli_query($con, $sql);
-    $filas = mysqli_num_rows($result);
+    if ($_SESSION['usutipo'] == 'Asistente') {
+        $sql = "SELECT DISTINCT * FROM pacientes";
+        $result = mysqli_query($con, $sql);
+        $filas = mysqli_num_rows($result);
+    } else {
+        $error = "No tienes permisos.";
+        $aviso = "Inicie sesión como asistente para poder realizar la operación.";
+        header("Refresh:4; url=../logout.php", true);
+    }
+
     ?>
     <nav class="sidebar close">
         <header>
@@ -37,9 +46,9 @@
             <i class='bx bx-chevron-right toggle'></i>
         </header>
         <div class="menu-bar">
-        <div class="menu">
+            <div class="menu">
                 <ul class="menu-links">
-                <li class="nav-link">
+                    <li class="nav-link">
                         <a href="citas-atendidas.php">
                             <i class='bx bx-calendar-check icon'></i>
                             <span class="text nav-text">Citas Atendidas</span>
@@ -122,4 +131,5 @@
     <script src="../assets/js/bar-script.js"></script>
     <script src="assets/js/table-script.js"></script>
 </body>
+
 </html>
