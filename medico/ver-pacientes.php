@@ -17,9 +17,15 @@
         exit();
     }
 
-   $sql = "SELECT DISTINCT pacientes.* FROM pacientes,citas,medicos WHERE citas.citPaciente=pacientes.dniPac AND citas.citMedico='$_SESSION[dni]'"; 
-   $result = mysqli_query($con, $sql);
-    $filas = mysqli_num_rows($result);
+    if ($_SESSION['usutipo'] == 'Medico') {
+        $sql = "SELECT DISTINCT pacientes.* FROM pacientes,citas,medicos WHERE citas.citPaciente=pacientes.dniPac AND citas.citMedico='$_SESSION[dni]'"; 
+        $result = mysqli_query($con, $sql);
+        $filas = mysqli_num_rows($result);
+    } else {
+        $error = "No tienes permisos.";
+        $aviso = "Inicie sesión como médico para poder realizar la operación.";
+        header("Refresh:4; url=../logout.php", true);
+    }
     ?>
     <nav class="sidebar close">
         <header>

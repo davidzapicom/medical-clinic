@@ -19,10 +19,15 @@
         exit();
     }
 
-    $sql = "SELECT citas.citFecha,citas.citHora,pacientes.dniPac,pacientes.pacNombres,pacientes.pacApellidos,consultorios.conNombre,citas.CitObservaciones FROM citas,medicos,consultorios,pacientes WHERE citas.citMedico='$_SESSION[dni]' AND citas.citEstado='Asignado' AND citas.citMedico=medicos.dniMed AND citas.citConsultorio=consultorios.idConsultorio AND citas.citPaciente=pacientes.dniPac";
-    $result = mysqli_query($con, $sql);
-    $filas = mysqli_num_rows($result);
-
+    if ($_SESSION['usutipo'] == 'Medico') {
+        $sql = "SELECT citas.citFecha,citas.citHora,citas.citPaciente,pacientes.pacNombres,pacientes.pacApellidos,citas.CitObservaciones FROM citas, pacientes WHERE citas.citMedico='$_SESSION[dni]' AND citas.citEstado='Asignado' AND citas.citPaciente=pacientes.dniPac";
+        $result = mysqli_query($con, $sql);
+        $filas = mysqli_num_rows($result);
+    } else {
+        $error = "No tienes permisos.";
+        $aviso = "Inicie sesión como médico para poder realizar la operación.";
+        header("Refresh:4; url=../logout.php", true);
+    }
 
 
     if (isset($_POST['ac'])) {
@@ -96,7 +101,6 @@
                             <th>Hora</th>
                             <th>Dni</th>
                             <th>Paciente</th>
-                            <th>Consultorio</th>
                             <th>Observaciones</th>
                             <th>Atender</th>
                         </tr>
@@ -116,7 +120,6 @@
                                     <td><?php echo $registro[2]; ?></td>
                                     <td><?php echo $registro[3]. ' ' .$registro[4]; ?></td>
                                     <td><?php echo $registro[5]; ?></td>
-                                    <td><?php echo $registro[6]; ?></td>
                                     <td><button type="submit" name="ac[]" value=<?php echo $registro[0].",".$registro[1].",".$registro[2].",".$registro[3].",".$registro[4]; ?>>Atender</button></td>
                                 </tr>
                         <?php

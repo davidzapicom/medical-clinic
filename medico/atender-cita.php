@@ -13,6 +13,7 @@
 <body>
     <?php
     session_start();
+    ini_set("display_errors", true);
     $con = mysqli_connect('localhost', 'Medico', 'mEdrrr033IcO', 'Clinica');
     if (mysqli_connect_errno()) {
         printf("Conexión fallida %s\n", mysqli_connect_error());

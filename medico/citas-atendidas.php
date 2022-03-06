@@ -11,7 +11,6 @@
 <body>
     <?php
     session_start();
-    ini_set("display_errors", true);
     $con = mysqli_connect('localhost', 'Medico', 'mEdrrr033IcO', 'Clinica');
     if (mysqli_connect_errno()) {
         printf("Conexión fallida %s\n", mysqli_connect_error());
@@ -19,7 +18,7 @@
     }
 
     if ($_SESSION['usutipo'] == 'Medico') {
-        $sql = "SELECT citas.citFecha,citas.citHora,medicos.medNombres,medicos.medApellidos,citas.CitObservaciones FROM citas,medicos WHERE citas.citMedico='$_SESSION[dni]' AND citas.citEstado='Atendido' AND citas.citMedico=medicos.dniMed";
+        $sql = "SELECT citas.citFecha,citas.citHora,pacientes.pacNombres,pacientes.pacApellidos,citas.CitObservaciones FROM citas, pacientes WHERE citas.citMedico='$_SESSION[dni]' AND citas.citEstado='Atendido' AND citas.citPaciente=pacientes.dniPac";
         $result = mysqli_query($con, $sql);
         $filas = mysqli_num_rows($result);
     } else {
@@ -88,7 +87,6 @@
                             <th>Fecha</th>
                             <th>Hora</th>
                             <th>Paciente</th>
-                            <th>Consultorio</th>
                             <th>Observaciones</th>
                         </tr>
                     </thead>
@@ -106,7 +104,6 @@
                                     <td><?php echo $registro[1]; ?></td>
                                     <td><?php echo $registro[2] . ' ' . $registro[3]; ?></td>
                                     <td><?php echo $registro[4]; ?></td>
-                                    <td><?php echo $registro[5]; ?></td>
                                 </tr>
                         <?php
                             }
