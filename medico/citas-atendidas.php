@@ -11,15 +11,21 @@
 <body>
     <?php
     session_start();
-    $con = mysqli_connect('localhost', 'Medico', 'mEdrrr033IcO', 'Clinica');
+    $con = mysqli_connect('localhost', 'Asistente', 'Ass86teN33', 'Clinica');
     if (mysqli_connect_errno()) {
         printf("Conexión fallida %s\n", mysqli_connect_error());
         exit();
     }
 
-    $sql = "SELECT citas.citFecha,citas.citHora,medicos.medNombres,medicos.medApellidos,consultorios.conNombre,citas.CitObservaciones FROM citas,medicos,consultorios WHERE citas.citMedico='$_SESSION[dni]' AND citas.citEstado='Atendido' AND citas.citMedico=medicos.dniMed AND citas.citConsultorio=consultorios.idConsultorio";
-    $result = mysqli_query($con, $sql);
-    $filas = mysqli_num_rows($result);
+    if ($_SESSION['usutipo'] == 'Asistente') {
+        $sql = "SELECT citas.citFecha,citas.citHora,medicos.medNombres,medicos.medApellidos,consultorios.conNombre,citas.CitObservaciones FROM citas,medicos,consultorios WHERE citas.citMedico='$_SESSION[dni]' AND citas.citEstado='Atendido' AND citas.citMedico=medicos.dniMed AND citas.citConsultorio=consultorios.idConsultorio";
+        $result = mysqli_query($con, $sql);
+        $filas = mysqli_num_rows($result);
+    } else {
+        $error = "No tienes permisos.";
+        $aviso = "Inicie sesión como médico para poder realizar la operación.";
+        header("Refresh:4; url=../logout.php", true);
+    }
     ?>
     <nav class="sidebar close">
         <header>
@@ -37,18 +43,24 @@
             <i class='bx bx-chevron-right toggle'></i>
         </header>
         <div class="menu-bar">
-        <div class="menu">
-                <ul class="menu-links">
+            <div class="menu">
+            <ul class="menu-links">
                     <li class="nav-link">
                         <a href="#">
-                            <i class='bx bx-calendar-check icon'></i>
+                        <i class='bx bx-calendar-check icon'></i>
                             <span class="text nav-text">Citas Atendidas</span>
                         </a>
                     </li>
                     <li class="nav-link">
                         <a href="citas-pendientes.php">
-                            <i class='bx bx-calendar-minus icon' ></i>
+                        <i class='bx bx-calendar-minus icon' ></i>
                             <span class="text nav-text">Citas Pendientes</span>
+                        </a>
+                    </li>
+                    <li class="nav-link">
+                        <a href="ver-pacientes.php">
+                        <i class='bx bxs-user-badge icon'></i>
+                            <span class="text nav-text">Ver Pacientes</span>
                         </a>
                     </li>
                 </ul>
@@ -91,7 +103,7 @@
                                 <tr>
                                     <td><?php echo $registro[0]; ?></td>
                                     <td><?php echo $registro[1]; ?></td>
-                                    <td><?php echo $registro[2]. ' ' .$registro[3]; ?></td>
+                                    <td><?php echo $registro[2] . ' ' . $registro[3]; ?></td>
                                     <td><?php echo $registro[4]; ?></td>
                                     <td><?php echo $registro[5]; ?></td>
                                 </tr>
@@ -108,7 +120,6 @@
         </div>
     </section>
     <script src="../assets/js/bar-script.js"></script>
-    <script src="assets/js/table-script.js"></script>
+    <script src="../assets/js/table-script.js"></script>
 </body>
-
 </html>
