@@ -23,21 +23,20 @@
         $sql = "SELECT citas.citFecha,citas.citHora,citas.citPaciente,pacientes.pacNombres,pacientes.pacApellidos,citas.CitObservaciones FROM citas, pacientes WHERE citas.citMedico='$_SESSION[dni]' AND citas.citEstado='Asignado' AND citas.citPaciente=pacientes.dniPac";
         $result = mysqli_query($con, $sql);
         $filas = mysqli_num_rows($result);
+
+        if (isset($_POST['atender'])) {
+            foreach ($_POST['atender'] as $value) {
+                $pac=explode(",", $value);
+            }
+            $_SESSION['atenderpaciente']=$pac;
+            var_dump($_SESSION['atenderpaciente']);
+            header("Location:atender-cita.php");
+        }
     } else {
         $error = "No tienes permisos.";
         $aviso = "Inicie sesión como médico para poder realizar la operación.";
         header("Refresh:4; url=../logout.php", true);
     }
-
-
-    if (isset($_POST['ac'])) {
-		foreach ($_POST['ac'] as $value) {
-			$pac=explode(",", $value);
-		}
-		$_SESSION['atenderpaciente']=$pac;
-		var_dump($_SESSION['atenderpaciente']);
-		header("Location:atender-cita.php");
-	}
     ?>
     <nav class="sidebar close">
         <header>
@@ -58,7 +57,7 @@
         <div class="menu">
                 <ul class="menu-links">
                 <li class="nav-link">
-                        <a href="#">
+                        <a href="citas-atendidas.php">
                         <i class='bx bx-calendar-check icon'></i>
                             <span class="text nav-text">Citas Atendidas</span>
                         </a>
@@ -120,12 +119,12 @@
                                     <td><?php echo $registro[2]; ?></td>
                                     <td><?php echo $registro[3]. ' ' .$registro[4]; ?></td>
                                     <td><?php echo $registro[5]; ?></td>
-                                    <td><button type="submit" name="ac[]" value=<?php echo $registro[0].",".$registro[1].",".$registro[2].",".$registro[3].",".$registro[4]; ?>>Atender</button></td>
+                                    <td><button type="submit" name="atender[]" value=<?php echo $registro[0].",".$registro[1].",".$registro[2].",".$registro[3].",".$registro[4]; ?>>Atender</button></td>
                                 </tr>
                         <?php
                             }
                         } else {
-                            echo "<tr><td>No hay pacientes en el registro</td></tr>";
+                            echo "<tr><td>No hay citas pendientes.</td></tr>";
                         }
                         mysqli_close($con);
                         ?>
