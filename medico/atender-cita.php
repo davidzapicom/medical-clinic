@@ -102,7 +102,7 @@
                 <br />
                 Apellidos: <input type="text" name="apellidos" value="<?php echo $apellido ?>" readonly>
                 <br />
-                Observaciones: <textarea rows="6" cols="35" name="observaciones" placeholder="Escriba aquí las observaciones del paciente" required></textarea>
+                Observaciones: <textarea rows="6" cols="35" name="observaciones" placeholder="Escriba aquí las observaciones del paciente" maxlength="300" required></textarea>
                 <br />
                 <p><?php echo "<strong>$error</strong>"; ?></p>
                 <p><?php echo "$aviso"; ?></p>
