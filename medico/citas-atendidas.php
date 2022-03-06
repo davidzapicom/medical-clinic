@@ -11,14 +11,15 @@
 <body>
     <?php
     session_start();
-    $con = mysqli_connect('localhost', 'Asistente', 'Ass86teN33', 'Clinica');
+    ini_set("display_errors", true);
+    $con = mysqli_connect('localhost', 'Medico', 'mEdrrr033IcO', 'Clinica');
     if (mysqli_connect_errno()) {
         printf("Conexión fallida %s\n", mysqli_connect_error());
         exit();
     }
 
-    if ($_SESSION['usutipo'] == 'Asistente') {
-        $sql = "SELECT citas.citFecha,citas.citHora,medicos.medNombres,medicos.medApellidos,consultorios.conNombre,citas.CitObservaciones FROM citas,medicos,consultorios WHERE citas.citMedico='$_SESSION[dni]' AND citas.citEstado='Atendido' AND citas.citMedico=medicos.dniMed AND citas.citConsultorio=consultorios.idConsultorio";
+    if ($_SESSION['usutipo'] == 'Medico') {
+        $sql = "SELECT citas.citFecha,citas.citHora,medicos.medNombres,medicos.medApellidos,citas.CitObservaciones FROM citas,medicos WHERE citas.citMedico='$_SESSION[dni]' AND citas.citEstado='Atendido' AND citas.citMedico=medicos.dniMed";
         $result = mysqli_query($con, $sql);
         $filas = mysqli_num_rows($result);
     } else {
@@ -86,7 +87,7 @@
                         <tr>
                             <th>Fecha</th>
                             <th>Hora</th>
-                            <th>Médico</th>
+                            <th>Paciente</th>
                             <th>Consultorio</th>
                             <th>Observaciones</th>
                         </tr>
@@ -110,7 +111,7 @@
                         <?php
                             }
                         } else {
-                            echo "<tr><td>No hay pacientes en el registro</td></tr>";
+                            echo "<tr><td>No hay citas atendidas.</td></tr>";
                         }
                         mysqli_close($con);
                         ?>

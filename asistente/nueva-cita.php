@@ -10,7 +10,6 @@
 </head>
 <body>
     <?php
-    ini_set("display_errors", true);
     session_start();
     $error = $aviso = "";
     if (isset($_POST['alta'])) {

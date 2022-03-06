@@ -116,7 +116,7 @@
                         <?php
                             }
                         } else {
-                            echo "<tr><td>No hay pacientes en el registro</td></tr>";
+                            echo "<tr><td>No hay citas atendidas.</td></tr>";
                         }
                         mysqli_close($con);
                         ?>

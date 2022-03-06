@@ -11,7 +11,7 @@
 <body>
     <?php
     session_start();
-    $con = mysqli_connect('localhost', '$_SESSION[usutipo]', 'mEdrrr033IcO', 'Clinica');
+    $con = mysqli_connect('localhost', 'Medico', 'mEdrrr033IcO', 'Clinica');
     if (mysqli_connect_errno()) {
         printf("Conexión fallida %s\n", mysqli_connect_error());
         exit();
