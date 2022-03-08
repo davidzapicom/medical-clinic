@@ -67,14 +67,14 @@
             <h1>Clinica ADSI</h1>
             <div class="input">
                 <i class='bx bx-user input__lock'></i>
-                <input type="text" name="usu" placeholder="Nombre de usuario/a o DNI" class="input__password" required>
+                <input type="text" name="usu" placeholder="Nombre de usuario/a o DNI" class="input__password" pattern="[A-Za-z0-9]" maxlength="15" required>
             </div>
             <br />
             <div class="input">
                 <div class="input__overlay" id="input-overlay"></div>
 
                 <i class='bx bx-lock-alt input__lock'></i>
-                <input type="password" name="pass" placeholder="Contraseña" class="input__password" id="input-pass" required>
+                <input type="password" name="pass" placeholder="Contraseña" class="input__password" id="input-pass" maxlength="15" required>
                 <i class='bx bx-hide input__icon' id="input-icon"></i>
             </div>
             <p><?php echo "<strong>$error</strong>"; ?></p>
