@@ -13,6 +13,7 @@
 <body>
     <?php
     session_start();
+    ini_set('display_errors', '1');
     $error = $aviso = "";
     if (isset($_POST['alta'])) {
         $usuario = $_POST['usuario'];
@@ -33,39 +34,44 @@
                 printf("Conexión fallida %s\n", mysqli_connect_error());
                 exit();
             }
-            $selectususarios = "SELECT * FROM medicos where dniMed='$dnimedico' AND usuLogin='$usuario'";
-            $result = mysqli_query($con, $selectususarios);
+            $selectdni = "SELECT * FROM usuarios where dniUsu='$dnimedico' AND usutipo='Medico'";
+            $selectusu = "SELECT * FROM usuarios where usuLogin='$usuario' AND usutipo='Medico'";
+            $resultdni = mysqli_query($con, $selectdni);
+            $resultusu = mysqli_query($con, $selectusu);
 
-            if (mysqli_num_rows($result) != 0) {
-                $error = "Ya hay un usuario resgistrado con ese DNI.";
+            if (mysqli_num_rows($resultdni) != 0 && mysqli_num_rows($resultusu) != 0) {
+                $error = "Ya hay un médico resgistrado con ese DNI y usuario.";
+                $aviso = "Compruebe los datos / inicie sesión.";
+                $_SESSION['check'] = 0;
+            } else if (mysqli_num_rows($resultdni) != 0) {
+                $error = "Ya hay un médico resgistrado con ese DNI.";
                 $aviso = "Compruebe el DNI / inicie sesión.";
                 $_SESSION['check'] = 0;
-
+            } else if (mysqli_num_rows($resultusu) != 0) {
+                $error = "Ya hay un médico resgistrado con ese usuario.";
+                $aviso = "Compruebe el usuario / inicie sesión.";
+                $_SESSION['check'] = 0;
             } else if ($_POST['password'] != $_POST['password2']) {
                 $error = "Las contraseñas no coinciden.";
                 $aviso = "Comprueba las contraseñas e intentalo de nuevo.";
                 $_SESSION['check'] = 0;
-
             } else if (!preg_match("#.*^(?=.{8,20})(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*\W).*$#", $password)) {
                 $error = "La contraseña debe tener al menos 8 caracteres, un numero, una mayúscula, una minúscula y un carácter especial.";
                 $_SESSION['check'] = 0;
-
             } else {
                 $cif = hash_hmac('sha512', '$password', 'secret');
                 $inmed = "INSERT INTO medicos (dniMed,medNombres,medApellidos,medEspecialidad,medTelefono,medCorreo) VALUES ('$dnimedico','$nombre','$apellidos','$especialidad','$telefono','$correo')";
                 $inusu = "INSERT INTO usuarios (dniUsu,usuLogin,usuPassword,usuEstado,usutipo) VALUES ('$dnimedico','$usuario','$cif','$estado','$tipo')";
-                
+
                 if (mysqli_query($con, $inmed) && mysqli_query($con, $inusu)) {
-                    $error = "Usuario insertado correctamente.";
                     $_SESSION['check'] = 1;
-                    
                 } else {
                     $error = "ERROR: no se ha podido insertar el usuario.";
                     $aviso = "Vuelve a intentarlo.";
                     $_SESSION['check'] = 0;
                 }
             }
-            mysqli_close($con);            
+            mysqli_close($con);
         } else {
             $error = "No tienes permisos.";
             $aviso = "Inicie sesión como administrador para poder realizar la operación.";
@@ -124,13 +130,13 @@
             <form action="#" method="post">
                 <input type="text" name="usuario" placeholder="Nombre de usuario" value="<?php if (isset($_POST['alta']) && $_SESSION['check'] == 0) echo $usuario; ?>" pattern="[A-Za-z0-9]+" maxlength="10" oninvalid="this.setCustomValidity('Debes introducir solo letras y numeros.')" oninput="this.setCustomValidity('')" required>
                 <br />
-                <input type="text" name="nombre" placeholder="Nombre" value="<?php if (isset($_POST['alta']) && $_SESSION['check'] == 0) echo $nombre; ?>" maxlength="10" oninvalid="this.setCustomValidity('Debes introducir solo letras.')" oninput="this.setCustomValidity('')" required>
+                <input type="text" name="nombre" placeholder="Nombre" value="<?php if (isset($_POST['alta']) && $_SESSION['check'] == 0) echo $nombre; ?>" pattern="[A-Za-z]+" maxlength="10" oninvalid="this.setCustomValidity('Debes introducir solo letras.')" oninput="this.setCustomValidity('')" required>
                 <br />
-                <input type="text" name="apellidos" placeholder="Apellidos" value="<?php if (isset($_POST['alta']) && $_SESSION['check'] == 0) echo $apellidos; ?>" maxlength="15" oninvalid="this.setCustomValidity('Debes introducir solo letras.')" oninput="this.setCustomValidity('')" required>
+                <input type="text" name="apellidos" placeholder="Apellidos" value="<?php if (isset($_POST['alta']) && $_SESSION['check'] == 0) echo $apellidos; ?>" pattern="[A-Za-z]+" maxlength="15" oninvalid="this.setCustomValidity('Debes introducir solo letras.')" oninput="this.setCustomValidity('')" required>
                 <br />
-                <input type="text" name="especialidad" placeholder="Especialidad" value="<?php if (isset($_POST['alta']) && $_SESSION['check'] == 0) echo $especialidad; ?>" maxlength="10" oninvalid="this.setCustomValidity('Debes introducir letras.')" oninput="this.setCustomValidity('')" required>
+                <input type="text" name="especialidad" placeholder="Especialidad" value="<?php if (isset($_POST['alta']) && $_SESSION['check'] == 0) echo $especialidad; ?>" pattern="[A-Za-z]+" maxlength="10" oninvalid="this.setCustomValidity('Debes introducir letras.')" oninput="this.setCustomValidity('')" required>
                 <br />
-                <input type="tel" name="telefono" placeholder="Teléfono (000-000-000)" value="<?php if (isset($_POST['alta']) && $_SESSION['check'] == 0) echo $telefono; ?>" pattern="[0-9]{3}-[0-9]{3}-[0-9]{3}" maxlength="15" oninvalid="this.setCustomValidity('Debes introducir solo numeros y letras.')" oninput="this.setCustomValidity('')" required>
+                <input type="tel" name="telefono" placeholder="Teléfono (000000000)" value="<?php if (isset($_POST['alta']) && $_SESSION['check'] == 0) echo $telefono; ?>" pattern="[0-9]{9}" maxlength="9" oninvalid="this.setCustomValidity('Debes introducir solo numeros y letras.')" oninput="this.setCustomValidity('')" required>
                 <br />
                 <input type="email" name="correo" placeholder="Correo" value="<?php if (isset($_POST['alta']) && $_SESSION['check'] == 0) echo $correo; ?>" pattern="[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Za-z]{1,63}$" maxlength="30" oninvalid="this.setCustomValidity('Debes introducir un email válido.')" oninput="this.setCustomValidity('')" required>
                 <br />

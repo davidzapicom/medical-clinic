@@ -11,6 +11,7 @@
 <body>
     <?php
     session_start();
+    $_SESSION['check'] = 0;
     ?>
     <nav class="sidebar close">
         <header>

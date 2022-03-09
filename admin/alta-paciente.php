@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -8,6 +9,7 @@
     <link href='https://unpkg.com/boxicons@2.1.1/css/boxicons.min.css' rel='stylesheet'>
     <title>Administrador - Alta paciente | Clinica ADSI</title>
 </head>
+
 <body>
     <?php
     session_start();
@@ -35,29 +37,23 @@
                 $error = "Ya hay un usuario resgistrado con ese DNI.";
                 $aviso = "Compruebe el DNI / inicie sesión.";
                 $_SESSION['check'] = 0;
+            } else if ($password != $password2) {
+                $error = "Las contraseñas no coinciden.";
+                $aviso = "Comprueba las contraseñas e intentalo de nuevo.";
+                $_SESSION['check'] = 0;
+            } else if (!preg_match("#.*^(?=.{8,20})(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*\W).*$#", $password)) {
+                $error = "La contraseña debe tener al menos 8 caracteres, un numero, una mayúscula, una minúscula y un carácter especial.";
+                $_SESSION['check'] = 0;
             } else {
-                if ($password != $password2) {
-                    $error = "Las contraseñas no coinciden.";
-                    $aviso = "Comprueba las contraseñas e intentalo de nuevo.";
-                    $_SESSION['check'] = 0;
+                $cif = hash_hmac('sha512', '$password', 'secret');
+                $inpac = "INSERT INTO pacientes (dniPac,pacNombres,pacApellidos,pacFechaNacimiento,pacSexo) VALUES ('$dnipaciente','$nombre','$apellidos','$fechanacimiento','$sexo')";
+                $inusu = "INSERT INTO usuarios (dniUsu,usuLogin,usuPassword,usuEstado,usutipo) VALUES ('$dnipaciente','$usuario','$cif','Activo','Paciente')";
+                if (mysqli_query($con, $inpac) && mysqli_query($con, $inusu)) {
+                    $_SESSION['check'] = 1;
                 } else {
-                    if (!preg_match("#.*^(?=.{8,20})(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*\W).*$#", $password)) {
-                        $error = "La contraseña debe tener al menos 8 caracteres, un numero, una mayúscula, una minúscula y un carácter especial.";
-                        $_SESSION['check'] = 0;
-                    } else {
-                        $cif = hash_hmac('sha512', '$password', 'secret');
-                        $inpac = "INSERT INTO pacientes (dniPac,pacNombres,pacApellidos,pacFechaNacimiento,pacSexo) VALUES ('$dnipaciente','$nombre','$apellidos','$fechanacimiento','$sexo')";
-                        $inusu = "INSERT INTO usuarios (dniUsu,usuLogin,usuPassword,usuEstado,usutipo) VALUES ('$dnipaciente','$usuario','$cif','Activo','Paciente')";
-                        if (mysqli_query($con, $inpac) && mysqli_query($con, $inusu)) {
-                            //$error = "Usuario insertado correctamente.";
-                            header("Location:alta-paciente.php");
-                            $_SESSION['check'] = 1;
-                        } else {
-                            $error = "ERROR: no se ha podido insertar el usuario.";
-                            $aviso = "Vuelve a intentarlo.";
-                            $_SESSION['check'] = 0;
-                        }
-                    }
+                    $error = "ERROR: no se ha podido insertar el usuario.";
+                    $aviso = "Vuelve a intentarlo.";
+                    $_SESSION['check'] = 0;
                 }
             }
             mysqli_close($con);
@@ -118,7 +114,7 @@
         <div class="text">
             <h1>Alta Paciente</h1>
             <form action="#" method="post">
-                <input type="text" name="dnipaciente" placeholder="DNI" value="<?php if (isset($_POST['alta']) && $_SESSION['check'] == 0) echo $dnipaciente; ?>"  pattern="[0-9]{8}[A-Za-z]{1}" maxlength="10" oninvalid="this.setCustomValidity('Debes introducir ocho numeros y una letra.')" oninput="this.setCustomValidity('')" required>
+                <input type="text" name="dnipaciente" placeholder="DNI" value="<?php if (isset($_POST['alta']) && $_SESSION['check'] == 0) echo $dnipaciente; ?>" pattern="[0-9]{8}[A-Za-z]{1}" maxlength="10" oninvalid="this.setCustomValidity('Debes introducir ocho numeros y una letra.')" oninput="this.setCustomValidity('')" required>
                 <br />
                 <input type="text" name="usuario" placeholder="Nombre de usuario" value="<?php if (isset($_POST['alta']) && $_SESSION['check'] == 0) echo $usuario; ?>" pattern="[A-Za-z0-9]+" maxlength="10" oninvalid="this.setCustomValidity('Debes introducir solo numeros y letras.')" oninput="this.setCustomValidity('')" required>
                 <br />
@@ -144,4 +140,5 @@
     </section>
     <script src="../assets/js/bar-script.js"></script>
 </body>
+
 </html>
