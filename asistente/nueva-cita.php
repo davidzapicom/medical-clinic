@@ -18,7 +18,7 @@
         $_SESSION['consultorio'] = $_POST['consultorio'];
         $_SESSION['observaciones'] = $_POST['observaciones'];
         $_SESSION['fechacita'] = date('Y-m-d', strtotime($_POST['fechacita']));
-        $_SESSION['horacita'] = date('H:i:s', strtotime($_POST['horacita']));
+        $horacita = date('H:i:s', strtotime($_POST['horacita']));
 
 
         if ($_SESSION['usutipo'] == 'Asistente') {
@@ -27,6 +27,11 @@
                 printf("Conexión fallida %s\n", mysqli_connect_error());
                 exit();
             }
+
+            if (!validacionFecha($horacita)) {
+                $error = "La hora debe ser posterior a la hora actual";
+            }
+    
 
             $ins = "INSERT INTO citas (idCita,citFecha,citHora,citPaciente,citMedico,citConsultorio,citEstado,citObservaciones) VALUES (NULL,'$_SESSION[fechacita]','$_SESSION[horacita]','$_SESSION[dnipaciente]','$_SESSION[dnimedico]','$_SESSION[consultorio]','Asignado','$_SESSION[observaciones]')";
             if (mysqli_query($con, $ins)) {
@@ -43,6 +48,15 @@
             header("Refresh:4; url=../logout.php", true);
         }
     }
+
+
+    function validacionFecha($horacita) {
+		if ($horacita < date('H:i')) {
+			return true;
+		}
+		return false;
+	}
+
     ?>
     <nav class="sidebar close">
         <header>
@@ -139,7 +153,8 @@
                 Fecha: <input type="date" name="fechacita" value="<?php if (isset($_POST['alta'])) echo $_SESSION['fechacita']; ?>" min="<?= date('Y-m-d'); ?>" max="2100-12-31" required>
                 <br />
 
-                Hora: <input type="time" id="horacita" name="horacita" min="09:00" max="20:30" required>
+                Hora: <input type="time" id="horacita" name="horacita" min="09:00" max="20:30" onblur="valhc()" required>
+                <span id="avisohora">
                 <small>La clínica atiende de 9:00 a 20:30.</small>
                 <br />
                 <textarea rows="6" cols="35" name="observaciones" class="form-control" placeholder="Observaciones" maxlength="150" value="<?php if (isset($_POST['alta'])) echo $_SESSION['observaciones']; ?>" required></textarea>

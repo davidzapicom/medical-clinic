@@ -84,7 +84,7 @@
     </nav>
     <section class="home">
         <div class="text">
-            <h1>Mis Pacientes</h1>
+            <h1>Pacientes</h1>
         </div>
         <div class="tabla">
             <div class="tbl-header">

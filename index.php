@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -18,6 +19,7 @@
     </style>
     <title>Login | Clinica ADSI</title>
 </head>
+
 <body>
     <?php
     session_start();
@@ -25,24 +27,31 @@
     if (isset($_POST['login'])) {
         $_SESSION['usu'] = $_POST['usu'];
         $password = $_POST['pass'];
+
         $cif = hash_hmac('sha512', '$password', 'secret');
         $con = mysqli_connect('localhost', 'Acceso', 'take55AcceSs38', 'Clinica');
+
         $sentencia = 'SELECT * FROM usuarios WHERE usuLogin="' . $_SESSION["usu"] . '" OR dniUsu="' . $_SESSION["usu"] . '" AND usuPassword="' . $cif . '"';
         $result = mysqli_query($con, $sentencia);
         $fetch = mysqli_fetch_assoc($result);
+
         $_SESSION['name'] = $fetch['usuLogin'];
         $_SESSION['dni'] = $fetch['dniUsu'];
         $_SESSION['usutipo'] = $fetch['usutipo'];
+
+
         if (mysqli_num_rows($result) == 0) {
             $sentencia = 'SELECT * FROM usuarios WHERE usuLogin="' . $_SESSION["usu"] . '" OR dniUsu="' . $_SESSION["usu"] . '"';
             $result2 = mysqli_query($con, $sentencia);
             $fetch = mysqli_fetch_assoc($result2);
             mysqli_close($con);
+
             if (mysqli_num_rows($result2) == 0) {
                 $error = "Usuario inexistente.";
             } else {
                 $error = "Contraseña incorrecta.";
             }
+
             $aviso = "Por favor, intentelo de nuevo.";
             header("Refresh:2; url=index.php", true);
         } else {
@@ -67,14 +76,14 @@
             <h1>Clinica ADSI</h1>
             <div class="input">
                 <i class='bx bx-user input__lock'></i>
-                <input type="text" name="usu" placeholder="Nombre de usuario/a o DNI" class="input__password" pattern="[A-Za-z0-9]" maxlength="15" required>
+                <input type="text" name="usu" placeholder="Nombre de usuario/a o DNI" class="input__password" pattern="[A-Za-z0-9]{}" maxlength="15" required>
             </div>
             <br />
             <div class="input">
                 <div class="input__overlay" id="input-overlay"></div>
 
                 <i class='bx bx-lock-alt input__lock'></i>
-                <input type="password" name="pass" placeholder="Contraseña" class="input__password" id="input-pass" maxlength="15" required>
+                <input type="password" name="pass" placeholder="Contraseña" class="input__password" id="input-pass" required>
                 <i class='bx bx-hide input__icon' id="input-icon"></i>
             </div>
             <p><?php echo "<strong>$error</strong>"; ?></p>
@@ -84,4 +93,5 @@
     </div>
     <script src="assets/js/main.js"></script>
 </body>
+
 </html>
