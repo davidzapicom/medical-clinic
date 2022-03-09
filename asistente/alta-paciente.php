@@ -28,38 +28,53 @@
                 printf("Conexión fallida %s\n", mysqli_connect_error());
                 exit();
             }
-            $selectususarios = "SELECT * FROM pacientes where dniPac='$dnipaciente'";
-            $result = mysqli_query($con, $selectususarios);
 
-            if (mysqli_num_rows($result) != 0) {
-                $error = "Ya hay un usuario resgistrado con ese DNI.";
+            $selectdni = "SELECT * FROM usuarios where dniUsu='$dnipaciente' AND usutipo='Paciente'";
+            $selectusu = "SELECT * FROM usuarios where usuLogin='$usuario' AND usutipo='Paciente'";
+            $resultdni = mysqli_query($con, $selectdni);
+            $resultusu = mysqli_query($con, $selectusu);
+
+            if (mysqli_num_rows($resultdni) != 0 && mysqli_num_rows($resultusu) != 0) {
+                $error = "Ya hay un paciente resgistrado con ese DNI y usuario.";
+                $aviso = "Compruebe los datos / inicie sesión.";
+                $_SESSION['check'] = 0;
+            } else if (mysqli_num_rows($resultdni) != 0) {
+                $error = "Ya hay un médpacienteico resgistrado con ese DNI.";
                 $aviso = "Compruebe el DNI / inicie sesión.";
+                $_SESSION['check'] = 0;
+            } else if (mysqli_num_rows($resultusu) != 0) {
+                $error = "Ya hay un paciente resgistrado con ese usuario.";
+                $aviso = "Compruebe el usuario / inicie sesión.";
+                $_SESSION['check'] = 0;
+            } else if ($password != $password2) {
+                $error = "Las contraseñas no coinciden.";
+                $aviso = "Comprueba las contraseñas e intentalo de nuevo.";
+                $_SESSION['check'] = 0;
+            } else if (!preg_match("#.*^(?=.{8,20})(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*\W).*$#", $password)) {
+                $error = "La contraseña debe tener al menos 8 caracteres, un numero, una mayúscula, una minúscula y un carácter especial.";
+                $_SESSION['check'] = 0;
             } else {
-                if ($_POST['password'] != $_POST['password2']) {
-                    $error = "Las contraseñas no coinciden.";
-                    $aviso = "Comprueba las contraseñas e intentalo de nuevo.";
+                $cif = hash_hmac('sha512', '$password', 'secret');
+                $inpac = "INSERT INTO pacientes (dniPac,pacNombres,pacApellidos,pacFechaNacimiento,pacSexo) VALUES ('$dnipaciente','$nombre','$apellidos','$fechanacimiento','$sexo')";
+                $inusu = "INSERT INTO usuarios (dniUsu,usuLogin,usuPassword,usuEstado,usutipo) VALUES ('$dnipaciente','$usuario','$cif','Activo','Paciente')";
+                if (mysqli_query($con, $inpac) && mysqli_query($con, $inusu)) {
+                    $_SESSION['check'] = 1;
                 } else {
-                    if (!preg_match("#.*^(?=.{8,20})(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*\W).*$#", $password)) {
-                        $error = "La contraseña debe tener al menos 8 caracteres, un numero, una mayúscula, una minúscula y un carácter especial.";
-                    } else {
-                        $cif = hash_hmac('sha512', '$password', 'secret');
-                        $inpac = "INSERT INTO pacientes (dniPac,pacNombres,pacApellidos,pacFechaNacimiento,pacSexo) VALUES ('$dnipaciente','$nombre','$apellidos','$fechanacimiento','$sexo')";
-                        $inusu = "INSERT INTO usuarios (dniUsu,usuLogin,usuPassword,usuEstado,usutipo) VALUES ('$dnipaciente','$usuario','$cif','Activo','Paciente')";
-                        if (mysqli_query($con, $inpac) && mysqli_query($con, $inusu)) {
-                            $error = "Usuario insertado correctamente.";
-                        } else {
-                            $error = "ERROR: no se ha podido insertar el usuario.";
-                            $aviso = "Vuelve a intentarlo.";
-                        }
-                    }
+                    $error = "ERROR: no se ha podido insertar el paciente.";
+                    $aviso = "Vuelve a intentarlo.";
+                    $_SESSION['check'] = 0;
                 }
-            }
+            }   
             mysqli_close($con);
         } else {
             $error = "No tienes permisos.";
             $aviso = "Inicie sesión como asistente para poder realizar la operación.";
             header("Refresh:4; url=../logout.php", true);
         }
+    }
+
+    if ($_SESSION['check'] == 1) {
+        $error = "Paciente insertado correctamente.";
     }
     ?>
     <nav class="sidebar close">

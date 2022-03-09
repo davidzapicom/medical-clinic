@@ -26,10 +26,9 @@
 
         if (isset($_POST['atender'])) {
             foreach ($_POST['atender'] as $value) {
-                $pac=explode(",", $value);
+                $pac = explode(",", $value);
             }
-            $_SESSION['atenderpaciente']=$pac;
-            var_dump($_SESSION['atenderpaciente']);
+            $_SESSION['atenderpaciente'] = $pac;
             header("Location:atender-cita.php");
         }
     } else {
@@ -119,7 +118,7 @@
                                     <td><?php echo $registro[2]; ?></td>
                                     <td><?php echo $registro[3]. ' ' .$registro[4]; ?></td>
                                     <td><?php echo $registro[5]; ?></td>
-                                    <td><button type="submit" name="atender[]" value=<?php echo $registro[0].",".$registro[1].",".$registro[2].",".$registro[3].",".$registro[4]; ?>>Atender</button></td>
+                                    <td><button type="submit" name="atender[]" value=<?php echo $registro[0].",".$registro[1].",".$registro[2].",".$registro[3].",".$registro[4]; ?>><i class='bx bx-select-multiple icon' style="width: 30px;"></i></button></td>
                                 </tr>
                         <?php
                             }
