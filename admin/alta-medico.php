@@ -66,7 +66,7 @@
                 if (mysqli_query($con, $inmed) && mysqli_query($con, $inusu)) {
                     $_SESSION['check'] = 1;
                 } else {
-                    $error = "ERROR: no se ha podido insertar el usuario.";
+                    $error = "ERROR: no se ha podido insertar el médico.";
                     $aviso = "Vuelve a intentarlo.";
                     $_SESSION['check'] = 0;
                 }
@@ -79,7 +79,7 @@
         }
     }
     if ($_SESSION['check'] == 1) {
-        $error = "Usuario insertado correctamente.";
+        $error = "Médico insertado correctamente.";
     }
     ?>
     <nav class="sidebar close">

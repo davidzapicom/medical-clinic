@@ -13,6 +13,7 @@
 <body>
     <?php
     session_start();
+    ini_set("display_errors",'1');
     $error = $aviso = "";
     if (isset($_POST['alta'])) {
         $usuario = $_POST['usuario'];
@@ -30,12 +31,23 @@
                 printf("Conexión fallida %s\n", mysqli_connect_error());
                 exit();
             }
-            $selectususarios = "SELECT * FROM pacientes where dniPac='$dnipaciente'";
-            $result = mysqli_query($con, $selectususarios);
 
-            if (mysqli_num_rows($result) != 0) {
-                $error = "Ya hay un usuario resgistrado con ese DNI.";
+            $selectdni = "SELECT * FROM usuarios where dniUsu='$dnipaciente' AND usutipo='Paciente'";
+            $selectusu = "SELECT * FROM usuarios where usuLogin='$usuario' AND usutipo='Paciente'";
+            $resultdni = mysqli_query($con, $selectdni);
+            $resultusu = mysqli_query($con, $selectusu);
+
+            if (mysqli_num_rows($resultdni) != 0 && mysqli_num_rows($resultusu) != 0) {
+                $error = "Ya hay un paciente resgistrado con ese DNI y usuario.";
+                $aviso = "Compruebe los datos / inicie sesión.";
+                $_SESSION['check'] = 0;
+            } else if (mysqli_num_rows($resultdni) != 0) {
+                $error = "Ya hay un médpacienteico resgistrado con ese DNI.";
                 $aviso = "Compruebe el DNI / inicie sesión.";
+                $_SESSION['check'] = 0;
+            } else if (mysqli_num_rows($resultusu) != 0) {
+                $error = "Ya hay un paciente resgistrado con ese usuario.";
+                $aviso = "Compruebe el usuario / inicie sesión.";
                 $_SESSION['check'] = 0;
             } else if ($password != $password2) {
                 $error = "Las contraseñas no coinciden.";
@@ -51,11 +63,11 @@
                 if (mysqli_query($con, $inpac) && mysqli_query($con, $inusu)) {
                     $_SESSION['check'] = 1;
                 } else {
-                    $error = "ERROR: no se ha podido insertar el usuario.";
+                    $error = "ERROR: no se ha podido insertar el paciente.";
                     $aviso = "Vuelve a intentarlo.";
                     $_SESSION['check'] = 0;
                 }
-            }
+            }   
             mysqli_close($con);
         } else {
             $error = "No tienes permisos.";
@@ -65,7 +77,7 @@
     }
 
     if ($_SESSION['check'] == 1) {
-        $error = "Usuario insertado correctamente.";
+        $error = "Paciente insertado correctamente.";
     }
     ?>
     <nav class="sidebar close">
