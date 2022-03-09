@@ -33,13 +33,15 @@
             if ($horacita >= "09:00" && $horacita <= "20:30" && $fechacita >= date('Y-m-d') && date('H:i') <= $horacita) {
                 $ins = "INSERT INTO citas (idCita,citFecha,citHora,citPaciente,citMedico,citConsultorio,citEstado,citObservaciones) VALUES (NULL,'$_SESSION[fechacita]','$_SESSION[horacita]','$_SESSION[dnipaciente]','$_SESSION[dnimedico]','$_SESSION[consultorio]','Asignado','$_SESSION[observaciones]')";
                 if (mysqli_query($con, $ins)) {
-                    $error = "Cita insertada correctamente.";
+                    $_SESSION['check'] = 1;
                 } else {
                     $error = "ERROR: no se ha podido insertar la cita.";
                     $aviso = "Vuelve a intentarlo.";
+                    $_SESSION['check'] = 0;
                 }
             } else if (date('H:i') >= $horacita) {
                 $error = "La hora tiene que ser posterior a la actual";
+                $_SESSION['check'] = 0;
             }
             mysqli_close($con);
         } else {
@@ -49,8 +51,9 @@
         }
     }
 
-
-
+    if ($_SESSION['check'] == 1) {
+        $error = "Cita creada correctamente.";
+    }
     ?>
     <nav class="sidebar close">
         <header>
@@ -110,7 +113,7 @@
         <div class="text">
             <h1>Nueva Cita</h1>
             <form action="#" method="post">
-                Paciente: <select name="dnipaciente" value="<?php if (isset($_POST['alta'])) echo $dnipaciente; ?>" required>
+                Paciente: <select name="dnipaciente" value="<?php if (isset($_POST['alta']) && $_SESSION['check'] == 0) echo $dnipaciente; ?>" required>
                     <?php
                     $con = mysqli_connect('localhost', 'Asistente', 'Ass86teN33', 'Clinica');
                     $result = mysqli_query($con, "SELECT pacNombres,pacApellidos,dniPac FROM pacientes");
@@ -122,7 +125,7 @@
                     ?>
                 </select>
                 <br />
-                Médico: <select name="dnimedico" value="<?php if (isset($_POST['alta'])) echo $dnimedico; ?>" required>
+                Médico: <select name="dnimedico" value="<?php if (isset($_POST['alta']) && $_SESSION['check'] == 0) echo $dnimedico; ?>" required>
                     <?php
                     $result = mysqli_query($con, "SELECT medNombres,medApellidos,dniMed FROM medicos");
                     while ($registro = mysqli_fetch_row($result)) {
@@ -133,7 +136,7 @@
                     ?>
                 </select>
                 <br />
-                Consultorio: <select name="consultorio" value="<?php if (isset($_POST['alta'])) echo $consultorio; ?>" required>
+                Consultorio: <select name="consultorio" value="<?php if (isset($_POST['alta']) && $_SESSION['check'] == 0) echo $consultorio; ?>" required>
                     <?php
                     $result = mysqli_query($con, "SELECT * FROM consultorios");
                     while ($registro = mysqli_fetch_row($result)) {
@@ -144,14 +147,14 @@
                     ?>
                 </select>
                 <br />
-                Fecha: <input type="date" name="fechacita" value="<?php if (isset($_POST['alta'])) echo $fechacita; ?>" min="<?= date('Y-m-d'); ?>" max="2100-12-31" required>
+                Fecha: <input type="date" name="fechacita" value="<?php if (isset($_POST['alta']) && $_SESSION['check'] == 0) echo $fechacita; ?>" min="<?= date('Y-m-d'); ?>" max="2100-12-31" required>
                 <br />
 
-                Hora: <input type="time" id="horacita" name="horacita" min="09:00" max="20:30" required>
+                Hora: <input type="time" id="horacita" name="horacita" value="<?php if (isset($_POST['alta']) && $_SESSION['check'] == 0) echo $horacita; ?>" min="09:00" max="20:30" required>
                 <span id="avisohora">
                     <small>La clínica atiende de 9:00 a 20:30.</small>
                     <br />
-                    <textarea rows="6" cols="35" name="observaciones" class="form-control" placeholder="Observaciones" maxlength="150" value="<?php if (isset($_POST['alta'])) echo $observaciones; ?>" required></textarea>
+                    <textarea rows="6" cols="35" name="observaciones" class="form-control" placeholder="Observaciones" maxlength="150" value="<?php if (isset($_POST['alta']) && $_SESSION['check'] == 0) echo $observaciones; ?>" required></textarea>
                     <br />
                     <p><?php echo "<strong>$error</strong>"; ?></p>
                     <p><?php echo "$aviso"; ?></p>
