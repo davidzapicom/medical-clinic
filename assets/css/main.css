@@ -123,11 +123,6 @@ input[data-error] {
 
 
 
-
-
-
-
-
 button.logout:hover{
   cursor: pointer;
 }
@@ -184,25 +179,3 @@ p.ufl::first-letter {
 .form {
   min-width: 400px;
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
