@@ -13,6 +13,7 @@
 <body>
     <?php
     session_start();
+    ini_set("display_errors","1");
     $error = $aviso = "";
     if (isset($_POST['alta'])) {
         $dnipaciente = $_POST['dnipaciente'];
@@ -30,8 +31,8 @@
                 exit();
             }
 
-            if ($horacita >= "09:00" && $horacita <= "20:30" && $fechacita >= date('Y-m-d') && date('H:i') <= $horacita) {
-                $ins = "INSERT INTO citas (idCita,citFecha,citHora,citPaciente,citMedico,citConsultorio,citEstado,citObservaciones) VALUES (NULL,'$_SESSION[fechacita]','$_SESSION[horacita]','$_SESSION[dnipaciente]','$_SESSION[dnimedico]','$_SESSION[consultorio]','Asignado','$_SESSION[observaciones]')";
+            if (($fechacita >  date('Y-m-d') || ($fechacita == date('Y-m-d') && $horacita > date('H:i:s'))) && $horacita >= "09:00" && $horacita <= "20:30") {
+                $ins = "INSERT INTO citas (idCita,citFecha,citHora,citPaciente,citMedico,citConsultorio,citEstado,citObservaciones) VALUES (NULL,'$fechacita','$horacita','$dnipaciente','$dnimedico','$consultorio','Asignado','$observaciones')";
                 if (mysqli_query($con, $ins)) {
                     $_SESSION['check'] = 1;
                 } else {
