@@ -13,9 +13,9 @@ GRANT USAGE ON *.* TO `Administrador`@`localhost` IDENTIFIED BY PASSWORD '*08852
 
 GRANT SELECT, INSERT ON `Clinica`.`medicos` TO `Administrador`@`localhost`;
 
-GRANT SELECT, INSERT ON `Clinica`.`usuarios` TO `Administrador`@`localhost`;
-
 GRANT SELECT, INSERT ON `Clinica`.`pacientes` TO `Administrador`@`localhost`;
+
+GRANT SELECT, INSERT ON `Clinica`.`usuarios` TO `Administrador`@`localhost`;
 
 
 # Privilegios para `Asistente`@`localhost`

@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: localhost
--- Tiempo de generación: 06-03-2022 a las 19:09:56
+-- Tiempo de generación: 10-03-2022 a las 08:19:05
 -- Versión del servidor: 10.4.22-MariaDB
 -- Versión de PHP: 8.1.2
 
@@ -114,7 +114,6 @@ CREATE TABLE `pacientes` (
 --
 
 INSERT INTO `pacientes` (`dniPac`, `pacNombres`, `pacApellidos`, `pacFechaNacimiento`, `pacSexo`) VALUES
-('3492389C', 'Cel', 'Concar', '2001-12-07', 'Femenino'),
 ('41236987F', 'Andrew', 'Perez', '1990-12-14', 'Masculino'),
 ('71978454T', 'Rita', 'Cantaora', '1980-02-12', 'Femenino');
 
@@ -139,8 +138,8 @@ CREATE TABLE `usuarios` (
 INSERT INTO `usuarios` (`dniUsu`, `usuLogin`, `usuPassword`, `usuEstado`, `usutipo`) VALUES
 ('00000001A', 'Lider', '63f2dbe23707d96f3f1feae0c203013c4a2a831391cc8189fa0b2673bcdb6fa8a818ef754bac38a878ddb7baa3143423c5870c4a93b333fe9e1601c5a285b507', 'Activo', 'Administrador'),
 ('12345678A', 'Juan', 'c062e4fd3eed28511a1f2b52bf7b56b70a79bcbecef1f24fd86abfa7269d920e7bd7553c998d9e94fd8f5226b8e57881eca7c9b3403065894f26c5db2ab7fab6', 'Activo', 'Asistente'),
-('21324354F', 'Perico', '778cb2714c34ccec1005d24ee6d9815ecb7f26966ea22b211f890c8589c5352966c4d45d5b63a4851b32f81c5f44d634b806ed908177bfb3f7dfbd8c0d7a78eb', 'Activo', 'Medico'),
-('41236987F', 'andrew', '7e2b5e49b917b41e7f65e9e9946cc83486eb8da75bf64669020dbc6e653431335b2d2a9089ec4be8aa3f6d333e9f02d5746092c145a0d9cd71760484bcee7484', 'Activo', 'Paciente');
+('12346753Y', 'Andrew', 'cf1af1dd6d8fc37bc20e67ea6239ff3ecb3685bdb43bce6da173a761daaf661a9de2e5a65718501fef8c8ca553ef68e12faf55314f45fd2ba286efe85f771256', 'Activo', 'Paciente'),
+('21324354F', 'Perico', '778cb2714c34ccec1005d24ee6d9815ecb7f26966ea22b211f890c8589c5352966c4d45d5b63a4851b32f81c5f44d634b806ed908177bfb3f7dfbd8c0d7a78eb', 'Activo', 'Medico');
 
 --
 -- Índices para tablas volcadas
@@ -187,19 +186,7 @@ ALTER TABLE `usuarios`
 -- AUTO_INCREMENT de la tabla `citas`
 --
 ALTER TABLE `citas`
-  MODIFY `idCita` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=524;
-
---
--- Restricciones para tablas volcadas
---
-
---
--- Filtros para la tabla `citas`
---
-ALTER TABLE `citas`
-  ADD CONSTRAINT `citas_ibfk_1` FOREIGN KEY (`citPaciente`) REFERENCES `pacientes` (`dniPac`),
-  ADD CONSTRAINT `citas_ibfk_2` FOREIGN KEY (`citMedico`) REFERENCES `medicos` (`dniMed`),
-  ADD CONSTRAINT `citas_ibfk_3` FOREIGN KEY (`citConsultorio`) REFERENCES `consultorios` (`idConsultorio`);
+  MODIFY `idCita` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=530;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
