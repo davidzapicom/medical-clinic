@@ -81,6 +81,56 @@
     if ($_SESSION['check'] == 1) {
         $error = "Médico insertado correctamente.";
     }
+
+
+
+
+
+
+//Funciones
+
+
+//} else if (($_SESSION["tipoRegistro"] === "altamedico") && (!regexvalidar($regexTelefono, $telefono))) {
+    function regexvalidar($regex, $input)
+	{
+		if (preg_match("/" . $regex . "/", $input)) {
+			return true;
+		}
+		return false;
+	}
+	function dnivalido($regex, $dni)
+	{
+		if (!regexvalidar($regex, $dni)) {
+			return false;
+		}
+		$letra = substr($dni, -1);
+		$numeros = substr($dni, 0, -1);
+		if (substr("TRWAGMYFPDXBNJZSQVHLCKE", $numeros % 23, 1) == $letra && strlen($letra) == 1 && strlen($numeros) == 8) {
+			return true;
+		}
+		return false;
+	}
+	function fechavalida($input)
+	{
+		if ($input <= date('Y-m-d')) {
+			return true;
+		}
+		return false;
+	}
+	function sexovalido($input)
+	{
+		if (($input === "Masculino") || ($input === "Femenino")) {
+			return true;
+		}
+		return false;
+	}
+	function correovalido($input)
+	{
+		if (filter_var($input, FILTER_VALIDATE_EMAIL)) {
+			return true;
+		}
+		return false;
+	}
     ?>
     <nav class="sidebar close">
         <header>
