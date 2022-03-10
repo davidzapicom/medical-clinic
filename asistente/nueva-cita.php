@@ -163,9 +163,6 @@
             </form>
         </div>
     </section>
-    <?php
-    $mysqli->close();
-    ?>
     <script src="../assets/js/bar-script.js"></script>
 </body>
 
