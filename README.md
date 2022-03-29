@@ -26,7 +26,6 @@
 ### La aplicación está desarrollada con Php, MySql, HTML y css.
 
 ### La finalidad de este repositorio es utilizar el control de versiones para desarrollar el trabajo en varios equipos sin riesgo de perder nada.
-### ¿Qué incluye el repositorio?
 
 ![Medico Playmobil](/assets/img/playmobil.jpg)
 
