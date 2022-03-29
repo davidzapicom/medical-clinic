@@ -1,6 +1,6 @@
 # **Clinica-medica:mask:**
 ##  ___David Zapico___:copyright:
-### Soy de Avilés:house_with_garden:, tengo 20 años y soy :man_student: de desarrollo de aplicaciones web.
+
 ### La aplicación es una clínica médica. Lista pacientes y citas. Se pueden insertar citas, dar de alta usuarios (pacientes y medicos). La página inicia con un index (la dirección es localhost:80/CLINICA) que es el login, según el rol del usuario te redirige automáticamente a las páginas permitidas para ese rol concreto.
 ### Las paginas del admin son:
 1. Alta paciente
@@ -30,4 +30,4 @@
 
 ![Medico Playmobil](/assets/img/playmobil.jpg)
 
-Contacto -> **[link](davidzapico@davidzapico.com)**.
+Contacto -> **[email](mailto:davidzapico@davidzapico.com)**.
