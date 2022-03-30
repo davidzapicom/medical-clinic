@@ -23,7 +23,7 @@
 1. Listar citas atendidas
 2. Listar citas pendientes
 
-### La aplicación está desarrollada con Php, MySql, HTML y css.
+### Tech stack -> Php | MySql | HTML | CSS
 
 ![Medico Playmobil](/assets/img/playmobil.jpg)
 
